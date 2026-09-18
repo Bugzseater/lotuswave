@@ -75,10 +75,10 @@ export function HeroPathways({
   className,
 }: HeroPathwaysProps) {
   return (
-    <div className={cn("flex flex-col items-center gap-6", className)}>
+    <div className={cn("flex flex-col items-start gap-5", className)}>
       <Link
         href={scrollHint.href}
-        className="hidden size-11 shrink-0 items-center justify-center rounded-pill border border-white/25 text-white transition-colors duration-200 ease-out hover:border-white/50 hover:bg-white/15 focus-visible:outline-white lg:flex"
+        className="hidden size-10 shrink-0 items-center justify-center rounded-pill border border-white/25 text-white transition-colors duration-200 ease-out hover:border-white/50 hover:bg-white/15 focus-visible:outline-white lg:flex"
       >
         <span className="sr-only">{scrollHint.label}</span>
         <ChevronDown className="size-5 motion-safe:animate-nudge" aria-hidden />

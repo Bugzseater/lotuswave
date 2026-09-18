@@ -2,7 +2,6 @@ import Link from "next/link";
 
 import { HeroMedia } from "@/components/home/hero-media";
 import { HeroPathways } from "@/components/home/hero-pathways";
-import { Container } from "@/components/ui/container";
 import { HERO_CONTENT } from "@/lib/constants";
 
 const { media, headline, subtitle, actions, pathways, scrollHint } =
@@ -35,15 +34,21 @@ export function Hero() {
       <div className="relative flex min-h-[100svh] flex-col overflow-hidden">
         <HeroMedia image={media.image} />
 
+        {/*
+         * Flat darkening pass across the whole frame. Neutral ink rather than
+         * brand purple, so the golden sunrise survives — it just gets quieter.
+         */}
+        <div aria-hidden className="bg-ink/40 absolute inset-0" />
+
         {/* Headline legibility: dark at the sky, gone by mid-frame. */}
         <div
           aria-hidden
-          className="absolute inset-0 bg-linear-to-b from-brand-dark/70 from-0% via-brand-dark/25 via-30% to-transparent to-55%"
+          className="absolute inset-0 bg-linear-to-b from-brand-dark/60 from-0% via-brand-dark/25 via-30% to-transparent to-55%"
         />
         {/* Soft vignette so the frosted cards have something to sit on. */}
         <div
           aria-hidden
-          className="absolute inset-0 bg-linear-to-t from-ink/35 from-0% via-ink/12 via-22% to-transparent to-48%"
+          className="absolute inset-0 bg-linear-to-t from-ink/50 from-0% via-ink/18 via-22% to-transparent to-48%"
         />
 
         {/*
@@ -52,26 +57,38 @@ export function Hero() {
          * headline, copy, buttons and the four cards — so nothing lands under
          * the fold on a 100svh hero.
          */}
-        <Container className="relative flex flex-1 flex-col pt-28 pb-10 sm:pt-30 lg:pt-32 lg:pb-12">
+        {/*
+         * Not `Container`: the hero sits further left than the rest of the
+         * site's 72rem column, close to the frame edge, while the header keeps
+         * its own alignment. The max-width only bites on very wide screens, to
+         * stop the block drifting away from the headline on an ultrawide.
+         */}
+        <div className="relative mx-auto flex w-full max-w-[112rem] flex-1 flex-col px-5 pt-28 pb-10 sm:px-8 sm:pt-30 lg:px-12 lg:pt-32 lg:pb-12 xl:px-16">
           {/* Hairline rule down the left of the type block. */}
-          <div className="w-full max-w-[46rem] border-l border-white/25 pl-5 sm:pl-8 xl:max-w-[52rem]">
+          <div className="w-full max-w-[46rem] border-l border-white/25 pl-5 sm:pl-8 xl:max-w-[58rem]">
             <h1
-              className="font-display text-[2.75rem] leading-[1.05] text-white sm:text-6xl lg:text-7xl motion-safe:animate-rise"
+              className="font-display text-[2.9rem] leading-[1.02] text-white sm:text-[3.75rem] lg:text-[4.5rem] xl:text-[5.25rem] motion-safe:animate-rise"
               style={{ animationDelay: "0ms" }}
             >
-              {headline.lead}{" "}
-              <em className="font-light italic">{headline.emphasis}</em>
+              {/* One unbroken line from `sm` up — the phrase should not split
+                  across "Sri" and "Lanka". A phone is too narrow to promise it. */}
+              <span className="block font-bold sm:whitespace-nowrap">
+                {headline.lead}
+              </span>
+              <em className="mt-1 block font-normal italic">
+                {headline.emphasis}
+              </em>
             </h1>
 
             <p
-              className="mx-auto mt-6 max-w-2xl text-base text-white/90 sm:text-lg motion-safe:animate-rise"
+              className="mt-5 max-w-xl text-base text-white/90 sm:text-lg motion-safe:animate-rise"
               style={{ animationDelay: "100ms" }}
             >
               {subtitle}
             </p>
 
             <div
-              className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4 motion-safe:animate-rise"
+              className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:gap-4 motion-safe:animate-rise"
               style={{ animationDelay: "200ms" }}
             >
               <Link
@@ -92,9 +109,9 @@ export function Hero() {
           <HeroPathways
             pathways={pathways}
             scrollHint={scrollHint}
-            className="mt-12 sm:mt-auto sm:pt-16"
+            className="mt-10 sm:mt-auto sm:pt-10"
           />
-        </Container>
+        </div>
       </div>
     </section>
   );

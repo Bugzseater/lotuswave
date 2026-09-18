@@ -20,7 +20,7 @@ export default async function HomePage() {
 
       {/* Placeholder section slots — real home sections come with the design work.
           The featured experience cards belong here, not in the hero. */}
-      <Section id="featured-experiences" className="scroll-mt-18">
+      <Section id="featured-experiences" className="scroll-mt-24">
         <Container className="space-y-2">
           <h2 className="font-display text-2xl">Featured experiences</h2>
           <p className="text-sm">{experiences.length} loaded</p>
