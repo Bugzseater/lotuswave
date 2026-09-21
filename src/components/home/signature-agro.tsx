@@ -10,6 +10,7 @@ import {
 import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { WaveEdge } from "@/components/ui/wave-edge";
 
 type Step = {
@@ -85,15 +86,19 @@ export function SignatureAgro() {
         aria-hidden="true"
         className="absolute -top-1/4 -right-1/4 -z-10 aspect-square w-[80%] rounded-pill bg-radial from-white/12 to-transparent to-70%"
       />
-      <WaveEdge position="top" className="fill-white" />
+      <WaveEdge position="top" flat className="fill-white" />
       {/* Filled with the wellness section's sand so the two sections meet
           on the wave, with no white strip between them. */}
-      <WaveEdge position="bottom" className="fill-warm-sand" />
+      <WaveEdge position="bottom" flat className="fill-warm-sand" />
       <Container>
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-24">
-          {/* Collage — field large, plate overlapping its lower corner. */}
+        <ScrollReveal className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-24">
+          {/* Collage — field large, plate overlapping its lower corner. The
+              plate rises further, so it trails the field into place. */}
           <div className="relative pr-10 pb-14 sm:pr-16 sm:pb-20">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-card bg-white/10">
+            <div
+              data-reveal-image
+              className="relative aspect-[4/5] overflow-hidden rounded-card bg-white/10"
+            >
               <Image
                 src={IMAGES.field.src}
                 alt={IMAGES.field.alt}
@@ -103,7 +108,10 @@ export function SignatureAgro() {
               />
             </div>
 
-            <div className="absolute right-0 bottom-0 aspect-square w-[46%] overflow-hidden rounded-card bg-white/10 ring-6 ring-accent-green-soft">
+            <div
+              data-reveal-image="140"
+              className="absolute right-0 bottom-0 aspect-square w-[46%] overflow-hidden rounded-card bg-white/10 ring-6 ring-accent-green-soft"
+            >
               <Image
                 src={IMAGES.table.src}
                 alt={IMAGES.table.alt}
@@ -113,58 +121,68 @@ export function SignatureAgro() {
               />
             </div>
 
-            <p className="absolute top-5 left-5 inline-flex items-center gap-2 rounded-pill bg-white/90 px-4 py-2 text-xs font-semibold text-ink backdrop-blur-sm sm:text-sm">
+            <p
+              data-reveal-step
+              className="absolute top-5 left-5 inline-flex items-center gap-2 rounded-pill bg-white/90 px-4 py-2 text-xs font-semibold text-ink backdrop-blur-sm sm:text-sm"
+            >
               <Sprout aria-hidden="true" className="size-4 text-accent-green" strokeWidth={1.75} />
               Only with LotusWave
             </p>
           </div>
 
           <div>
-            <p className="text-xs font-semibold tracking-[0.2em] text-white/90 uppercase">
+            <p
+              data-reveal
+              className="text-xs font-semibold tracking-[0.2em] text-white/90 uppercase"
+            >
               Signature Agro Experience
             </p>
             <h2
               id="agro-heading"
+              data-reveal
               className="mt-4 font-display text-4xl leading-[1.08] text-balance text-white sm:text-5xl lg:text-6xl"
             >
               From the Land{" "}
               <em className="font-medium text-white/85">to Your Table.</em>
             </h2>
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-pretty text-white/90 sm:text-lg">
+            <p data-reveal className="mt-6 max-w-xl text-sm leading-relaxed text-pretty text-white/90 sm:text-base">
               A full day on a working Sri Lankan farm — from the first step into
               the field to the last bite of a meal you helped grow and cook.
             </p>
 
-            <ol className="mt-10 space-y-7">
+            <ol className="mt-9 space-y-6">
               {STEPS.map(({ title, line, icon: Icon }, i) => (
                 <li
                   key={title}
-                  className="relative pl-16 before:absolute before:top-12 before:bottom-[-1.75rem] before:left-[1.4rem] before:w-px before:bg-white/30 last:before:hidden"
+                  data-reveal-step
+                  className="relative pl-14 before:absolute before:top-11 before:bottom-[-1.5rem] before:left-[1.2rem] before:w-px before:bg-white/30 last:before:hidden"
                 >
-                  <span className="absolute top-0 left-0 grid size-11 place-items-center rounded-pill bg-white/15 text-white ring-1 ring-white/30">
-                    <Icon aria-hidden="true" className="size-5" strokeWidth={1.5} />
+                  <span className="absolute top-0 left-0 grid size-10 place-items-center rounded-pill bg-white/15 text-white ring-1 ring-white/30">
+                    <Icon aria-hidden="true" className="size-[18px]" strokeWidth={1.5} />
                   </span>
-                  <p className="text-[11px] font-semibold tracking-[0.16em] text-white/85 uppercase">
+                  <p className="text-[10px] font-semibold tracking-[0.16em] text-white/85 uppercase">
                     Step {String(i + 1).padStart(2, "0")}
                   </p>
-                  <h3 className="mt-1 font-display text-2xl leading-tight font-semibold text-white">
+                  <h3 className="mt-1 font-display text-lg leading-tight font-semibold text-white sm:text-xl">
                     {title}
                   </h3>
-                  <p className="mt-1.5 max-w-md text-sm leading-relaxed text-white/90">{line}</p>
+                  <p className="mt-1 max-w-md text-[13px] leading-relaxed text-white/90">{line}</p>
                 </li>
               ))}
             </ol>
 
-            <ButtonLink
-              href="/experiences/agro-farm-experiences"
-              size="lg"
-              // Purple sinks on green, so the CTA inverts: solid white, green label.
-              className="mt-10 w-full bg-white text-accent-green hover:bg-white/85 focus-visible:outline-white sm:w-auto"
-            >
-              Explore Agro Experiences
-            </ButtonLink>
+            <div data-reveal-step className="mt-10">
+              <ButtonLink
+                href="/experiences/agro-farm-experiences"
+                size="lg"
+                // Purple sinks on green, so the CTA inverts: solid white, green label.
+                className="w-full bg-white text-accent-green hover:bg-white/85 focus-visible:outline-white sm:w-auto"
+              >
+                Explore Agro Experiences
+              </ButtonLink>
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
       </Container>
     </Section>
   );

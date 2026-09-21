@@ -6,14 +6,14 @@ import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
-import { LogoPanel } from "@/components/layout/logo-panel";
+import { Logo } from "@/components/layout/logo";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { NAV_LINKS, WHATSAPP_URL } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 /**
- * The logo sits in a brand panel wedged into the top-left corner of the page;
- * the navigation floats beside it as a glass pill. The pill starts transparent
+ * One glass pill carries the logo, the navigation and the calls to action.
+ * The pill starts transparent
  * with white type over the hero, then settles into white glass with ink type
  * once the page scrolls past the fold.
  */
@@ -37,18 +37,18 @@ export function Header() {
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-50">
-        <LogoPanel className="absolute top-0 left-0" />
-
-        <Container className="flex max-w-[80rem] justify-end pt-3 sm:pt-5">
+        <Container className="max-w-[80rem] pt-3 sm:pt-5">
           <div
             className={cn(
-              "flex h-14 items-center gap-5 rounded-pill border pr-2 pl-4 sm:h-16 sm:pr-2.5 sm:pl-6",
+              "flex h-14 items-center justify-between gap-5 rounded-pill border pr-2 pl-4 sm:h-16 sm:pr-2.5 sm:pl-6",
               "backdrop-blur-xl backdrop-saturate-150 transition-colors duration-300 ease-out",
               light
                 ? "border-white/20 bg-white/10"
                 : "border-line bg-white/80 shadow-header",
             )}
           >
+            <Logo tone={light ? "light" : "brand"} />
+
             <nav aria-label="Main" className="hidden xl:block">
               <ul className="flex items-center gap-x-4 2xl:gap-x-6">
                 {NAV_LINKS.map((link) => {

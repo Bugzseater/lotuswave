@@ -12,9 +12,12 @@ import { cn } from "@/lib/utils";
  */
 export function WaveEdge({
   position = "top",
+  flat = false,
   className,
 }: {
   position?: "top" | "bottom";
+  /** Drops the translucent swell, leaving the solid band alone. */
+  flat?: boolean;
   className?: string;
 }) {
   return (
@@ -28,10 +31,12 @@ export function WaveEdge({
         className,
       )}
     >
-      <path
-        opacity="0.35"
-        d="M0 0h1440v78c-120 26-260 38-420 18S740 30 560 44 240 118 0 92Z"
-      />
+      {!flat && (
+        <path
+          opacity="0.35"
+          d="M0 0h1440v78c-120 26-260 38-420 18S740 30 560 44 240 118 0 92Z"
+        />
+      )}
       <path d="M0 0h1440v46c-150 34-300 44-470 22S690 12 520 28 210 92 0 66Z" />
     </svg>
   );
