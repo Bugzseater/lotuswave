@@ -13,7 +13,7 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
  * Entrance timeline for the hero copy. The markup stays server-rendered; this
  * only finds the marked pieces and plays them in:
  *
- * - `[data-hero-rule]` — the left rule draws downwards
+ * - `[data-hero-rule]` — the hairline under the headline draws out from centre
  * - `[data-hero-line]` — headline lines rise out of their masks
  * - `[data-hero-accent]` — "Sri Lanka" settles in after its line
  * - `[data-hero-fade]` — supporting copy and CTAs lift and fade in, staggered
@@ -42,12 +42,16 @@ export function HeroIntro({
 
         gsap
           .timeline({ defaults: { ease: "power3.out" }, delay: 0.5 })
-          .from("[data-hero-rule]", {
-            scaleY: 0,
-            transformOrigin: "top",
-            duration: 1.8,
-            ease: "power2.inOut",
-          })
+          .from(
+            "[data-hero-rule]",
+            {
+              scaleX: 0,
+              transformOrigin: "center",
+              duration: 1.8,
+              ease: "power2.inOut",
+            },
+            0.9,
+          )
           .from(
             "[data-hero-line]",
             { yPercent: 110, duration: 1.5, stagger: 0.3 },

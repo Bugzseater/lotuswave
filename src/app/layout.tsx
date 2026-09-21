@@ -3,6 +3,7 @@ import { Figtree, Fraunces } from "next/font/google";
 import { BackToTop } from "@/components/layout/back-to-top";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { WhatsAppButton } from "@/components/layout/whatsapp-button";
 import { SITE } from "@/lib/constants";
 import "@/styles/globals.css";
 
@@ -46,6 +47,7 @@ export default function RootLayout({
         <main>{children}</main>
         <Footer />
         <BackToTop />
+        <WhatsAppButton />
       </body>
     </html>
   );
