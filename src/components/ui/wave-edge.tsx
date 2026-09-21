@@ -1,13 +1,16 @@
 import { cn } from "@/lib/utils";
 
 /**
- * Accent-green wave edging a section, drawn inline so it takes the token
- * colour directly. Two layers: a translucent swell behind for depth, the solid
- * band in front. `position="bottom"` flips the same shape to close a section.
+ * Wave edging a section, drawn inline so it takes a token colour directly.
+ * Two layers: a translucent swell behind for depth, the solid band in front.
+ * `position="bottom"` flips the same shape to close a section.
+ *
+ * Accent-green by default. Pass a `fill-*` class to change it — e.g.
+ * `fill-white` on a coloured section cuts it into the white page around it.
  *
  * Expects a positioned parent with `overflow-hidden`.
  */
-export function GreenWave({
+export function WaveEdge({
   position = "top",
   className,
 }: {

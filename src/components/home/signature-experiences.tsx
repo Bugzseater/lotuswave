@@ -1,7 +1,7 @@
 import { ExperienceCard } from "@/components/experiences/experience-card";
 import { Container } from "@/components/ui/container";
-import { GreenWave } from "@/components/ui/green-wave";
 import { Section } from "@/components/ui/section";
+import { WaveEdge } from "@/components/ui/wave-edge";
 import { getExperiences } from "@/lib/data";
 
 /**
@@ -19,8 +19,8 @@ export async function SignatureExperiences() {
       // Extra top and bottom room so the content clears the waves.
       className="relative overflow-hidden bg-section pt-28 pb-28 sm:pt-36 sm:pb-36 lg:pt-44 lg:pb-44"
     >
-      <GreenWave position="top" />
-      <GreenWave position="bottom" />
+      <WaveEdge position="top" />
+      <WaveEdge position="bottom" />
 
       <Container className="max-w-6xl">
         <div className="mx-auto max-w-3xl text-center">

@@ -20,7 +20,14 @@
   /* Secondary accents — sparingly */
   --color-accent-gold: #c8963e;
   --color-accent-green: #1f3d2b;
+  /* Sage — accent-green lifted towards white, for large green surfaces
+     (the agro section). White text still clears 6:1 on it. */
+  --color-accent-green-soft: color-mix(in srgb, var(--color-accent-green) 80%, var(--color-white));
   --color-accent-sand: #e9dfcb;
+  /* Warm sand — background of the wellness section. A surface, never text.
+     Ink and brand text both clear 7:1 on it; muted is borderline, so
+     supporting copy on it uses ink at 75%. */
+  --color-warm-sand: #f4ece4;
 
   --color-transparent: transparent;
   --color-current: currentColor;
