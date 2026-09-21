@@ -22,12 +22,12 @@ export function JourneyCard({
   index,
 }: Journey & { index?: number }) {
   return (
-    <article className="group relative isolate flex h-full min-h-[30rem] flex-col justify-between overflow-hidden rounded-card bg-brand-dark text-white has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-4 has-[a:focus-visible]:outline-brand sm:min-h-[34rem]">
+    <article className="group relative isolate flex h-full min-h-[30rem] flex-col justify-between overflow-hidden rounded-card bg-brand-dark text-white has-[a:focus-visible]:outline-2 has-[a:focus-visible]:-outline-offset-4 has-[a:focus-visible]:outline-white sm:min-h-[34rem]">
       <Image
         src={image.src}
         alt={image.alt}
         fill
-        sizes="(min-width: 1024px) 55vw, 100vw"
+        sizes="(min-width: 1024px) 30vw, (min-width: 640px) 50vw, 85vw"
         className="-z-10 object-cover transition-transform duration-300 ease-out group-hover:scale-[1.05]"
       />
 

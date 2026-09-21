@@ -1,15 +1,9 @@
 import { JourneyCard } from "@/components/journeys/journey-card";
+import { JourneySlider } from "@/components/journeys/journey-slider";
 import { Container } from "@/components/ui/container";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { Section } from "@/components/ui/section";
 import { getFeaturedJourneys } from "@/lib/data";
-import { cn } from "@/lib/utils";
-
-/**
- * Wide/narrow, then narrow/wide on desktop, so the grid reads as a sequence
- * of posters rather than four equal tiles. Repeats past four.
- */
-const SPANS = ["lg:col-span-7", "lg:col-span-5", "lg:col-span-5", "lg:col-span-7"];
 
 /**
  * Section 04 — the packaged journeys, back on white after the tinted
@@ -47,17 +41,21 @@ export async function FeaturedJourneys() {
             </p>
           </div>
 
-          <ul className="mt-10 grid grid-cols-1 gap-5 sm:mt-12 lg:mt-14 lg:grid-cols-12 lg:gap-6">
-            {journeys.map((journey, i) => (
-              <li
-                key={journey.slug}
-                data-reveal-card
-                className={cn(SPANS[i % SPANS.length])}
-              >
-                <JourneyCard {...journey} index={i} />
-              </li>
-            ))}
-          </ul>
+          <div className="mt-10 sm:mt-12 lg:mt-14">
+            <JourneySlider label="Featured journeys">
+              {journeys.map((journey, i) => (
+                <li
+                  key={journey.slug}
+                  data-reveal-card
+                  // One card-width everywhere: most of the screen on phones so
+                  // the next card peeks in, then two, then three across.
+                  className="w-[85%] shrink-0 snap-start sm:w-[calc((100%-1.25rem)/2)] lg:w-[calc((100%-3rem)/3)]"
+                >
+                  <JourneyCard {...journey} index={i} />
+                </li>
+              ))}
+            </JourneySlider>
+          </div>
         </ScrollReveal>
       </Container>
     </Section>
