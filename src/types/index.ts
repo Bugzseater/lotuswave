@@ -12,6 +12,31 @@ export type SeoFields = {
 /** Keys into the icon map in `components/experiences/experience-icon.tsx`. */
 export type ExperienceIcon = "agro" | "wellness" | "culture" | "nature" | "food" | "beach";
 
+/**
+ * A real quote from a real person, published with their permission. Never
+ * write one of these by hand for placeholder content.
+ *
+ * `pilot` and `partner` cover the launch stage. Once real bookings start,
+ * add `guest`, `video`, `google` and `tripadvisor` sources here.
+ */
+export type Testimonial = {
+  quote: string;
+  /** As the person agreed to be credited, e.g. "Anna K." */
+  name: string;
+  /** "Pilot tour, March 2026" or "Owner, Sigiriya Organic Farm". */
+  context: string;
+  source: "pilot" | "partner";
+  country?: string;
+};
+
+export type FounderIntro = {
+  name: string;
+  role: string;
+  /** First person, a few sentences. */
+  message: string;
+  photo: ImageAsset;
+};
+
 /** A packaged multi-day itinerary. */
 export type Journey = {
   slug: string;
