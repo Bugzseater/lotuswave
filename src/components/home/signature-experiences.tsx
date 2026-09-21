@@ -1,5 +1,6 @@
 import { ExperienceCard } from "@/components/experiences/experience-card";
 import { Container } from "@/components/ui/container";
+import { GreenWave } from "@/components/ui/green-wave";
 import { Section } from "@/components/ui/section";
 import { getExperiences } from "@/lib/data";
 
@@ -12,8 +13,16 @@ export async function SignatureExperiences() {
   const experiences = await getExperiences();
 
   return (
-    <Section id="experiences" aria-labelledby="experiences-heading" className="bg-section">
-      <Container>
+    <Section
+      id="experiences"
+      aria-labelledby="experiences-heading"
+      // Extra top and bottom room so the content clears the waves.
+      className="relative overflow-hidden bg-section pt-28 pb-28 sm:pt-36 sm:pb-36 lg:pt-44 lg:pb-44"
+    >
+      <GreenWave position="top" />
+      <GreenWave position="bottom" />
+
+      <Container className="max-w-6xl">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-xs font-semibold tracking-[0.2em] text-brand uppercase">
             Signature Experiences
@@ -31,7 +40,7 @@ export async function SignatureExperiences() {
           </p>
         </div>
 
-        <ul className="mt-12 grid grid-cols-1 gap-5 sm:mt-16 sm:grid-cols-2 lg:mt-20 lg:grid-cols-3 lg:gap-6">
+        <ul className="mt-10 grid grid-cols-1 gap-4 sm:mt-12 sm:grid-cols-2 lg:mt-14 lg:grid-cols-3 lg:gap-5">
           {experiences.map((experience) => (
             <li key={experience.slug}>
               <ExperienceCard {...experience} />
