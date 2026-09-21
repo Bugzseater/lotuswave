@@ -27,6 +27,8 @@ export type Testimonial = {
   context: string;
   source: "pilot" | "partner";
   country?: string;
+  /** Dev-only design preview. The card is labelled and never ships. */
+  sample?: boolean;
 };
 
 export type FounderIntro = {

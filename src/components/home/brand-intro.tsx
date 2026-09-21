@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Compass, Flower2, HandHeart, Sprout, type LucideIcon } from "lucide-react";
 import { Container } from "@/components/ui/container";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { Section } from "@/components/ui/section";
 import { cn } from "@/lib/utils";
 
@@ -65,18 +66,26 @@ export function BrandIntro() {
   return (
     <Section aria-labelledby="brand-intro-heading">
       <Container>
+        <ScrollReveal>
         <div className="mx-auto max-w-3xl text-center">
-          <p className="text-xs font-semibold tracking-[0.2em] text-brand uppercase">
+          <p
+            data-reveal
+            className="text-xs font-semibold tracking-[0.2em] text-brand uppercase"
+          >
             Who We Are
           </p>
           <h2
             id="brand-intro-heading"
+            data-reveal
             className="mt-4 font-display text-4xl leading-[1.08] text-balance text-ink sm:text-5xl lg:text-6xl"
           >
             More Than a Holiday.{" "}
             <em className="font-medium text-brand">A Deeper Connection.</em>
           </h2>
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-pretty text-muted sm:text-lg">
+          <p
+            data-reveal
+            className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-pretty text-muted sm:text-lg"
+          >
             We create meaningful journeys that connect you with Sri Lanka’s land,
             people, food, traditions and natural healing culture.
           </p>
@@ -85,10 +94,15 @@ export function BrandIntro() {
         <ul className="mt-12 grid grid-cols-2 gap-3 sm:mt-16 sm:gap-5 lg:mt-20 lg:grid-cols-4 lg:gap-6">
           {PILLARS.map((pillar, i) => (
             <li key={pillar.title} className={cn(i % 2 === 1 && "lg:translate-y-12")}>
-              <PillarCard {...pillar} />
+              {/* Animated on this wrapper, not the li, so the reveal's
+                  transform never touches the stagger offset. */}
+              <div data-reveal-card>
+                <PillarCard {...pillar} />
+              </div>
             </li>
           ))}
         </ul>
+        </ScrollReveal>
       </Container>
     </Section>
   );

@@ -32,6 +32,12 @@ export function CustomJourneyCta() {
         className="-z-10 object-cover"
       />
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-brand-dark/70" />
+      {/* Dissolves the foot of the section into the charcoal footer, so the
+          two meet without a seam. */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 -z-10 h-32 bg-gradient-to-t from-charcoal to-transparent sm:h-48"
+      />
 
       <Container className="py-24 text-center sm:py-32 lg:py-44">
         <p className="text-xs font-semibold tracking-[0.2em] text-white/90 uppercase">

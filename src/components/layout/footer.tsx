@@ -44,6 +44,12 @@ export function Footer() {
         aria-hidden="true"
         className="absolute -right-32 -bottom-48 -z-10 size-[32rem] rounded-pill bg-white/10 blur-3xl"
       />
+      {/* Holds the top edge at flat charcoal across the full width, so the
+          sand glow cannot lighten the seam with the section above. */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 top-0 -z-10 h-40 bg-gradient-to-b from-charcoal to-transparent"
+      />
 
       {/* Wider than the page container: 80% of the viewport on desktop,
           the usual 16/24px gutter below that. */}

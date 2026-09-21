@@ -10,7 +10,8 @@ import {
 } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
-import { getFounderIntro, getPartnerEndorsements, getPilotFeedback } from "@/lib/data";
+import { getAllFeedback, getFounderIntro } from "@/lib/data";
+import { cn } from "@/lib/utils";
 import type { Testimonial } from "@/types";
 
 type Standard = {
@@ -43,12 +44,53 @@ const STANDARDS: Standard[] = [
   },
 ];
 
+type Tone = "brand" | "tint" | "outline";
+
+/*
+ * The quote grid runs as a zig-zag bento: wide, narrow / narrow, wide. Each
+ * slot has its own surface so four cards never read as a row of clones.
+ */
+const LAYOUT: { span: string; tone: Tone }[] = [
+  { span: "lg:col-span-7", tone: "brand" },
+  { span: "lg:col-span-5", tone: "outline" },
+  { span: "lg:col-span-5", tone: "outline" },
+  { span: "lg:col-span-7", tone: "tint" },
+];
+
+const TONES: Record<
+  Tone,
+  { card: string; mark: string; tag: string; avatar: string; meta: string }
+> = {
+  brand: {
+    card: "bg-brand text-white",
+    mark: "text-white/10",
+    tag: "bg-white/15 text-white",
+    avatar: "bg-white text-brand",
+    meta: "text-white/75",
+  },
+  tint: {
+    card: "bg-section text-ink",
+    mark: "text-brand/10",
+    tag: "bg-white text-brand",
+    avatar: "bg-brand text-white",
+    meta: "text-muted",
+  },
+  outline: {
+    card: "border border-line bg-white text-ink hover:border-brand/40",
+    mark: "text-brand/10",
+    tag: "bg-section text-brand",
+    avatar: "bg-brand-light text-brand",
+    meta: "text-muted",
+  },
+};
+
 /**
  * Section 10 — trust, built honestly for a young company. Nothing here is
  * invented:
  *
- * - Founder introduction, pilot-tour feedback and partner endorsements come
- *   from `@/lib/data` and render only when real entries exist.
+ * - Founder introduction and guest / partner quotes come from `@/lib/data`
+ *   and render only when real entries exist. In dev, labelled samples stand
+ *   in so the layout can be judged.
  * - Until any feedback exists, a plain note says so instead of an empty grid.
  * - "Our Standards" is always shown: those are our own commitments.
  *
@@ -56,12 +98,7 @@ const STANDARDS: Standard[] = [
  * `Testimonial` sources once real travellers start booking.
  */
 export async function Testimonials() {
-  const [founder, pilot, partners] = await Promise.all([
-    getFounderIntro(),
-    getPilotFeedback(),
-    getPartnerEndorsements(),
-  ]);
-  const hasFeedback = pilot.length > 0 || partners.length > 0;
+  const [founder, feedback] = await Promise.all([getFounderIntro(), getAllFeedback()]);
 
   return (
     <Section id="testimonials" aria-labelledby="testimonials-heading">
@@ -108,10 +145,22 @@ export async function Testimonials() {
           </figure>
         )}
 
-        {hasFeedback ? (
-          <div className="mt-12 grid gap-10 sm:mt-16 lg:grid-cols-2">
-            {pilot.length > 0 && <QuoteGroup title="From Our Pilot Tours" items={pilot} />}
-            {partners.length > 0 && <QuoteGroup title="From Our Partners" items={partners} />}
+        {feedback.length > 0 ? (
+          <div className="mt-12 sm:mt-16">
+            <h3 className="sr-only">In their own words</h3>
+            <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-12 lg:gap-5">
+              {feedback.map((item, i) => {
+                const slot = LAYOUT[i % LAYOUT.length];
+                return (
+                  <li
+                    key={`${item.name}-${item.quote.slice(0, 24)}`}
+                    className={cn(slot.span, slot.tone !== "outline" && "sm:col-span-2")}
+                  >
+                    <QuoteCard item={item} tone={slot.tone} featured={i === 0} />
+                  </li>
+                );
+              })}
+            </ul>
           </div>
         ) : (
           <p className="mx-auto mt-12 flex max-w-2xl items-start gap-3 rounded-card border border-dashed border-brand/30 p-5 text-sm leading-relaxed text-ink sm:mt-16 sm:p-6">
@@ -124,16 +173,33 @@ export async function Testimonials() {
           </p>
         )}
 
-        <div className="mt-16 sm:mt-20">
-          <h3 className="flex items-center justify-center gap-2 text-center font-display text-3xl text-ink sm:text-4xl">
-            <ShieldCheck aria-hidden="true" className="size-7 text-brand" strokeWidth={1.5} />
-            Our Standards
-          </h3>
-          <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
-            {STANDARDS.map(({ title, line, icon: Icon }) => (
-              <li key={title} className="rounded-card bg-section p-6">
-                <Icon aria-hidden="true" className="size-6 text-brand" strokeWidth={1.5} />
-                <h4 className="mt-4 font-display text-xl leading-tight font-semibold text-ink">
+        {/* One framed panel, cells split by hairlines rather than four
+            floating boxes — reads as a single charter, not a feature grid. */}
+        <div className="mt-20 overflow-hidden rounded-card border border-line sm:mt-28">
+          <div className="flex flex-col gap-2 border-b border-line bg-section px-6 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-9 sm:py-7">
+            <h3 className="flex items-center gap-3 font-display text-2xl text-ink sm:text-3xl">
+              <ShieldCheck aria-hidden="true" className="size-7 text-brand" strokeWidth={1.5} />
+              Our Standards
+            </h3>
+            <p className="text-sm text-muted sm:max-w-xs sm:text-right">
+              The promises we hold ourselves to, on every journey.
+            </p>
+          </div>
+          <ul className="grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-4">
+            {STANDARDS.map(({ title, line, icon: Icon }, i) => (
+              <li
+                key={title}
+                className="group bg-white p-6 transition-colors duration-300 ease-out hover:bg-section sm:p-8"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-display text-sm font-semibold tracking-widest text-brand">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="grid size-11 place-items-center rounded-pill bg-brand-light text-brand transition-colors duration-300 ease-out group-hover:bg-brand group-hover:text-white">
+                    <Icon aria-hidden="true" className="size-5" strokeWidth={1.5} />
+                  </span>
+                </div>
+                <h4 className="mt-8 font-display text-xl leading-tight font-semibold text-ink">
                   {title}
                 </h4>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{line}</p>
@@ -146,30 +212,84 @@ export async function Testimonials() {
   );
 }
 
-function QuoteGroup({ title, items }: { title: string; items: Testimonial[] }) {
+function QuoteCard({
+  item,
+  tone,
+  featured,
+}: {
+  item: Testimonial;
+  tone: Tone;
+  featured: boolean;
+}) {
+  const t = TONES[tone];
+  const initials = item.name
+    .split(/\s+/)
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+
   return (
-    <div>
-      <h3 className="font-display text-2xl text-ink sm:text-3xl">{title}</h3>
-      <ul className="mt-6 space-y-4">
-        {items.map((item) => (
-          <li key={`${item.name}-${item.quote.slice(0, 24)}`}>
-            <figure className="rounded-card border border-line p-6">
-              <Quote aria-hidden="true" className="size-6 text-brand" strokeWidth={1.5} />
-              <blockquote className="mt-3 text-base leading-relaxed text-ink">
-                {item.quote}
-              </blockquote>
-              <figcaption className="mt-4 text-sm">
-                <span className="font-semibold text-ink">{item.name}</span>
-                <span className="text-muted">
-                  {" "}
-                  — {item.context}
-                  {item.country && `, ${item.country}`}
-                </span>
-              </figcaption>
-            </figure>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <figure
+      className={cn(
+        "relative isolate flex h-full flex-col overflow-hidden rounded-card p-7 transition-[transform,border-color] duration-300 ease-out hover:-translate-y-1 sm:p-9",
+        t.card,
+      )}
+    >
+      {/* Oversized serif quote mark as texture, set behind the copy. */}
+      <span
+        aria-hidden="true"
+        className={cn(
+          "pointer-events-none absolute -top-10 right-6 -z-10 font-display text-[12rem] leading-none select-none sm:text-[14rem]",
+          t.mark,
+        )}
+      >
+        &ldquo;
+      </span>
+
+      <div className="flex flex-wrap items-center gap-2">
+        <span
+          className={cn(
+            "rounded-pill px-3 py-1 text-[11px] font-semibold tracking-[0.15em] uppercase",
+            t.tag,
+          )}
+        >
+          {item.source === "partner" ? "Partner" : "Pilot tour"}
+        </span>
+        {item.sample && (
+          <span className="rounded-pill border border-dashed border-current px-3 py-1 text-[11px] font-semibold tracking-[0.15em] uppercase opacity-70">
+            Sample
+          </span>
+        )}
+      </div>
+
+      <blockquote
+        className={cn(
+          "mt-6 font-display leading-snug text-pretty",
+          featured ? "text-2xl sm:text-3xl" : "text-xl sm:text-2xl",
+        )}
+      >
+        &ldquo;{item.quote}&rdquo;
+      </blockquote>
+
+      <figcaption className="mt-auto flex items-center gap-3 pt-8">
+        <span
+          aria-hidden="true"
+          className={cn(
+            "grid size-11 shrink-0 place-items-center rounded-pill font-display text-sm font-semibold",
+            t.avatar,
+          )}
+        >
+          {initials}
+        </span>
+        <span className="text-sm leading-tight">
+          <span className="block font-semibold">{item.name}</span>
+          <span className={cn("mt-1 block", t.meta)}>
+            {item.context}
+            {item.country && ` · ${item.country}`}
+          </span>
+        </span>
+      </figcaption>
+    </figure>
   );
 }

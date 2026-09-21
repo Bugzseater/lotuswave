@@ -2,7 +2,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 const WAVE = {
-  src: "/bg/wave.png",
+  src: "/bg/cloudwave.png",
   width: 2172,
   height: 724,
 } as const;
@@ -25,7 +25,9 @@ export function WaveDivider({ className }: { className?: string }) {
     <div
       aria-hidden="true"
       className={cn(
-        "pointer-events-none absolute inset-x-0 bottom-0 z-10 h-[24vh] min-h-[150px] overflow-hidden sm:h-[32vh] lg:h-[40vh]",
+        // Masked at the top so the strip dissolves into the footage instead
+        // of ending on a hard line.
+        "pointer-events-none absolute inset-x-0 bottom-0 z-10 h-[24vh] min-h-[150px] overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_35%)] sm:h-[32vh] lg:h-[40vh]",
         className,
       )}
     >

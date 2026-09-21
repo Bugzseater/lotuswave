@@ -119,6 +119,23 @@
     animation: rise-in 600ms var(--ease-out-soft) both;
   }
 
+  /* Liquid surface in the back-to-top ball. The wave strip is two periods
+     wide, so sliding it half its width loops without a seam. Reduced motion
+     freezes it through the base-layer rule. */
+  @keyframes wave-drift {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-wave-drift {
+    animation: wave-drift 2.8s linear infinite;
+  }
+
+  .animate-wave-drift-slow {
+    animation: wave-drift 4.5s linear infinite reverse;
+  }
+
   /* Glass card with a wavy top edge (the footer). Two mask layers: the wave
      shape across the top strip, a solid block for everything below it. The
      SVG is a mask only — black means "keep", so no palette colour is
