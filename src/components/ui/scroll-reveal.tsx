@@ -9,13 +9,18 @@ import { cn } from "@/lib/utils";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
+/** Cards whose tops sit within this many px count as one row. */
+const ROW_TOLERANCE = 80;
+
 /**
- * Plays a section in as it scrolls into view, and back out in reverse when
- * the visitor scrolls back up past it. Content stays server-rendered; this
- * only animates the marked descendants:
+ * Scroll-linked reveal: progress follows the scrollbar, so the section plays
+ * in on the way down and runs backwards on the way up. Content stays
+ * server-rendered; this only animates the marked descendants:
  *
  * - `[data-reveal]` — lifts and fades in, staggered in document order
- * - `[data-reveal-card]` — rises and wipes open from the foot, staggered
+ * - `[data-reveal-card]` — rises and wipes open from the foot. Each row gets
+ *   its own trigger, so on a phone every card plays as it reaches the screen
+ *   rather than all at once off-screen.
  *
  * Reduced-motion visitors see everything in place with no movement.
  */
@@ -33,31 +38,42 @@ export function ScrollReveal({
       const mm = gsap.matchMedia();
 
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        const tl = gsap.timeline({
-          defaults: { ease: "power3.out" },
-          scrollTrigger: {
-            trigger: root.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-          },
-        });
+        const q = gsap.utils.selector(root);
 
-        if (root.current?.querySelector("[data-reveal]")) {
-          tl.from("[data-reveal]", {
-            y: 32,
+        const text = q("[data-reveal]");
+        if (text.length) {
+          gsap.from(text, {
+            y: 48,
             autoAlpha: 0,
-            duration: 0.8,
-            stagger: 0.1,
+            stagger: 0.25,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: root.current,
+              start: "top 85%",
+              end: "top 40%",
+              scrub: 1.2,
+            },
           });
         }
 
-        if (root.current?.querySelector("[data-reveal-card]")) {
-          // fromTo, not from: clip-path can't interpolate to its default
-          // `none`. The end shape matches rounded-card (20px).
-          tl.fromTo(
-            "[data-reveal-card]",
+        const rows: HTMLElement[][] = [];
+        for (const card of q("[data-reveal-card]") as HTMLElement[]) {
+          const top = card.getBoundingClientRect().top;
+          const row = rows.find(
+            (r) =>
+              Math.abs(r[0].getBoundingClientRect().top - top) < ROW_TOLERANCE,
+          );
+          if (row) row.push(card);
+          else rows.push([card]);
+        }
+
+        // fromTo, not from: clip-path can't interpolate to its default
+        // `none`. The end shape matches rounded-card (20px).
+        for (const row of rows) {
+          gsap.fromTo(
+            row,
             {
-              y: 60,
+              y: 80,
               autoAlpha: 0,
               clipPath: "inset(100% 0% 0% 0% round 20px)",
             },
@@ -65,10 +81,15 @@ export function ScrollReveal({
               y: 0,
               autoAlpha: 1,
               clipPath: "inset(0% 0% 0% 0% round 20px)",
-              duration: 1,
-              stagger: 0.12,
+              stagger: 0.2,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: row[0],
+                start: "top 95%",
+                end: "top 55%",
+                scrub: 1.2,
+              },
             },
-            "-=0.4",
           );
         }
       });

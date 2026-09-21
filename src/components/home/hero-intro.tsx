@@ -41,33 +41,33 @@ export function HeroIntro({
         gsap.set(root.current, { autoAlpha: 1 });
 
         gsap
-          .timeline({ defaults: { ease: "power3.out" }, delay: 0.2 })
+          .timeline({ defaults: { ease: "power3.out" }, delay: 0.5 })
           .from("[data-hero-rule]", {
             scaleY: 0,
             transformOrigin: "top",
-            duration: 1.1,
+            duration: 1.8,
             ease: "power2.inOut",
           })
           .from(
             "[data-hero-line]",
-            { yPercent: 110, duration: 1, stagger: 0.14 },
-            0.25,
+            { yPercent: 110, duration: 1.5, stagger: 0.3 },
+            0.4,
           )
           .from(
             "[data-hero-accent]",
             {
               opacity: 0,
               scale: 0.92,
-              filter: "blur(6px)",
+              filter: "blur(8px)",
               transformOrigin: "left center",
-              duration: 0.9,
+              duration: 1.4,
             },
-            0.55,
+            1,
           )
           .from(
             "[data-hero-fade]",
-            { y: 24, autoAlpha: 0, duration: 0.8, stagger: 0.12 },
-            0.8,
+            { y: 24, autoAlpha: 0, duration: 1.2, stagger: 0.25 },
+            1.5,
           );
 
         // Scroll out, and back in on the way up. Tweens the column itself so
