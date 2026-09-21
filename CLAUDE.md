@@ -155,10 +155,12 @@ and `src/app/manifest.ts`, which the browser reads outside any stylesheet.
 
 Loaded with `next/font/google` in `src/app/layout.tsx`.
 
-- **Cormorant Garamond** — 400/500/600/700 plus italics, var
-  `--font-cormorant-garamond`, exposed as `font-display`.
-  Headings, display text, pull quotes. Applied to `h1`–`h4` in base styles.
-- **Manrope** — 400/500/600/700, var `--font-manrope`, exposed as `font-sans`.
+- **Fraunces** — variable serif, all weights plus italics, with the `SOFT`
+  and `opsz` axes. Var `--font-fraunces`, exposed as `font-display`, set to
+  `"SOFT" 100` for rounded, organic letterforms. Headings, display text, pull
+  quotes. Applied to `h1`–`h4` in base styles. Reads heavier than a classic
+  serif — prefer 400–600 for headings.
+- **Figtree** — variable sans, var `--font-figtree`, exposed as `font-sans`.
   Body copy, navigation, buttons, forms. This is the `body` default.
 
 Do not add a third family. Do not import fonts from a CDN — `next/font` self-hosts

@@ -28,6 +28,9 @@
      Ink and brand text both clear 7:1 on it; muted is borderline, so
      supporting copy on it uses ink at 75%. */
   --color-warm-sand: #f4ece4;
+  /* Charcoal — warm near-black, the footer background. White text only;
+     never brand text on it (same rule as ink). */
+  --color-charcoal: #2a2622;
 
   --color-transparent: transparent;
   --color-current: currentColor;
@@ -40,8 +43,10 @@
   --color-text: var(--color-ink);
 
   /* Type */
-  --font-display: var(--font-cormorant-garamond), Georgia, serif;
-  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), Georgia, serif;
+  /* Fraunces at full softness: rounded terminals, the organic feel. */
+  --font-display--font-variation-settings: "SOFT" 100;
+  --font-sans: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
 
   /* Radii */
   --radius-card: 20px;
@@ -71,6 +76,7 @@
   h3,
   h4 {
     font-family: var(--font-display);
+    font-variation-settings: var(--font-display--font-variation-settings);
     font-weight: 500;
     letter-spacing: -0.01em;
   }
@@ -111,5 +117,29 @@
 
   .animate-rise-in {
     animation: rise-in 600ms var(--ease-out-soft) both;
+  }
+
+  /* Glass card with a wavy top edge (the footer). Two mask layers: the wave
+     shape across the top strip, a solid block for everything below it. The
+     SVG is a mask only — black means "keep", so no palette colour is
+     involved. Side borders are clipped by the same mask, so they meet the
+     curve cleanly. Pair with the matching stroke in `footer.tsx`. */
+  .glass-wave {
+    --wave-h: 3rem;
+    --wave-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 120' preserveAspectRatio='none'%3E%3Cpath d='M1440 46c-150 34-300 44-470 22S690 12 520 28 210 92 0 66V120H1440Z'/%3E%3C/svg%3E");
+    -webkit-mask-image: var(--wave-mask), linear-gradient(#000 0 0);
+    mask-image: var(--wave-mask), linear-gradient(#000 0 0);
+    -webkit-mask-size: 100% var(--wave-h), 100% calc(100% - var(--wave-h) + 1px);
+    mask-size: 100% var(--wave-h), 100% calc(100% - var(--wave-h) + 1px);
+    -webkit-mask-position: top, bottom;
+    mask-position: top, bottom;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+  }
+
+  @media (min-width: 64rem) {
+    .glass-wave {
+      --wave-h: 4.5rem;
+    }
   }
 }

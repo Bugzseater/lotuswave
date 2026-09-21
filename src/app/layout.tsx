@@ -1,22 +1,26 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Manrope } from "next/font/google";
+import { Figtree, Fraunces } from "next/font/google";
+import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { SITE } from "@/lib/constants";
 import "@/styles/globals.css";
 
-const cormorantGaramond = Cormorant_Garamond({
-  variable: "--font-cormorant-garamond",
+// Variable font: every weight comes in one file. `SOFT` rounds the
+// letterforms (set in globals.css); `opsz` lets large display sizes draw
+// finer detail than body sizes.
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
+  axes: ["SOFT", "opsz"],
   display: "swap",
 });
 
-const manrope = Manrope({
-  variable: "--font-manrope",
+// Variable font — 300 is used for airy supporting copy over imagery (the
+// hero standfirst), 400–700 everywhere else.
+const figtree = Figtree({
+  variable: "--font-figtree",
   subsets: ["latin"],
-  // 300 is here for airy supporting copy over imagery — the hero standfirst.
-  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -35,10 +39,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${cormorantGaramond.variable} ${manrope.variable}`}>
+    <html lang="en" className={`${fraunces.variable} ${figtree.variable}`}>
       <body>
         <Header />
         <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );
