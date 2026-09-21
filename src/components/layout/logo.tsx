@@ -1,73 +1,65 @@
 import Image from "next/image";
-
+import Link from "next/link";
+import { SITE } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
-/** Generated from `public/logo/logo.jpg` by `scripts/build-logo-assets.mjs`. */
-const MARK = {
-  light: "/logo/mark-light.png",
-  brand: "/logo/mark-brand.png",
-} as const;
-
-type Tone = keyof typeof MARK;
-
-interface LogoProps {
-  /**
-   * `light` for purple and photographic backgrounds, `brand` for white ones.
-   * `both` renders the pair stacked and cross-fades between them — for the
-   * header, whose background changes under the visitor without a remount.
-   */
-  tone: Tone | "both";
-  /** Which of the two a `both` logo is currently showing. Ignored otherwise. */
-  onDark?: boolean;
-  priority?: boolean;
+type LogoProps = {
+  /** `light` sits on purple or over a dark image; `brand` on white. */
+  tone?: "light" | "brand";
+  /** `sm` fits a header pill; `lg` carries the corner panel. */
+  size?: "sm" | "lg";
   className?: string;
-}
+};
 
-/**
- * The brand lockup: mark beside a two-line wordmark.
- *
- * The supplied artwork stacks the mark over the wordmark in a square, which is
- * unreadable in a 72px header — so the lockup is rebuilt horizontally here and
- * the wordmark is set in the display face as real text. That keeps it legible
- * at any size, selectable, and readable by search engines, which a flattened
- * image of the words would not be. Colour comes from the parent, so the caller
- * decides white or brand.
- */
-export function Logo({ tone, onDark = false, priority, className }: LogoProps) {
-  const variants: Tone[] = tone === "both" ? ["brand", "light"] : [tone];
-  const visible: Tone = onDark ? "light" : "brand";
+/** Horizontal lockup: the lotus-and-wave mark beside the stacked wordmark. */
+export function Logo({ tone = "brand", size = "sm", className }: LogoProps) {
+  const light = tone === "light";
+  const large = size === "lg";
 
   return (
-    <span className={cn("inline-flex items-center gap-2.5", className)}>
-      <span className="relative block h-9 w-7 shrink-0">
-        {variants.map((variant) => (
-          <Image
-            key={variant}
-            // Decorative: the wordmark beside it already names the company.
-            alt=""
-            src={MARK[variant]}
-            fill
-            sizes="28px"
-            // Only the variant on screen is worth preloading.
-            priority={priority && variant === visible}
-            className={cn(
-              "object-contain",
-              tone === "both" && "transition-opacity duration-300 ease-out",
-              tone === "both" &&
-                (variant === visible ? "opacity-100" : "opacity-0"),
-            )}
-          />
-        ))}
-      </span>
-
+    <Link
+      href="/"
+      aria-label={`${SITE.name} — home`}
+      className={cn(
+        "group inline-flex shrink-0 items-center",
+        large ? "gap-3 sm:gap-4" : "gap-2.5",
+        className,
+      )}
+    >
+      <Image
+        src={light ? "/logo/mark-light.png" : "/logo/mark-brand.png"}
+        alt=""
+        width={236}
+        height={308}
+        className={cn(
+          "w-auto transition-opacity duration-200 ease-out group-hover:opacity-80",
+          large ? "h-9 sm:h-12" : "h-7 sm:h-8",
+        )}
+        loading="eager"
+        fetchPriority="high"
+      />
       <span className="flex flex-col leading-none">
-        <span className="font-display text-[1.05rem] font-semibold tracking-[0.06em] uppercase">
+        <span
+          className={cn(
+            "font-display leading-none font-semibold tracking-[0.06em] whitespace-nowrap uppercase",
+            large ? "text-lg sm:text-2xl" : "text-[15px] sm:text-base",
+            light ? "text-white" : "text-brand",
+          )}
+        >
           LotusWave
         </span>
-        <span className="mt-1 text-[0.55rem] font-medium tracking-[0.3em] uppercase opacity-80">
+        <span
+          className={cn(
+            "leading-none font-medium whitespace-nowrap uppercase",
+            large
+              ? "mt-1.5 text-[10px] tracking-[0.34em] sm:text-xs"
+              : "mt-[3px] text-[8px] tracking-[0.26em]",
+            light ? "text-white/75" : "text-muted",
+          )}
+        >
           Lanka Tours
         </span>
       </span>
-    </span>
+    </Link>
   );
 }

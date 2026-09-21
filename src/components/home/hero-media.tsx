@@ -1,66 +1,62 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
 
-import { cn } from "@/lib/utils";
-import type { ImageAsset } from "@/types";
-
-export interface HeroVideo {
-  /** Absolute or public-relative source. R2 in production. */
-  src: string;
-  /** Defaults to MP4. */
-  type?: string;
-}
-
-interface HeroMediaProps {
-  image: ImageAsset;
-  /**
-   * Optional clip. When present the still becomes its poster, so the hero looks
-   * identical until the video can play. Nothing else in the hero changes.
-   */
-  video?: HeroVideo;
-  className?: string;
-}
+type HeroMediaProps = {
+  image: { src: string; alt: string };
+  /** Looping background footage. Without it the still carries the section. */
+  video?: { src: string; type?: string };
+};
 
 /**
- * The hero's background layer.
+ * The hero backdrop. The still always renders — it is the LCP element and the
+ * poster the footage sits on, so the section is never empty while the video
+ * buffers, and it is what readers who ask for reduced motion keep.
  *
- * Object position is deliberate: the source still is a left/right split, agro
- * on the left and wellness on the right.
- *
- * The still is 2.35:1 and the frame is now a full screen, so `object-cover`
- * scales to the frame's height and crops the sides — the two things the hero is
- * about. On desktop `center` keeps both halves in shot. A phone only has room
- * for about a fifth of the width, so it holds the agro side: `20%` frames the
- * farmer and the terraces rather than an arbitrary middle. The vertical value
- * only bites on short, wide viewports, where `60%` lifts the sunrise sky up
- * behind the headline.
+ * A client component only because `prefers-reduced-motion` cannot stop a video
+ * from autoplaying through CSS; the query has to be read to decide whether to
+ * mount it at all.
  */
-export function HeroMedia({ image, video, className }: HeroMediaProps) {
-  const framing = "h-full w-full object-cover object-[20%_center] lg:object-[center_60%] motion-safe:animate-ken-burns";
+export function HeroMedia({ image, video }: HeroMediaProps) {
+  const [motionAllowed, setMotionAllowed] = useState(false);
+
+  useEffect(() => {
+    if (!video) return;
+
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setMotionAllowed(!query.matches);
+
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, [video]);
 
   return (
-    <div className={cn("absolute inset-0 overflow-hidden", className)}>
-      {video ? (
+    <>
+      <Image
+        src={image.src}
+        alt={image.alt}
+        fill
+        sizes="100vw"
+        loading="eager"
+        fetchPriority="high"
+        className="-z-20 object-cover"
+      />
+
+      {video && motionAllowed && (
         <video
-          className={framing}
-          poster={image.url}
-          aria-label={image.alt}
+          aria-hidden="true"
           autoPlay
           muted
           loop
           playsInline
+          poster={image.src}
+          className="absolute inset-0 -z-20 h-full w-full object-cover"
         >
           <source src={video.src} type={video.type ?? "video/mp4"} />
         </video>
-      ) : (
-        <Image
-          src={image.url}
-          alt={image.alt}
-          fill
-          priority
-          sizes="100vw"
-          className={framing}
-        />
       )}
-    </div>
+    </>
   );
 }

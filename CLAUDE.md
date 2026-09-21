@@ -84,7 +84,7 @@ default palette. The colours below are the only ones that exist — `bg-red-500`
 | Token                  | Hex       | Use                                            |
 | ---------------------- | --------- | ---------------------------------------------- |
 | `--color-accent-gold`  | `#C8963E` | icons, star ratings, 24px+ text                |
-| `--color-accent-green` | `#1F3D2B` | agro-related badges and icons only             |
+| `--color-accent-green` | `#1F3D2B` | header logo panel; agro badges and icons       |
 | `--color-accent-sand`  | `#E9DFCB` | occasional alternate section background        |
 
 Plus `--color-transparent` and `--color-current`.
@@ -100,14 +100,19 @@ at runtime any more.
 ### Usage rules
 
 1. **Ratio.** Roughly 70% white, 20% purple, 10% ink text. Accents stay under 5%
-   of a page, and **no section carries more than one accent colour**.
+   of a page, and **no section carries more than one accent colour**. The header
+   logo panel is the one standing exception — see rule 4.
 2. **Primary CTAs** — "Plan My Journey", "Design My Journey", "Plan This
    Journey": `bg-brand text-white hover:bg-brand-dark`. That is
    `<Button variant="primary">`, the default.
 3. **Secondary buttons** — "WhatsApp Us", "Explore Our Journeys": transparent
    background, 1px brand border, brand text (`variant="secondary"`). On a purple
    background use `variant="onBrand"` — white border, white text.
-4. **Header**: white background, ink nav links, brand for active and hover.
+4. **Header**: two pieces. The **logo panel** is a curved accent-green block
+   wedged into the top-left corner, white logo on it — the only place green
+   carries a surface rather than an icon or a badge. The **nav** floats beside
+   it as a glass pill: transparent with white links over the hero, settling to
+   white glass with ink links and brand hover once the page scrolls.
    **Footer**: brand background, white text.
 5. **Hero, Custom Journey CTA and How It Works** may take a full brand
    background with white text. If the hero keeps a background image, put a
@@ -127,6 +132,10 @@ at runtime any more.
 categorisation, but it must not change any colour. Differentiate with icons
 (`Sprout` / `Flower2`), imagery and copy. The single exception is
 `<Badge variant="agro">`, which tints its label accent-green.
+
+The green in the header logo panel is not this — it is fixed brand furniture
+that signals the agro side of the offer once, site-wide. It never responds to a
+record's `theme`.
 
 This applies to the TwoWorlds section too: the layout stays, both halves use the
 same palette.

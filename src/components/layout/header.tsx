@@ -1,165 +1,130 @@
 "use client";
 
-import { ArrowRight, Phone } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
-
-import { Logo } from "@/components/layout/logo";
+import { Menu, X } from "lucide-react";
+import { ButtonLink } from "@/components/ui/button";
+import { Container } from "@/components/ui/container";
+import { LogoPanel } from "@/components/layout/logo-panel";
 import { MobileNav } from "@/components/layout/mobile-nav";
-import { MAIN_NAV } from "@/lib/constants";
+import { NAV_LINKS, WHATSAPP_URL } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 /**
- * Capsule height plus the padding above it. Every page but the home hero
- * reserves this much space, and `scroll-mt-24` on anchor targets matches it.
+ * The logo sits in a brand panel wedged into the top-left corner of the page;
+ * the navigation floats beside it as a glass pill. The pill starts transparent
+ * with white type over the hero, then settles into white glass with ink type
+ * once the page scrolls past the fold.
  */
-const HEADER_SPACE = "h-24";
-
-/** The lockup renders the name, so the link only needs it for assistive tech. */
-const SITE_NAME = "LotusWave Lanka Tours";
-
-interface HeaderProps {
-  /** Shown beside the CTA on wide screens. From `settings.contact.phone`. */
-  phone: string;
-}
-
-/**
- * Site header — a floating glass capsule rather than a full-width bar.
- *
- * On the home page it rides over the hero as dark glass with white type, so the
- * full-height still starts at the very top of the viewport. It flips to light
- * glass with ink type as soon as you scroll past the fold, while the menu panel
- * is open, and on every other route — otherwise white-on-white would vanish.
- *
- * Note this is a deliberate departure from the "header: white background, ink
- * nav links" rule in CLAUDE.md, which predates the full-bleed hero.
- */
-export function Header({ phone }: HeaderProps) {
+export function Header() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const isHome = pathname === "/";
-  const overHero = isHome && !scrolled && !menuOpen;
-
   useEffect(() => {
-    if (!isHome) return;
-
     const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll(); // Catch a restored scroll position on back-navigation.
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [isHome]);
+  }, []);
 
-  const isActive = useCallback(
-    (href: string) => pathname === href || pathname.startsWith(`${href}/`),
-    [pathname],
-  );
+  const closeMenu = useCallback(() => setMenuOpen(false), []);
+
+  // While the panel is open the islands sit on brand-dark, so keep it light.
+  const light = !scrolled || menuOpen;
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-4 sm:pt-4 lg:px-6 lg:pt-5">
-        <div
-          className={cn(
-            "relative mx-auto flex h-16 max-w-[90rem] items-center gap-4 rounded-pill border py-2 pr-2 pl-4 backdrop-blur-md transition-colors duration-300 ease-out sm:pl-5 lg:gap-6 lg:pr-3 lg:pl-6",
-            overHero
-              ? "border-white/20 bg-white/10 text-white"
-              : "border-line bg-white/85 text-ink shadow-card",
-          )}
-        >
-          <Link
-            href="/"
-            aria-label={`${SITE_NAME} — home`}
+      <header className="fixed inset-x-0 top-0 z-50">
+        <LogoPanel className="absolute top-0 left-0" />
+
+        <Container className="flex max-w-[80rem] justify-end pt-3 sm:pt-5">
+          <div
             className={cn(
-              "shrink-0 transition-colors duration-300",
-              overHero ? "text-white focus-visible:outline-white" : "text-brand",
+              "flex h-14 items-center gap-5 rounded-pill border pr-2 pl-4 sm:h-16 sm:pr-2.5 sm:pl-6",
+              "backdrop-blur-xl backdrop-saturate-150 transition-colors duration-300 ease-out",
+              light
+                ? "border-white/20 bg-white/10"
+                : "border-line bg-white/80 shadow-header",
             )}
           >
-            <Logo tone="both" onDark={overHero} priority />
-          </Link>
+            <nav aria-label="Main" className="hidden xl:block">
+              <ul className="flex items-center gap-x-4 2xl:gap-x-6">
+                {NAV_LINKS.map((link) => {
+                  const active = pathname === link.href;
+                  return (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        aria-current={active ? "page" : undefined}
+                        className={cn(
+                          "relative block py-2 text-[12px] font-medium whitespace-nowrap",
+                          "transition-colors duration-200 ease-out",
+                          "after:absolute after:inset-x-0 after:bottom-0 after:h-px after:origin-left",
+                          "after:scale-x-0 after:transition-transform after:duration-200 after:ease-out",
+                          "hover:after:scale-x-100",
+                          light
+                            ? "text-white/85 after:bg-white hover:text-white focus-visible:outline-white"
+                            : "text-ink after:bg-brand hover:text-brand",
+                          active &&
+                            (light
+                              ? "text-white after:scale-x-100"
+                              : "text-brand after:scale-x-100"),
+                        )}
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
 
-          <nav aria-label="Main" className="mx-auto hidden lg:block">
-            <ul className="flex items-center gap-6 text-sm whitespace-nowrap xl:gap-8">
-              {MAIN_NAV.map((item) => {
-                const active = isActive(item.href);
+            <div className="flex items-center gap-2">
+              <ButtonLink
+                href={WHATSAPP_URL}
+                variant={light ? "onBrand" : "secondary"}
+                size="sm"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden xl:inline-flex"
+              >
+                WhatsApp Us
+              </ButtonLink>
+              <ButtonLink
+                href="/plan-your-trip"
+                size="sm"
+                className="hidden sm:inline-flex"
+              >
+                Plan My Journey
+              </ButtonLink>
 
-                return (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      aria-current={active ? "page" : undefined}
-                      className={cn(
-                        "relative inline-block py-1 transition-colors duration-200",
-                        overHero
-                          ? "hover:text-white focus-visible:outline-white"
-                          : "hover:text-brand",
-                        overHero && active && "font-medium text-white",
-                        overHero && !active && "text-white/75",
-                        !overHero && active && "text-brand font-medium",
-                        !overHero && !active && "text-ink",
-                      )}
-                    >
-                      {item.label}
-                      {active ? (
-                        <span
-                          aria-hidden
-                          className={cn(
-                            "absolute -bottom-1.5 left-1/2 size-1.5 -translate-x-1/2 rounded-pill",
-                            // Brand purple is too dark to read on the glass.
-                            overHero ? "bg-white" : "bg-brand",
-                          )}
-                        />
-                      ) : null}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
-
-          <div className="ml-auto flex shrink-0 items-center gap-2 lg:ml-0 lg:gap-4">
-            <a
-              href={`tel:${phone.replace(/\s/g, "")}`}
-              className={cn(
-                // Only from xl — below that the nav and the CTA need the room.
-                "hidden items-center gap-2 text-sm whitespace-nowrap transition-colors duration-200 xl:inline-flex",
-                overHero
-                  ? "text-white/80 hover:text-white focus-visible:outline-white"
-                  : "text-muted hover:text-brand",
-              )}
-            >
-              <Phone className="size-4 shrink-0" aria-hidden />
-              {phone}
-            </a>
-
-            <Link
-              href="/plan-your-trip"
-              // The filled brand pill works in both states: over the hero it
-              // sits on darkened glass, not on the bright image itself.
-              className={cn(
-                "group bg-brand hover:bg-brand-dark hidden h-12 items-center gap-2 rounded-pill px-6 text-sm font-medium whitespace-nowrap text-white transition-colors duration-200 sm:inline-flex",
-                overHero && "focus-visible:outline-white",
-              )}
-            >
-              Plan My Journey
-              <ArrowRight
-                className="size-4 transition-transform duration-200 ease-out group-hover:translate-x-1"
-                aria-hidden
-              />
-            </Link>
-
-            <MobileNav
-              tone={overHero ? "light" : "dark"}
-              onOpenChange={setMenuOpen}
-            />
+              <button
+                type="button"
+                onClick={() => setMenuOpen((open) => !open)}
+                aria-label={menuOpen ? "Close menu" : "Open menu"}
+                aria-expanded={menuOpen}
+                aria-controls="mobile-nav"
+                className={cn(
+                  "inline-flex h-10 w-10 items-center justify-center rounded-pill transition-colors duration-200 ease-out xl:hidden",
+                  light
+                    ? "text-white hover:bg-white/15 focus-visible:outline-white"
+                    : "text-ink hover:bg-brand-light",
+                )}
+              >
+                {menuOpen ? (
+                  <X className="h-5 w-5" aria-hidden="true" />
+                ) : (
+                  <Menu className="h-5 w-5" aria-hidden="true" />
+                )}
+              </button>
+            </div>
           </div>
-        </div>
+        </Container>
       </header>
 
-      {/* The header is out of flow, so every page but the home hero needs the
-          space back at the top. */}
-      {isHome ? null : <div aria-hidden className={HEADER_SPACE} />}
+      <MobileNav open={menuOpen} onClose={closeMenu} pathname={pathname} />
     </>
   );
 }
