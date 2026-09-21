@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { Section } from "@/components/ui/section";
 import { WaveEdge } from "@/components/ui/wave-edge";
 
@@ -44,8 +45,10 @@ const STEPS: Step[] = [
  * Opens on a warm-sand wave so it flows out of the wellness section above,
  * and closes on a white one into the page.
  *
- * Gold is this section's one accent, used only for the large step numerals —
- * display size on purple, which rule 7 allows. Everything else is white.
+ * Set as an editorial spread: headline left, standfirst and CTA opposite,
+ * then the steps as ruled columns with large outlined numerals. Gold is this
+ * section's one accent — the numerals fill with it on hover, display size on
+ * purple, which rule 7 allows. Everything else is white.
  */
 export function HowItWorks() {
   return (
@@ -59,62 +62,77 @@ export function HowItWorks() {
       <WaveEdge position="bottom" className="fill-white" />
 
       <Container>
-        <div className="mx-auto max-w-3xl text-center">
-          <p className="text-xs font-semibold tracking-[0.2em] text-white/90 uppercase">
-            How It Works
-          </p>
-          <h2
-            id="how-it-works-heading"
-            className="mt-4 font-display text-4xl leading-[1.08] text-balance text-white sm:text-5xl lg:text-6xl"
-          >
-            Your Journey in{" "}
-            <em className="font-medium text-white/85">Four Simple Steps.</em>
-          </h2>
-        </div>
+        <ScrollReveal>
+          <div className="grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-12">
+            <div className="lg:col-span-7">
+              <p
+                data-reveal
+                className="flex items-center gap-3 text-xs font-semibold tracking-[0.2em] text-white uppercase"
+              >
+                <span aria-hidden="true" className="h-px w-10 bg-white" />
+                How It Works
+              </p>
+              <h2
+                id="how-it-works-heading"
+                data-reveal
+                className="mt-5 font-display text-4xl leading-[1.08] text-balance text-white sm:text-5xl lg:text-6xl"
+              >
+                Your Journey in{" "}
+                <em className="block font-medium text-white/85">Four Simple Steps.</em>
+              </h2>
+            </div>
 
-        <ol className="mt-12 grid gap-10 sm:mt-16 sm:grid-cols-2 sm:gap-x-8 lg:mt-20 lg:grid-cols-4 lg:gap-6">
-          {STEPS.map(({ title, line, icon: Icon }, i) => (
-            <li
-              key={title}
-              // Dashed thread linking the icons across the row on desktop.
-              className="relative lg:after:absolute lg:after:top-7 lg:after:right-0 lg:after:left-[4.5rem] lg:after:border-t lg:after:border-dashed lg:after:border-white/30 lg:last:after:hidden"
-            >
-              <div className="flex items-center gap-4">
-                <span className="grid size-14 shrink-0 place-items-center rounded-pill bg-white/10 text-white ring-1 ring-white/25">
-                  <Icon aria-hidden="true" className="size-6" strokeWidth={1.5} />
-                </span>
-                <span
+            <div data-reveal className="lg:col-span-5 lg:pb-2">
+              <p className="text-base leading-relaxed text-pretty text-white/85 sm:text-lg">
+                From your first message to your last morning on the island, one
+                local team plans, books and looks after everything.
+              </p>
+              <ButtonLink
+                href="/plan-your-trip"
+                size="lg"
+                // Purple on purple would vanish, so the CTA inverts: white, brand label.
+                className="mt-6 w-full bg-white text-brand hover:bg-brand-light focus-visible:outline-white sm:w-auto"
+              >
+                Start Planning
+              </ButtonLink>
+            </div>
+          </div>
+
+          {/* Ruled columns, like a printed itinerary. Hairlines between steps
+              rather than boxes; each column lifts slightly on hover. */}
+          <ol className="mt-12 grid border-t border-white/20 sm:mt-16 sm:grid-cols-2 lg:mt-20 lg:grid-cols-4">
+            {STEPS.map(({ title, line, icon: Icon }, i) => (
+              <li
+                key={title}
+                data-reveal-step
+                className="group border-b border-white/20 py-10 transition-colors duration-300 ease-out hover:bg-white/5 sm:px-8 sm:odd:border-r lg:border-r lg:border-b-0 lg:last:border-r-0"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-semibold tracking-[0.2em] text-white/80 uppercase">
+                    Step {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="grid size-11 place-items-center rounded-pill text-white ring-1 ring-white/30 transition-colors duration-300 ease-out group-hover:bg-white group-hover:text-brand">
+                    <Icon aria-hidden="true" className="size-5" strokeWidth={1.5} />
+                  </span>
+                </div>
+
+                {/* Outlined numeral that fills gold on hover — display size on
+                    purple, which rule 7 allows. */}
+                <p
                   aria-hidden="true"
-                  className="font-display text-5xl leading-none font-medium text-accent-gold lg:hidden"
+                  className="mt-8 font-display text-7xl leading-none font-semibold text-transparent transition-colors duration-300 ease-out [-webkit-text-stroke:1px_color-mix(in_srgb,var(--color-white)_50%,transparent)] group-hover:text-accent-gold group-hover:[-webkit-text-stroke-color:var(--color-accent-gold)] sm:text-8xl"
                 >
                   {String(i + 1).padStart(2, "0")}
-                </span>
-              </div>
+                </p>
 
-              <p
-                aria-hidden="true"
-                className="mt-6 hidden font-display text-5xl leading-none font-medium text-accent-gold lg:block"
-              >
-                {String(i + 1).padStart(2, "0")}
-              </p>
-              <h3 className="mt-4 font-display text-2xl leading-tight font-semibold text-white">
-                {title}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-white/80">{line}</p>
-            </li>
-          ))}
-        </ol>
-
-        <div className="mt-14 text-center sm:mt-16">
-          <ButtonLink
-            href="/plan-your-trip"
-            size="lg"
-            // Purple on purple would vanish, so the CTA inverts: white, brand label.
-            className="w-full bg-white text-brand hover:bg-brand-light focus-visible:outline-white sm:w-auto"
-          >
-            Start Planning
-          </ButtonLink>
-        </div>
+                <h3 className="mt-6 font-display text-2xl leading-tight font-medium text-white">
+                  {title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-white/80">{line}</p>
+              </li>
+            ))}
+          </ol>
+        </ScrollReveal>
       </Container>
     </Section>
   );

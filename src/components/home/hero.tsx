@@ -61,7 +61,7 @@ export function Hero() {
               className="mt-5 max-w-2xl text-base font-light tracking-wide text-pretty text-white/90 sm:text-lg lg:text-xl"
             >
               Authentic journeys through agriculture, wellness, nature and local
-              communities—personally designed around you.
+              communities personally designed around you.
             </p>
 
             <span

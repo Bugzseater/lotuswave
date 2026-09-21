@@ -1,5 +1,13 @@
 import Image from "next/image";
-import { Compass, Flower2, HandHeart, Sprout, type LucideIcon } from "lucide-react";
+import Link from "next/link";
+import {
+  ArrowRight,
+  Compass,
+  Flower2,
+  HandHeart,
+  Sprout,
+  type LucideIcon,
+} from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { Section } from "@/components/ui/section";
@@ -55,84 +63,105 @@ const PILLARS: Pillar[] = [
 ];
 
 /**
- * Section 02 — what the company is, in one line, then the four ideas every
- * journey is built from. The photographs do the talking; each card carries a
- * single word and a single line.
+ * Section 02 — what the company is, then the four ideas every journey is
+ * built from. Set like an editorial spread: headline ranged left, the
+ * standfirst and a link opposite it across a hairline.
  *
- * On large screens the second and fourth cards drop half a step so the row
- * reads as a loose sequence rather than a rigid grid.
+ * The pillars are framed as arches — the shape of temple and colonial
+ * doorways across the island — each with an offset outline behind it. On
+ * large screens the second and fourth drop half a step so the row reads as a
+ * loose sequence rather than a rigid grid.
  */
 export function BrandIntro() {
   return (
     <Section aria-labelledby="brand-intro-heading">
       <Container>
         <ScrollReveal>
-        <div className="mx-auto max-w-3xl text-center">
-          <p
-            data-reveal
-            className="text-xs font-semibold tracking-[0.2em] text-brand uppercase"
-          >
-            Who We Are
-          </p>
-          <h2
-            id="brand-intro-heading"
-            data-reveal
-            className="mt-4 font-display text-4xl leading-[1.08] text-balance text-ink sm:text-5xl lg:text-6xl"
-          >
-            More Than a Holiday.{" "}
-            <em className="font-medium text-brand">A Deeper Connection.</em>
-          </h2>
-          <p
-            data-reveal
-            className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-pretty text-muted sm:text-lg"
-          >
-            We create meaningful journeys that connect you with Sri Lanka’s land,
-            people, food, traditions and natural healing culture.
-          </p>
-        </div>
+          <div className="grid gap-8 border-b border-line pb-12 sm:pb-16 lg:grid-cols-12 lg:items-end lg:gap-12">
+            <div className="lg:col-span-7">
+              <p
+                data-reveal
+                className="flex items-center gap-3 text-xs font-semibold tracking-[0.2em] text-brand uppercase"
+              >
+                <span aria-hidden="true" className="h-px w-10 bg-brand" />
+                Who We Are
+              </p>
+              <h2
+                id="brand-intro-heading"
+                data-reveal
+                className="mt-5 font-display text-4xl leading-[1.08] text-balance text-ink sm:text-5xl lg:text-6xl"
+              >
+                More Than a Holiday.{" "}
+                <em className="block font-medium text-brand">A Deeper Connection.</em>
+              </h2>
+            </div>
 
-        <ul className="mt-12 grid grid-cols-2 gap-3 sm:mt-16 sm:gap-5 lg:mt-20 lg:grid-cols-4 lg:gap-6">
-          {PILLARS.map((pillar, i) => (
-            <li key={pillar.title} className={cn(i % 2 === 1 && "lg:translate-y-12")}>
-              {/* Animated on this wrapper, not the li, so the reveal's
-                  transform never touches the stagger offset. */}
-              <div data-reveal-card>
-                <PillarCard {...pillar} />
-              </div>
-            </li>
-          ))}
-        </ul>
+            <div data-reveal className="lg:col-span-5 lg:pb-2">
+              <p className="text-base leading-relaxed text-pretty text-muted sm:text-lg">
+                We create meaningful journeys that connect you with Sri
+                Lanka&rsquo;s land, people, food, traditions and natural healing
+                culture.
+              </p>
+              <Link
+                href="/about"
+                className="group mt-6 inline-flex items-center gap-3 text-sm font-semibold tracking-[0.14em] text-brand uppercase"
+              >
+                Discover our story
+                <span className="grid size-9 place-items-center rounded-pill border border-brand transition-colors duration-200 ease-out group-hover:bg-brand group-hover:text-white">
+                  <ArrowRight aria-hidden="true" className="size-4" />
+                </span>
+              </Link>
+            </div>
+          </div>
+
+          <ul className="mt-12 grid grid-cols-2 gap-x-4 gap-y-12 sm:mt-16 sm:gap-x-6 lg:grid-cols-4 lg:gap-x-8">
+            {PILLARS.map((pillar, i) => (
+              // Offset by padding, not transform, so the reveal's transform
+              // never fights it.
+              <li key={pillar.title} className={cn(i % 2 === 1 && "lg:pt-16")}>
+                <div data-reveal-card>
+                  <PillarCard {...pillar} index={i} />
+                </div>
+              </li>
+            ))}
+          </ul>
         </ScrollReveal>
       </Container>
     </Section>
   );
 }
 
-function PillarCard({ title, line, icon: Icon, image }: Pillar) {
+function PillarCard({ title, line, icon: Icon, image, index }: Pillar & { index: number }) {
   return (
-    <article className="group relative isolate aspect-[3/4] overflow-hidden rounded-card bg-brand-light">
-      <Image
-        src={image.src}
-        alt={image.alt}
-        fill
-        sizes="(min-width: 1024px) 22vw, 50vw"
-        className="-z-10 object-cover transition-transform duration-300 ease-out group-hover:scale-[1.04]"
-      />
-
-      {/* Weighted to the foot of the card so the copy always has ground under
-          it; the top of the photograph stays clean. */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 -z-10 bg-gradient-to-t from-brand-dark/85 via-brand-dark/20 to-transparent"
-      />
-
-      <div className="flex h-full flex-col justify-end p-4 text-white sm:p-6">
-        <Icon aria-hidden="true" className="size-5 text-white/90 sm:size-6" strokeWidth={1.5} />
-        <h3 className="mt-2 font-display text-2xl leading-none font-semibold text-white sm:mt-3 sm:text-3xl lg:text-4xl">
-          {title}
-        </h3>
-        <p className="mt-2 hidden text-sm leading-snug text-white/85 sm:block">{line}</p>
+    <article className="group">
+      <div className="relative pt-2 pr-2">
+        {/* Offset outline, sitting behind the arch like a second doorway. */}
+        <div
+          aria-hidden="true"
+          className="absolute top-0 right-0 bottom-2 left-2 rounded-t-full rounded-b-card border border-brand/30 transition-transform duration-300 ease-out group-hover:translate-x-1 group-hover:-translate-y-1"
+        />
+        <div className="relative aspect-[3/4] overflow-hidden rounded-t-full rounded-b-card bg-brand-light">
+          <Image
+            src={image.src}
+            alt={image.alt}
+            fill
+            sizes="(min-width: 1024px) 22vw, 50vw"
+            className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.05]"
+          />
+        </div>
       </div>
+
+      <div className="mt-5 flex items-center gap-3 text-brand">
+        <span className="font-display text-sm font-semibold tracking-widest">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        <span aria-hidden="true" className="h-px flex-1 bg-line" />
+        <Icon aria-hidden="true" className="size-5" strokeWidth={1.5} />
+      </div>
+      <h3 className="mt-3 font-display text-2xl leading-none font-medium text-ink sm:text-3xl">
+        {title}
+      </h3>
+      <p className="mt-2 text-sm leading-relaxed text-muted">{line}</p>
     </article>
   );
 }

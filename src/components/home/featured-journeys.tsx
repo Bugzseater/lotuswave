@@ -43,7 +43,7 @@ export async function FeaturedJourneys() {
 
           <div className="mt-10 sm:mt-12 lg:mt-14">
             <JourneySlider label="Featured journeys">
-              {journeys.map((journey, i) => (
+              {journeys.map((journey) => (
                 <li
                   key={journey.slug}
                   data-reveal-card
@@ -51,7 +51,7 @@ export async function FeaturedJourneys() {
                   // the next card peeks in, then two, then three across.
                   className="w-[85%] shrink-0 snap-start sm:w-[calc((100%-1.25rem)/2)] lg:w-[calc((100%-3rem)/3)]"
                 >
-                  <JourneyCard {...journey} index={i} />
+                  <JourneyCard {...journey} />
                 </li>
               ))}
             </JourneySlider>

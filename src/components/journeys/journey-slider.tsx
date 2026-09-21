@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -51,11 +51,14 @@ export function JourneySlider({
     });
   };
 
+  // Below the track on small screens; from lg they float at the track's
+  // sides, level with the photographs (`lg:contents` drops the wrapper so the
+  // buttons position against the outer frame).
   const control =
-    "grid size-12 place-items-center rounded-pill border border-brand text-brand transition-colors duration-200 ease-out hover:bg-brand hover:text-white disabled:pointer-events-none disabled:opacity-35";
+    "grid size-12 place-items-center rounded-pill border border-brand bg-white text-brand transition-colors duration-200 ease-out hover:bg-brand hover:text-white disabled:pointer-events-none disabled:opacity-0 lg:absolute lg:top-[22%] lg:z-10 lg:shadow-header";
 
   return (
-    <div>
+    <div className="relative">
       <ul
         ref={track}
         aria-label={label}
@@ -64,24 +67,24 @@ export function JourneySlider({
         {children}
       </ul>
 
-      <div className="mt-8 flex justify-end gap-3">
+      <div className="mt-8 flex justify-center gap-3 lg:contents">
         <button
           type="button"
           onClick={() => step(-1)}
           disabled={atStart}
           aria-label="Previous journey"
-          className={cn(control)}
+          className={cn(control, "lg:-left-6 2xl:-left-16")}
         >
-          <ArrowLeft aria-hidden="true" className="size-5" />
+          <ChevronLeft aria-hidden="true" className="size-5" />
         </button>
         <button
           type="button"
           onClick={() => step(1)}
           disabled={atEnd}
           aria-label="Next journey"
-          className={cn(control)}
+          className={cn(control, "lg:-right-6 2xl:-right-16")}
         >
-          <ArrowRight aria-hidden="true" className="size-5" />
+          <ChevronRight aria-hidden="true" className="size-5" />
         </button>
       </div>
     </div>

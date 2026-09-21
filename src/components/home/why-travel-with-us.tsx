@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { Section } from "@/components/ui/section";
 
 type TrustPoint = {
@@ -65,52 +66,69 @@ const POINTS: TrustPoint[] = [
 /**
  * Section 08 — the reasons to book with us. Back on white after the purple
  * How It Works. The heading holds the left column (sticky on desktop) while
- * the eight trust points run down the right as a quiet two-column grid.
+ * the eight trust points run down the right as a two-column ledger of
+ * numbered, hairline-ruled entries.
  */
 export function WhyTravelWithUs() {
   return (
     <Section id="why-us" aria-labelledby="why-us-heading">
       <Container>
-        <div className="grid gap-12 lg:grid-cols-[2fr_3fr] lg:gap-16 xl:gap-24">
+        <ScrollReveal className="grid gap-12 lg:grid-cols-[2fr_3fr] lg:gap-16 xl:gap-24">
           <div className="lg:sticky lg:top-32 lg:self-start">
-            <p className="text-xs font-semibold tracking-[0.2em] text-brand uppercase">
+            <p
+              data-reveal
+              className="flex items-center gap-3 text-xs font-semibold tracking-[0.2em] text-brand uppercase"
+            >
+              <span aria-hidden="true" className="h-px w-10 bg-brand" />
               Why LotusWave
             </p>
             <h2
               id="why-us-heading"
-              className="mt-4 font-display text-4xl leading-[1.08] text-balance text-ink sm:text-5xl lg:text-6xl"
+              data-reveal
+              className="mt-5 font-display text-4xl leading-[1.08] text-balance text-ink sm:text-5xl lg:text-6xl"
             >
               Why Travel{" "}
-              <em className="font-medium text-brand">With Us?</em>
+              <em className="block font-medium text-brand">With Us?</em>
             </h2>
-            <p className="mt-6 max-w-md text-base leading-relaxed text-pretty text-muted sm:text-lg">
+            <p
+              data-reveal
+              className="mt-6 max-w-md text-base leading-relaxed text-pretty text-muted sm:text-lg"
+            >
               A small Sri Lankan team that plans every journey personally — and
               stays with you from the first message to the flight home.
             </p>
-            <ButtonLink href="/contact" variant="secondary" className="mt-8 w-full sm:w-auto">
-              Talk to Our Team
-            </ButtonLink>
+            <div data-reveal className="mt-8">
+              <ButtonLink href="/contact" variant="secondary" className="w-full sm:w-auto">
+                Talk to Our Team
+              </ButtonLink>
+            </div>
           </div>
 
-          <ul className="grid gap-4 sm:grid-cols-2 sm:gap-5">
-            {POINTS.map(({ title, line, icon: Icon }) => (
+          {/* A ledger rather than a card grid: hairline-ruled entries, and on
+              hover a brand line draws along the rule above the entry. */}
+          <ul className="grid gap-x-10 sm:grid-cols-2">
+            {POINTS.map(({ title, line, icon: Icon }, i) => (
               <li
                 key={title}
-                className="flex gap-4 rounded-card border border-line p-5 transition-colors duration-200 ease-out hover:border-brand/40 sm:p-6"
+                data-reveal-step
+                className="group relative border-t border-line pt-6 pb-9 before:absolute before:-top-px before:left-0 before:h-px before:w-full before:origin-left before:scale-x-0 before:bg-brand before:transition-transform before:duration-300 before:ease-out hover:before:scale-x-100"
               >
-                <span className="grid size-11 shrink-0 place-items-center rounded-pill bg-brand-light text-brand">
-                  <Icon aria-hidden="true" className="size-5" strokeWidth={1.5} />
-                </span>
-                <div>
-                  <h3 className="font-display text-xl leading-tight font-semibold text-ink">
-                    {title}
-                  </h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-muted">{line}</p>
+                <div className="flex items-center justify-between">
+                  <span className="font-display text-sm font-semibold tracking-widest text-brand">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="grid size-10 place-items-center rounded-pill text-brand ring-1 ring-line transition-colors duration-300 ease-out group-hover:bg-brand group-hover:text-white group-hover:ring-brand">
+                    <Icon aria-hidden="true" className="size-[18px]" strokeWidth={1.5} />
+                  </span>
                 </div>
+                <h3 className="mt-5 font-display text-xl leading-tight font-medium text-ink sm:text-2xl">
+                  {title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{line}</p>
               </li>
             ))}
           </ul>
-        </div>
+        </ScrollReveal>
       </Container>
     </Section>
   );
