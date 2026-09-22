@@ -52,8 +52,8 @@ export async function FeaturedJourneys() {
                   key={journey.slug}
                   data-reveal-card
                   // One card-width everywhere: most of the screen on phones so
-                  // the next card peeks in, then two, then three across.
-                  className="w-[85%] shrink-0 snap-start sm:w-[calc((100%-1.25rem)/2)] lg:w-[calc((100%-3rem)/3)]"
+                  // the next card peeks in, then two, then four across.
+                  className="w-[85%] shrink-0 snap-start sm:w-[calc((100%-1.25rem)/2)] lg:w-[calc((100%-4.5rem)/4)]"
                 >
                   <JourneyCard {...journey} />
                 </li>

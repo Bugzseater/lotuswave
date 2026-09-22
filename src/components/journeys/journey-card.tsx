@@ -27,13 +27,13 @@ export function JourneyCard({
           src={image.src}
           alt={image.alt}
           fill
-          sizes="(min-width: 1024px) 30vw, (min-width: 640px) 50vw, 85vw"
+          sizes="(min-width: 1024px) 24vw, (min-width: 640px) 50vw, 85vw"
           className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.05]"
         />
       </div>
 
-      <div className="flex flex-1 flex-col items-center px-6 pt-8 pb-9 text-center sm:px-8">
-        <p className="text-sm text-ink">
+      <div className="flex flex-1 flex-col items-center px-5 pt-6 pb-7 text-center">
+        <p className="text-[13px] text-ink">
           {durationDays} Days
           <span aria-hidden="true" className="mx-2 text-line">
             |
@@ -43,7 +43,7 @@ export function JourneyCard({
             : `From ${formatPrice(startingPrice)}`}
         </p>
 
-        <h3 className="mt-4 font-display text-2xl leading-snug font-normal text-balance text-ink transition-colors duration-200 ease-out group-hover:text-brand sm:text-[1.75rem]">
+        <h3 className="mt-3 font-display text-xl leading-snug font-normal text-balance text-ink transition-colors duration-200 ease-out group-hover:text-brand sm:text-[1.375rem]">
           <Link
             href={`/journeys/${slug}`}
             className="outline-none after:absolute after:inset-0 after:content-['']"
@@ -52,11 +52,11 @@ export function JourneyCard({
           </Link>
         </h3>
 
-        <p className="mt-4 line-clamp-3 text-[15px] leading-relaxed text-muted">{summary}</p>
+        <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-muted">{summary}</p>
 
         <span
           aria-hidden="true"
-          className="mt-auto inline-flex items-center gap-2 pt-7 text-xs font-semibold tracking-[0.2em] text-brand uppercase"
+          className="mt-auto inline-flex items-center gap-2 pt-5 text-xs font-semibold tracking-[0.2em] text-brand uppercase"
         >
           View journey
           <ArrowRight className="size-4 transition-transform duration-200 ease-out group-hover:translate-x-1" />
