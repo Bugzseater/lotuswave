@@ -1,6 +1,8 @@
 import { BrandIntro } from "@/components/home/brand-intro";
 // Hidden for now — components kept, re-enable by uncommenting.
 // import { CustomJourneyCta } from "@/components/home/custom-journey-cta";
+import { CustomTourPrompt } from "@/components/home/custom-tour-prompt";
+import { DestinationsMosaic } from "@/components/home/destinations-mosaic";
 import { FeaturedJourneys } from "@/components/home/featured-journeys";
 import { FounderStory } from "@/components/home/founder-story";
 import { Hero } from "@/components/home/hero";
@@ -18,7 +20,9 @@ export default function HomePage() {
       <Hero />
       <BrandIntro />
       <SignatureExperiences />
+      <CustomTourPrompt />
       <FeaturedJourneys />
+      <DestinationsMosaic />
       <SignatureAgro />
       <WellnessExperience />
       {/* <HowItWorks /> */}

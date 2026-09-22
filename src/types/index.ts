@@ -60,6 +60,19 @@ export type Journey = {
   seo: SeoFields;
 };
 
+/** A place on the map, shown in the home page destinations mosaic. */
+export type Destination = {
+  slug: string;
+  name: string;
+  /** Province or coast, e.g. "Central Province". */
+  region: string;
+  /** Short label for the chip, e.g. "Heritage". */
+  category: "heritage" | "hills" | "wildlife" | "coast" | "tea";
+  /** One line under the name. */
+  tagline: string;
+  image: ImageAsset;
+};
+
 /** One of the signature experience categories shown on the home page. */
 export type ExperienceCategory = {
   slug: string;
