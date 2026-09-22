@@ -5,13 +5,13 @@ import {
   MessageSquareQuote,
   Quote,
   Scale,
-  ShieldCheck,
   type LucideIcon,
 } from "lucide-react";
+import { QuoteSlider } from "@/components/home/quote-slider";
 import { Container } from "@/components/ui/container";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { Section } from "@/components/ui/section";
 import { getAllFeedback, getFounderIntro } from "@/lib/data";
-import { cn } from "@/lib/utils";
 import type { Testimonial } from "@/types";
 
 type Standard = {
@@ -44,46 +44,6 @@ const STANDARDS: Standard[] = [
   },
 ];
 
-type Tone = "brand" | "tint" | "outline";
-
-/*
- * The quote grid runs as a zig-zag bento: wide, narrow / narrow, wide. Each
- * slot has its own surface so four cards never read as a row of clones.
- */
-const LAYOUT: { span: string; tone: Tone }[] = [
-  { span: "lg:col-span-7", tone: "brand" },
-  { span: "lg:col-span-5", tone: "outline" },
-  { span: "lg:col-span-5", tone: "outline" },
-  { span: "lg:col-span-7", tone: "tint" },
-];
-
-const TONES: Record<
-  Tone,
-  { card: string; mark: string; tag: string; avatar: string; meta: string }
-> = {
-  brand: {
-    card: "bg-brand text-white",
-    mark: "text-white/10",
-    tag: "bg-white/15 text-white",
-    avatar: "bg-white text-brand",
-    meta: "text-white/75",
-  },
-  tint: {
-    card: "bg-section text-ink",
-    mark: "text-brand/10",
-    tag: "bg-white text-brand",
-    avatar: "bg-brand text-white",
-    meta: "text-muted",
-  },
-  outline: {
-    card: "border border-line bg-white text-ink hover:border-brand/40",
-    mark: "text-brand/10",
-    tag: "bg-section text-brand",
-    avatar: "bg-brand-light text-brand",
-    meta: "text-muted",
-  },
-};
-
 /**
  * Section 10 — trust, built honestly for a young company. Nothing here is
  * invented:
@@ -91,8 +51,13 @@ const TONES: Record<
  * - Founder introduction and guest / partner quotes come from `@/lib/data`
  *   and render only when real entries exist. In dev, labelled samples stand
  *   in so the layout can be judged.
- * - Until any feedback exists, a plain note says so instead of an empty grid.
+ * - Until any feedback exists, a plain note says so instead of an empty track.
  * - "Our Standards" is always shown: those are our own commitments.
+ *
+ * The layout follows the shape a travel site earns trust with: a split header,
+ * a quiet carousel of quotes in one card size, then an open credentials strip
+ * along the foot. White throughout — the tinted Responsible Travel sits above
+ * it and the sand Founder Story below, so this one stays the clear page.
  *
  * Later: video testimonials and Google / TripAdvisor reviews slot in as new
  * `Testimonial` sources once real travellers start booking.
@@ -103,125 +68,141 @@ export async function Testimonials() {
   return (
     <Section id="testimonials" aria-labelledby="testimonials-heading">
       <Container>
-        <div className="mx-auto max-w-3xl text-center">
-          <p className="text-xs font-semibold tracking-[0.2em] text-brand uppercase">
-            Testimonials &amp; Standards
-          </p>
-          <h2
-            id="testimonials-heading"
-            className="mt-4 font-display text-4xl leading-[1.08] text-balance text-ink sm:text-5xl lg:text-6xl"
-          >
-            Trust, <em className="font-medium text-brand">Earned Honestly.</em>
-          </h2>
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-pretty text-muted sm:text-lg">
-            We&rsquo;re a young company, so we&rsquo;d rather show you how we
-            work than borrow words that aren&rsquo;t ours.
-          </p>
-        </div>
-
-        {founder && (
-          <figure className="mt-12 grid items-center gap-8 rounded-card bg-section p-6 sm:mt-16 sm:p-10 lg:grid-cols-[16rem_1fr] lg:gap-12">
-            <div className="relative mx-auto aspect-square w-40 overflow-hidden rounded-pill bg-white sm:w-48 lg:w-full">
-              <Image
-                src={founder.photo.src}
-                alt={founder.photo.alt}
-                fill
-                sizes="(min-width: 1024px) 16rem, 12rem"
-                className="object-cover"
-              />
-            </div>
+        <ScrollReveal>
+          {/* Split header: the claim on the left, the reason for it on the
+              right, sharing a baseline rather than stacked and centred. */}
+          <div className="grid gap-8 border-b border-line pb-10 lg:grid-cols-[1.1fr_1fr] lg:items-end lg:gap-16 lg:pb-14">
             <div>
-              <p className="text-xs font-semibold tracking-[0.2em] text-brand uppercase">
-                A Word From Our Founder
+              <p
+                data-reveal
+                className="flex items-center gap-3 text-xs font-semibold tracking-[0.2em] text-brand uppercase"
+              >
+                <span aria-hidden="true" className="h-px w-10 bg-brand" />
+                Testimonials &amp; Standards
               </p>
-              <blockquote className="mt-4 font-display text-2xl leading-snug text-pretty text-ink sm:text-3xl">
-                {founder.message}
-              </blockquote>
-              <figcaption className="mt-5 text-sm text-ink">
-                <span className="font-semibold">{founder.name}</span>
-                <span className="text-muted"> — {founder.role}</span>
-              </figcaption>
+              <h2
+                id="testimonials-heading"
+                data-reveal
+                className="mt-5 font-display text-4xl leading-[1.08] text-balance text-ink sm:text-5xl lg:text-6xl"
+              >
+                Trust, <em className="block font-medium text-brand">Earned Honestly.</em>
+              </h2>
             </div>
-          </figure>
-        )}
-
-        {feedback.length > 0 ? (
-          <div className="mt-12 sm:mt-16">
-            <h3 className="sr-only">In their own words</h3>
-            <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-12 lg:gap-5">
-              {feedback.map((item, i) => {
-                const slot = LAYOUT[i % LAYOUT.length];
-                return (
-                  <li
-                    key={`${item.name}-${item.quote.slice(0, 24)}`}
-                    className={cn(slot.span, slot.tone !== "outline" && "sm:col-span-2")}
-                  >
-                    <QuoteCard item={item} tone={slot.tone} featured={i === 0} />
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        ) : (
-          <p className="mx-auto mt-12 flex max-w-2xl items-start gap-3 rounded-card border border-dashed border-brand/30 p-5 text-sm leading-relaxed text-ink sm:mt-16 sm:p-6">
-            <Quote aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-brand" strokeWidth={1.5} />
-            <span>
-              Our first pilot tours are under way. Feedback from those guests
-              and from our farm and wellness partners will appear here in
-              their own words, with their permission.
-            </span>
-          </p>
-        )}
-
-        {/* One framed panel, cells split by hairlines rather than four
-            floating boxes — reads as a single charter, not a feature grid. */}
-        <div className="mt-20 overflow-hidden rounded-card border border-line sm:mt-28">
-          <div className="flex flex-col gap-2 border-b border-line bg-section px-6 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-9 sm:py-7">
-            <h3 className="flex items-center gap-3 font-display text-2xl text-ink sm:text-3xl">
-              <ShieldCheck aria-hidden="true" className="size-7 text-brand" strokeWidth={1.5} />
-              Our Standards
-            </h3>
-            <p className="text-sm text-muted sm:max-w-xs sm:text-right">
-              The promises we hold ourselves to, on every journey.
+            <p
+              data-reveal
+              className="max-w-xl text-base leading-relaxed text-pretty text-muted sm:text-lg"
+            >
+              We&rsquo;re a young company, so we&rsquo;d rather show you how we
+              work than borrow words that aren&rsquo;t ours. Below are the
+              words guests and partners gave us, and the standards we hold
+              ourselves to.
             </p>
           </div>
-          <ul className="grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-4">
-            {STANDARDS.map(({ title, line, icon: Icon }, i) => (
+
+          {founder && (
+            <figure className="mt-12 grid gap-8 sm:mt-16 lg:grid-cols-[20rem_1fr] lg:items-center lg:gap-16">
+              <div
+                data-reveal-image="40"
+                className="relative aspect-[4/5] w-48 overflow-hidden rounded-card bg-section sm:w-60 lg:w-full"
+              >
+                <Image
+                  src={founder.photo.src}
+                  alt={founder.photo.alt}
+                  fill
+                  sizes="(min-width: 1024px) 20rem, 15rem"
+                  className="object-cover"
+                />
+              </div>
+              <div className="lg:border-l lg:border-line lg:pl-16">
+                <p className="text-xs font-semibold tracking-[0.2em] text-brand uppercase">
+                  A Word From Our Founder
+                </p>
+                <blockquote className="mt-5 font-display text-2xl leading-snug text-pretty text-ink sm:text-3xl lg:text-4xl">
+                  {founder.message}
+                </blockquote>
+                <figcaption className="mt-6 text-sm text-ink">
+                  <span className="font-semibold">{founder.name}</span>
+                  <span className="text-muted"> — {founder.role}</span>
+                </figcaption>
+              </div>
+            </figure>
+          )}
+
+          {feedback.length > 0 ? (
+            <div className="mt-12 sm:mt-16">
+              <h3 className="sr-only">In their own words</h3>
+              <QuoteSlider label="Guest and partner feedback">
+                {feedback.map((item) => (
+                  <li
+                    key={`${item.name}-${item.quote.slice(0, 24)}`}
+                    data-reveal-card
+                    // One card width everywhere: most of the screen on phones
+                    // so the next card peeks in, then two, then three across.
+                    className="w-[85%] shrink-0 snap-start sm:w-[calc((100%-1.25rem)/2)] lg:w-[calc((100%-3rem)/3)]"
+                  >
+                    <QuoteCard item={item} />
+                  </li>
+                ))}
+              </QuoteSlider>
+            </div>
+          ) : (
+            <p className="mt-12 flex max-w-2xl items-start gap-4 border-l-2 border-brand pl-6 text-base leading-relaxed text-pretty text-muted sm:mt-16">
+              <Quote aria-hidden="true" className="mt-1 size-5 shrink-0 text-brand" strokeWidth={1.5} />
+              <span>
+                Our first pilot tours are under way. Feedback from those guests
+                and from our farm and wellness partners will appear here in
+                their own words, with their permission.
+              </span>
+            </p>
+          )}
+        </ScrollReveal>
+
+        {/* The standards run as an open credentials strip — hairline-divided
+            columns, no boxes — so they read as one charter under the quotes. */}
+        <ScrollReveal className="mt-20 border-t border-line pt-12 sm:mt-28 sm:pt-16">
+          <p
+            data-reveal
+            className="text-center text-xs font-semibold tracking-[0.2em] text-brand uppercase"
+          >
+            Our Standards
+          </p>
+          <h3
+            data-reveal
+            className="mx-auto mt-4 max-w-2xl text-center font-display text-2xl leading-snug text-balance text-ink sm:text-3xl"
+          >
+            The promises we hold ourselves to, on every journey.
+          </h3>
+
+          <ul className="mt-12 grid gap-10 sm:grid-cols-2 sm:gap-x-12 lg:mt-16 lg:grid-cols-4 lg:gap-0 lg:divide-x lg:divide-line">
+            {STANDARDS.map(({ title, line, icon: Icon }) => (
               <li
                 key={title}
-                className="group bg-white p-6 transition-colors duration-300 ease-out hover:bg-section sm:p-8"
+                data-reveal-step
+                className="group text-center lg:px-8 lg:first:pl-0 lg:last:pr-0"
               >
-                <div className="flex items-center justify-between">
-                  <span className="font-display text-sm font-semibold tracking-widest text-brand">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className="grid size-11 place-items-center rounded-pill bg-brand-light text-brand transition-colors duration-300 ease-out group-hover:bg-brand group-hover:text-white">
-                    <Icon aria-hidden="true" className="size-5" strokeWidth={1.5} />
-                  </span>
-                </div>
-                <h4 className="mt-8 font-display text-xl leading-tight font-semibold text-ink">
+                <span className="mx-auto grid size-14 place-items-center rounded-pill bg-section text-brand transition-colors duration-300 ease-out group-hover:bg-brand group-hover:text-white">
+                  <Icon aria-hidden="true" className="size-6" strokeWidth={1.5} />
+                </span>
+                <h4 className="mt-6 font-display text-xl leading-tight font-medium text-ink">
                   {title}
                 </h4>
-                <p className="mt-2 text-sm leading-relaxed text-muted">{line}</p>
+                <p className="mx-auto mt-3 max-w-xs text-sm leading-relaxed text-pretty text-muted">
+                  {line}
+                </p>
               </li>
             ))}
           </ul>
-        </div>
+        </ScrollReveal>
       </Container>
     </Section>
   );
 }
 
-function QuoteCard({
-  item,
-  tone,
-  featured,
-}: {
-  item: Testimonial;
-  tone: Tone;
-  featured: boolean;
-}) {
-  const t = TONES[tone];
+/**
+ * One quote, one card size. Uniform cards keep the carousel calm and let the
+ * words do the work; the brand hairline only shows up on hover.
+ */
+function QuoteCard({ item }: { item: Testimonial }) {
   const initials = item.name
     .split(/\s+/)
     .map((part) => part[0])
@@ -230,64 +211,35 @@ function QuoteCard({
     .toUpperCase();
 
   return (
-    <figure
-      className={cn(
-        "relative isolate flex h-full flex-col overflow-hidden rounded-card p-7 transition-[transform,border-color] duration-300 ease-out hover:-translate-y-1 sm:p-9",
-        t.card,
-      )}
-    >
-      {/* Oversized serif quote mark as texture, set behind the copy. */}
+    <figure className="flex h-full flex-col rounded-card border border-line bg-white p-7 transition-[transform,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-brand/40 sm:p-9">
       <span
         aria-hidden="true"
-        className={cn(
-          "pointer-events-none absolute -top-10 right-6 -z-10 font-display text-[12rem] leading-none select-none sm:text-[14rem]",
-          t.mark,
-        )}
+        className="grid size-12 place-items-center rounded-pill bg-section text-brand"
       >
-        &ldquo;
+        <Quote className="size-5" strokeWidth={1.5} />
       </span>
 
-      <div className="flex flex-wrap items-center gap-2">
-        <span
-          className={cn(
-            "rounded-pill px-3 py-1 text-[11px] font-semibold tracking-[0.15em] uppercase",
-            t.tag,
-          )}
-        >
-          {item.source === "partner" ? "Partner" : "Pilot tour"}
-        </span>
-        {item.sample && (
-          <span className="rounded-pill border border-dashed border-current px-3 py-1 text-[11px] font-semibold tracking-[0.15em] uppercase opacity-70">
-            Sample
-          </span>
-        )}
-      </div>
-
-      <blockquote
-        className={cn(
-          "mt-6 font-display leading-snug text-pretty",
-          featured ? "text-2xl sm:text-3xl" : "text-xl sm:text-2xl",
-        )}
-      >
+      <blockquote className="mt-7 font-display text-xl leading-snug text-pretty text-ink sm:text-2xl">
         &ldquo;{item.quote}&rdquo;
       </blockquote>
 
-      <figcaption className="mt-auto flex items-center gap-3 pt-8">
+      <figcaption className="mt-auto flex items-center gap-4 border-t border-line pt-6 text-sm">
         <span
           aria-hidden="true"
-          className={cn(
-            "grid size-11 shrink-0 place-items-center rounded-pill font-display text-sm font-semibold",
-            t.avatar,
-          )}
+          className="grid size-11 shrink-0 place-items-center rounded-pill bg-brand font-display text-sm font-semibold text-white"
         >
           {initials}
         </span>
-        <span className="text-sm leading-tight">
-          <span className="block font-semibold">{item.name}</span>
-          <span className={cn("mt-1 block", t.meta)}>
+        <span className="leading-tight">
+          <span className="block font-semibold text-ink">{item.name}</span>
+          <span className="mt-1 block text-muted">
             {item.context}
             {item.country && ` · ${item.country}`}
           </span>
+        </span>
+        <span className="ml-auto shrink-0 text-right text-[11px] font-semibold tracking-[0.15em] text-brand uppercase">
+          {item.source === "partner" ? "Partner" : "Pilot tour"}
+          {item.sample && <span className="mt-1 block text-muted">Sample</span>}
         </span>
       </figcaption>
     </figure>
