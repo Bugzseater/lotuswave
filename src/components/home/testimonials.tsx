@@ -68,7 +68,7 @@ export async function Testimonials() {
   return (
     <Section id="testimonials" aria-labelledby="testimonials-heading">
       <Container>
-        <ScrollReveal>
+        <ScrollReveal disabled>
           {/* Split header: the claim on the left, the reason for it on the
               right, sharing a baseline rather than stacked and centred. */}
           <div className="grid gap-8 border-b border-line pb-10 lg:grid-cols-[1.1fr_1fr] lg:items-end lg:gap-16 lg:pb-14">
@@ -159,7 +159,7 @@ export async function Testimonials() {
 
         {/* The standards run as an open credentials strip — hairline-divided
             columns, no boxes — so they read as one charter under the quotes. */}
-        <ScrollReveal className="mt-20 border-t border-line pt-12 sm:mt-28 sm:pt-16">
+        <ScrollReveal disabled className="mt-20 border-t border-line pt-12 sm:mt-28 sm:pt-16">
           <p
             data-reveal
             className="text-center text-xs font-semibold tracking-[0.2em] text-brand uppercase"

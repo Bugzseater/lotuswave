@@ -73,7 +73,7 @@ export function WhyTravelWithUs() {
   return (
     <Section id="why-us" aria-labelledby="why-us-heading">
       <Container>
-        <ScrollReveal className="grid gap-12 lg:grid-cols-[2fr_3fr] lg:gap-16 xl:gap-24">
+        <ScrollReveal disabled className="grid gap-12 lg:grid-cols-[2fr_3fr] lg:gap-16 xl:gap-24">
           <div className="lg:sticky lg:top-32 lg:self-start">
             <p
               data-reveal

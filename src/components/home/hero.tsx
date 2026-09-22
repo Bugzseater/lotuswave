@@ -81,11 +81,7 @@ export function Hero() {
             </p>
 
             <div className="flex flex-col gap-3 sm:flex-row">
-              <div data-hero-fade>
-                <ButtonLink href="/plan-your-trip" className="w-full sm:w-auto">
-                  Plan My Journey
-                </ButtonLink>
-              </div>
+
               <div data-hero-fade>
                 <ButtonLink
                   href="/journeys"

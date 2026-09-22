@@ -12,9 +12,15 @@ import { cn } from "@/lib/utils";
 export function JourneySlider({
   children,
   label,
+  itemName = "journey",
+  controlClassName,
 }: {
   children: ReactNode;
   label: string;
+  /** Singular noun for the button labels: "Previous journey". */
+  itemName?: string;
+  /** Overrides for both prev / next buttons — size, vertical position. */
+  controlClassName?: string;
 }) {
   const track = useRef<HTMLUListElement>(null);
   const [atStart, setAtStart] = useState(true);
@@ -72,8 +78,8 @@ export function JourneySlider({
           type="button"
           onClick={() => step(-1)}
           disabled={atStart}
-          aria-label="Previous journey"
-          className={cn(control, "lg:-left-6 2xl:-left-16")}
+          aria-label={`Previous ${itemName}`}
+          className={cn(control, "lg:-left-6 2xl:-left-16", controlClassName)}
         >
           <ChevronLeft aria-hidden="true" className="size-5" />
         </button>
@@ -81,8 +87,8 @@ export function JourneySlider({
           type="button"
           onClick={() => step(1)}
           disabled={atEnd}
-          aria-label="Next journey"
-          className={cn(control, "lg:-right-6 2xl:-right-16")}
+          aria-label={`Next ${itemName}`}
+          className={cn(control, "lg:-right-6 2xl:-right-16", controlClassName)}
         >
           <ChevronRight aria-hidden="true" className="size-5" />
         </button>

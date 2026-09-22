@@ -5,7 +5,6 @@ import {
   Leaf,
   Moon,
   Salad,
-  ShieldCheck,
   TreePalm,
   WifiOff,
   type LucideIcon,
@@ -76,8 +75,7 @@ const IMAGE = {
  * No waves of its own — the arch-topped photograph carries the softness.
  *
  * The seven practices flank the photograph on desktop — four left, three
- * right — and stack under it on smaller screens. A standing note makes clear
- * who delivers the programmes and that none of it is medical treatment.
+ * right — and stack under it on smaller screens.
  *
  * Warm sand is this section's one accent and only ever a surface; icons and
  * links stay brand. Muted grey is too light on it, so supporting copy uses
@@ -91,7 +89,7 @@ export function WellnessExperience() {
     <Section
       id="wellness"
       aria-labelledby="wellness-heading"
-      className="relative isolate overflow-hidden bg-warm-sand"
+      className="relative isolate overflow-hidden bg-warm-sand py-12 sm:py-16 lg:py-20"
     >
       <div
         aria-hidden="true"
@@ -116,14 +114,14 @@ export function WellnessExperience() {
           </p>
         </div>
 
-        <div className="mt-12 grid items-center gap-10 sm:mt-16 lg:mt-20 lg:grid-cols-[1fr_minmax(0,20rem)_1fr] lg:gap-12 xl:gap-16">
+        <div className="mt-10 grid items-center gap-10 sm:mt-12 lg:mt-14 lg:grid-cols-[1fr_minmax(0,17rem)_1fr] lg:gap-12 xl:gap-16">
           {/* Arch-topped photograph — first on small screens, centre on desktop. */}
           <div className="relative mx-auto aspect-[3/4] w-full max-w-xs overflow-hidden rounded-t-full rounded-b-card bg-white/50 ring-8 ring-white/60 lg:order-2 lg:max-w-none">
             <Image
               src={IMAGE.src}
               alt={IMAGE.alt}
               fill
-              sizes="(min-width: 1024px) 20rem, 20rem"
+              sizes="(min-width: 1024px) 17rem, 20rem"
               className="object-cover"
             />
           </div>
@@ -132,37 +130,14 @@ export function WellnessExperience() {
           <PracticeList items={right} className="lg:order-3" />
         </div>
 
-        <div className="mx-auto mt-14 max-w-3xl sm:mt-20">
-          <aside
-            aria-label="About our wellness providers"
-            className="flex gap-4 rounded-card bg-white/75 p-5 ring-1 ring-brand/15 sm:p-6"
+        <div className="mt-10 text-center sm:mt-12">
+          <ButtonLink
+            href="/experiences/ayurveda-wellness"
+            size="lg"
+            className="w-full sm:w-auto"
           >
-            <ShieldCheck
-              aria-hidden="true"
-              className="mt-0.5 size-6 shrink-0 text-brand"
-              strokeWidth={1.5}
-            />
-            <div className="text-sm leading-relaxed text-ink/80">
-              <p className="font-semibold text-ink">Qualified hands, honest expectations.</p>
-              <p className="mt-1">
-                Our wellness programmes are delivered with registered Ayurveda
-                practitioners and professionally qualified instructors. They are
-                designed for relaxation and general wellbeing, not as medical
-                treatment — please speak to your doctor about any health
-                condition before you travel.
-              </p>
-            </div>
-          </aside>
-
-          <div className="mt-10 text-center">
-            <ButtonLink
-              href="/experiences/ayurveda-wellness"
-              size="lg"
-              className="w-full sm:w-auto"
-            >
-              Explore Wellness Journeys
-            </ButtonLink>
-          </div>
+            Explore Wellness Journeys
+          </ButtonLink>
         </div>
       </Container>
     </Section>

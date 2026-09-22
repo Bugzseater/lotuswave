@@ -62,7 +62,7 @@ export function HowItWorks() {
       <WaveEdge position="bottom" className="fill-white" />
 
       <Container>
-        <ScrollReveal>
+        <ScrollReveal disabled>
           <div className="grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-12">
             <div className="lg:col-span-7">
               <p

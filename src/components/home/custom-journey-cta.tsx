@@ -50,7 +50,7 @@ export function CustomJourneyCta() {
       />
 
       <Container className="py-20 sm:py-28 lg:py-36">
-        <ScrollReveal className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
+        <ScrollReveal disabled className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
           <div
             data-reveal-image="60"
             className="relative aspect-[4/3] w-full overflow-hidden rounded-card ring-1 ring-white/15 sm:aspect-[16/10] lg:order-last lg:aspect-[4/5]"

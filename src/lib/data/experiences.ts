@@ -21,6 +21,10 @@ const EXPERIENCES: ExperienceCategory[] = [
       src: unsplash("1500382017468-9049fed747ef"),
       alt: "Golden farmland glowing under a low morning sun",
     },
+    cutout: {
+      src: "/bg/card_experience/farming.png",
+      alt: "Two travellers planting rice seedlings in a flooded paddy field",
+    },
     seo: {
       title: "Agro & Farm Experiences in Sri Lanka",
       description:
@@ -42,6 +46,10 @@ const EXPERIENCES: ExperienceCategory[] = [
     image: {
       src: unsplash("1540555700478-4be289fbecef"),
       alt: "A calm spa setting prepared for a restorative treatment",
+    },
+    cutout: {
+      src: "/bg/card_experience/village.png",
+      alt: "A woman holding a yoga pose on a bamboo deck above terraced rice fields",
     },
     seo: {
       title: "Ayurveda & Wellness Retreats in Sri Lanka",
@@ -65,6 +73,10 @@ const EXPERIENCES: ExperienceCategory[] = [
       src: unsplash("1588598198321-9735fd52455b"),
       alt: "Sigiriya rock fortress rising above green jungle plains",
     },
+    cutout: {
+      src: "/bg/card_experience/papa.png",
+      alt: "Two travellers riding an elephant across a meadow below Sigiriya rock",
+    },
     seo: {
       title: "Culture & Local Life Experiences in Sri Lanka",
       description:
@@ -86,6 +98,10 @@ const EXPERIENCES: ExperienceCategory[] = [
     image: {
       src: unsplash("1441974231531-c6227db76b6e"),
       alt: "Sunlight filtering through tall trees in a green forest",
+    },
+    cutout: {
+      src: "/bg/card_experience/card_wild_life.png",
+      alt: "A Sri Lankan leopard resting on a tree branch",
     },
     seo: {
       title: "Nature & Wildlife Experiences in Sri Lanka",
@@ -109,6 +125,10 @@ const EXPERIENCES: ExperienceCategory[] = [
       src: unsplash("1504674900247-0877df9cc836"),
       alt: "A freshly cooked dish served on a plate",
     },
+    cutout: {
+      src: "/bg/card_experience/foog.png",
+      alt: "Curry and rice served beside a clay bowl of vegetable curry",
+    },
     seo: {
       title: "Food & Culinary Experiences in Sri Lanka",
       description:
@@ -130,6 +150,10 @@ const EXPERIENCES: ExperienceCategory[] = [
     image: {
       src: unsplash("1507525428034-b723cf961d3e"),
       alt: "Clear turquoise water washing onto a quiet sandy beach",
+    },
+    cutout: {
+      src: "/bg/card_experience/gall.png",
+      alt: "A white lighthouse among coconut palms above a turquoise sea",
     },
     seo: {
       title: "Beach & Slow Travel in Sri Lanka",

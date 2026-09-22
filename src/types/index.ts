@@ -71,5 +71,7 @@ export type ExperienceCategory = {
   highlights: string[];
   icon: ExperienceIcon;
   image: ImageAsset;
+  /** Optional frameless PNG for the card — replaces the boxed photo there. */
+  cutout?: ImageAsset;
   seo: SeoFields;
 };

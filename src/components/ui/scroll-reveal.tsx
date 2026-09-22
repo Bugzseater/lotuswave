@@ -27,18 +27,24 @@ const ROW_TOLERANCE = 80;
  *
  *
  * Reduced-motion visitors see everything in place with no movement.
+ *
+ * `disabled` switches the reveal off for a section while keeping its markers,
+ * so it can be turned back on by deleting the prop.
  */
 export function ScrollReveal({
   children,
   className,
+  disabled = false,
 }: {
   children: ReactNode;
   className?: string;
+  disabled?: boolean;
 }) {
   const root = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
+      if (disabled) return;
       const mm = gsap.matchMedia();
 
       mm.add("(prefers-reduced-motion: no-preference)", () => {
@@ -128,7 +134,7 @@ export function ScrollReveal({
         }
       });
     },
-    { scope: root },
+    { scope: root, dependencies: [disabled] },
   );
 
   return (
