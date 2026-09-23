@@ -35,14 +35,16 @@ export const POLICY_LINKS: readonly NavLink[] = [
 ] as const;
 
 /*
- * Official profiles only. An entry with an empty href is hidden, so a guessed
- * handle never points guests at someone else's account.
+ * !! PLACEHOLDER HANDLES — guessed, not verified. Replace every URL below with
+ * the official profile before launch, or an entry will send guests to someone
+ * else's account. An entry with an empty href is hidden, so clearing one is
+ * the safe way to drop a network we do not have.
  */
 export const SOCIAL_LINKS: readonly NavLink[] = [
-  { label: "Facebook", href: "" },
-  { label: "Instagram", href: "" },
-  { label: "YouTube", href: "" },
-  { label: "TikTok", href: "" },
+  { label: "Facebook", href: "https://facebook.com/lotuswavelankatours" },
+  { label: "Instagram", href: "https://instagram.com/lotuswavelankatours" },
+  { label: "YouTube", href: "https://youtube.com/@lotuswavelankatours" },
+  { label: "TikTok", href: "https://tiktok.com/@lotuswavelankatours" },
 ] as const;
 
 export type NavLink = {

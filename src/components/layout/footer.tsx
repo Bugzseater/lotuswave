@@ -15,24 +15,21 @@ import {
   type NavLink,
 } from "@/lib/constants";
 import { getExperiences, getJourneys } from "@/lib/data";
-import { cn } from "@/lib/utils";
 
 const linkStyle =
-  "text-sm text-muted transition-colors duration-200 ease-out hover:text-brand";
+  "text-sm text-white/70 transition-colors duration-200 ease-out hover:text-white";
 
 const headingStyle =
-  "font-sans text-xs font-semibold tracking-[0.2em] text-ink uppercase";
+  "font-sans text-xs font-semibold tracking-[0.2em] text-white uppercase";
 
 /**
- * Site footer — white background, ink type, separated from the page by a
- * hairline. Three stacked bands: brand plus newsletter, a contact strip, then
- * the link columns, each divided by a `border-line` rule and all collapsing to
- * one column on phones.
+ * Site footer — a deep purple card inset from the white page, rounded on every
+ * corner, with the wordmark bleeding off its bottom edge.
  *
- * A faint Kolam-and-landscape artwork sits behind the whole footer: its detail
- * is on the left and right edges and it stays pale through the middle, so the
- * columns keep their contrast. Decorative only — hidden from assistive tech,
- * and from phones, where the crop would show nothing but the pale centre.
+ * Inside the card: the closing invitation and sign-up on top, then the link
+ * columns, then the legal bar. The Kolam-and-landscape artwork sits behind it
+ * all at a whisper — decorative, hidden from assistive tech and from phones,
+ * where the crop would show nothing but the pale centre.
  *
  * The experience and journey columns come from `@/lib/data`, so every page the
  * site has is reachable from the footer and stays in step as the collections
@@ -57,33 +54,38 @@ export async function Footer() {
   }));
 
   return (
-    <footer className="relative isolate overflow-hidden border-t border-line bg-white pt-12 pb-8 text-ink sm:pt-16">
-      {/* Kolam-and-landscape artwork, full width. It carries its detail on the
-          left and right edges and stays pale through the middle, so the
-          columns keep their contrast. Faint, fading in from the top edge so
-          the seam with the section above stays soft. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 hidden [mask-image:linear-gradient(to_bottom,transparent,#000_15%)] sm:block"
-      >
-        <Image
-          src="/bg/footer_bg.png"
-          alt=""
-          fill
-          sizes="100vw"
-          className="object-cover object-center opacity-[0.1]"
-        />
-      </div>
+    <footer className="bg-white px-3 pb-3 sm:px-5 sm:pb-5 lg:px-6 lg:pb-6">
+      <div className="relative isolate overflow-hidden rounded-card bg-brand-dark px-6 pt-14 text-white sm:px-10 sm:pt-16 lg:px-14 lg:pt-20 [&_a:focus-visible]:outline-white">
+        {/* Kolam-and-landscape artwork. It carries its detail on the left and
+            right edges and stays pale through the middle, so the columns keep
+            their contrast even where it shows through. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10 hidden [mask-image:linear-gradient(to_bottom,#000,transparent_75%)] sm:block"
+        >
+          <Image
+            src="/bg/footer_bg.png"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover object-center opacity-[0.5]"
+          />
+        </div>
 
-      {/* Wider than the page container: 80% of the viewport on desktop,
-          the usual 16/24px gutter below that. */}
-      <div className="relative mx-auto w-full px-4 sm:px-6 lg:w-[80%] lg:px-0">
         <FooterContent
           socials={socials}
           explore={explore}
           experienceLinks={experienceLinks}
           journeyLinks={journeyLinks}
         />
+
+        {/* The wordmark, oversized and cropped by the card's bottom edge. */}
+        <p
+          aria-hidden="true"
+          className="mt-12 -mb-[0.1em] bg-gradient-to-b from-white/25 to-white/5 bg-clip-text text-center font-display text-[19vw] leading-[0.75] font-semibold tracking-[0.02em] text-transparent select-none"
+        >
+          LotusWave
+        </p>
       </div>
     </footer>
   );
@@ -102,82 +104,86 @@ function FooterContent({
 }) {
   return (
     <>
-      {/* Band 1 — brand and newsletter */}
+      {/* Band 1 — the closing invitation, and the sign-up beside it */}
       <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
         <div>
-          <Logo tone="brand" size="lg" />
-          <p className="mt-5 max-w-xs text-sm leading-relaxed text-muted">
-            {SITE.tagline} Agro and wellness journeys, personally designed by a
-            local team.
-          </p>
-
+          <Logo tone="light" size="lg" />
+          <h2 className="mt-8 max-w-sm font-display text-3xl leading-tight text-white sm:text-4xl">
+            Shall we plan this journey together?
+          </h2>
           {socials.length > 0 && (
-            <ul aria-label="Social media" className="mt-7 flex flex-wrap gap-3">
-              {socials.map((link) => {
-                const Icon = SOCIAL_ICONS[link.label];
-                return (
-                  <li key={link.label}>
-                    <a
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${SITE.name} on ${link.label}`}
-                      className="inline-flex size-11 items-center justify-center rounded-pill border border-line text-brand transition-colors duration-200 ease-out hover:border-brand hover:bg-brand hover:text-white"
-                    >
-                      {Icon ? (
-                        <Icon className="size-4" />
-                      ) : (
-                        <span className="text-xs font-medium">{link.label}</span>
-                      )}
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
+            <div className="mt-8">
+              <h2 className={headingStyle}>Follow us</h2>
+              <ul aria-label="Social media" className="mt-4 flex flex-wrap gap-2.5">
+                {socials.map((link) => {
+                  const Icon = SOCIAL_ICONS[link.label];
+                  return (
+                    <li key={link.label}>
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${SITE.name} on ${link.label}`}
+                        className="inline-flex size-11 items-center justify-center rounded-pill border border-white/30 text-white transition-colors duration-200 ease-out hover:bg-white hover:text-brand"
+                      >
+                        {Icon ? (
+                          <Icon className="size-4" />
+                        ) : (
+                          <span className="text-xs font-medium">{link.label}</span>
+                        )}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
           )}
         </div>
 
-        <NewsletterSignup />
+        <div>
+          <NewsletterSignup />
+
+          {/* The three direct lines, one row under the sign-up. */}
+          <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3 border-t border-white/15 pt-6 text-sm">
+            <p className="flex items-center gap-2.5">
+              <Phone aria-hidden="true" className="size-4 shrink-0 text-white" />
+              <a href={telHref(COMPANY.phone)} className={linkStyle}>
+                {COMPANY.phone}
+              </a>
+            </p>
+            <p className="flex items-center gap-2.5">
+              <MessageCircle aria-hidden="true" className="size-4 shrink-0 text-white" />
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={linkStyle}
+              >
+                WhatsApp +{SITE.whatsappNumber}
+              </a>
+            </p>
+            <p className="flex items-center gap-2.5">
+              <Mail aria-hidden="true" className="size-4 shrink-0 text-white" />
+              <a href={`mailto:${COMPANY.email}`} className={`${linkStyle} break-all`}>
+                {COMPANY.email}
+              </a>
+            </p>
+          </div>
+        </div>
       </div>
 
-      {/* Band 2 — the three ways to reach us, side by side */}
-      <div className="mt-12 grid gap-6 border-t border-line pt-10 sm:grid-cols-2 lg:grid-cols-3">
-        <ContactTile
-          icon={<MessageCircle aria-hidden="true" className="size-5" strokeWidth={1.5} />}
-          label="WhatsApp"
-          href={WHATSAPP_URL}
-          value={`+${SITE.whatsappNumber}`}
-          external
-        />
-        <ContactTile
-          icon={<Phone aria-hidden="true" className="size-5" strokeWidth={1.5} />}
-          label="Call us"
-          href={telHref(COMPANY.phone)}
-          value={COMPANY.phone}
-        />
-        <ContactTile
-          icon={<Mail aria-hidden="true" className="size-5" strokeWidth={1.5} />}
-          label="Email"
-          href={`mailto:${COMPANY.email}`}
-          value={COMPANY.email}
-        />
-      </div>
-
-      {/* Band 3 — link columns */}
-      <div className="mt-12 grid gap-10 border-t border-line pt-10 sm:grid-cols-2 lg:grid-cols-[1fr_1.2fr_1.2fr_1.2fr] lg:gap-12">
+      {/* Band 2 — link columns, with contact as the last one */}
+      <div className="mt-16 grid gap-10 border-t border-white/15 pt-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
         <LinkColumn heading="Explore the site" links={explore} />
         <LinkColumn heading="Experiences" links={experienceLinks} />
         <LinkColumn heading="Journeys" links={journeyLinks} />
 
         <div>
           <h2 className={headingStyle}>Visit us</h2>
-          <address className="mt-5 text-sm not-italic">
-            <p className="flex gap-3 text-muted">
-              <MapPin aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand" />
+          <address className="mt-5 space-y-3 text-sm not-italic">
+            <p className="flex gap-3 text-white/70">
+              <MapPin aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-white" />
               <span>
-                <span className="block font-semibold text-ink">
-                  {COMPANY.legalName}
-                </span>
                 {COMPANY.address.map((line) => (
                   <span key={line} className="block">
                     {line}
@@ -185,32 +191,24 @@ function FooterContent({
                 ))}
               </span>
             </p>
+            <p className="flex gap-3">
+              <Siren aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-white" />
+              <span className="text-white/70">
+                <span className="block">24/7 while you travel</span>
+                <a
+                  href={telHref(COMPANY.emergencyPhone)}
+                  className="font-medium text-white underline-offset-4 hover:underline"
+                >
+                  {COMPANY.emergencyPhone}
+                </a>
+              </span>
+            </p>
           </address>
-
-          <div className="mt-6 flex gap-3 rounded-card bg-brand-light p-4">
-            <Siren
-              aria-hidden="true"
-              className="mt-0.5 size-5 shrink-0 text-brand"
-              strokeWidth={1.5}
-            />
-            <div className="text-sm">
-              <p className="font-semibold text-ink">24/7 emergency line</p>
-              <p className="mt-0.5 text-muted">
-                For guests currently travelling with us
-              </p>
-              <a
-                href={telHref(COMPANY.emergencyPhone)}
-                className="mt-1 inline-block font-semibold text-brand underline-offset-4 hover:underline"
-              >
-                {COMPANY.emergencyPhone}
-              </a>
-            </div>
-          </div>
         </div>
       </div>
 
-      {/* Bottom bar — the legal line, with the policy pages beside it */}
-      <div className="mt-12 flex flex-col gap-4 border-t border-line pt-8 text-xs text-muted lg:flex-row lg:items-center lg:justify-between">
+      {/* Band 3 — the legal line, with the policy pages beside it */}
+      <div className="mt-14 flex flex-col gap-4 border-t border-white/15 pt-8 text-xs text-white/60 lg:flex-row lg:items-center lg:justify-between">
         <div className="space-y-1">
           <p>
             &copy; {new Date().getFullYear()} {COMPANY.legalName}. All rights
@@ -230,7 +228,7 @@ function FooterContent({
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="transition-colors duration-200 ease-out hover:text-brand"
+                  className="transition-colors duration-200 ease-out hover:text-white"
                 >
                   {link.label}
                 </Link>
@@ -264,43 +262,5 @@ function LinkColumn({
         ))}
       </ul>
     </nav>
-  );
-}
-
-/** One reach-us tile: round tinted icon, small label, the link itself. */
-function ContactTile({
-  icon,
-  label,
-  href,
-  value,
-  external = false,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  href: string;
-  value: string;
-  external?: boolean;
-}) {
-  return (
-    <div className="flex items-center gap-4">
-      <span className="inline-flex size-12 shrink-0 items-center justify-center rounded-pill bg-brand-light text-brand">
-        {icon}
-      </span>
-      <span className="min-w-0">
-        <span className="block text-xs tracking-[0.16em] text-muted uppercase">
-          {label}
-        </span>
-        <a
-          href={href}
-          {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-          className={cn(
-            linkStyle,
-            "mt-1 block font-medium break-words text-ink hover:text-brand",
-          )}
-        >
-          {value}
-        </a>
-      </span>
-    </div>
   );
 }
