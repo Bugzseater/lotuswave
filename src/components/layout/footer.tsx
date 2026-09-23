@@ -24,7 +24,7 @@ const headingStyle =
 
 /**
  * Site footer — a deep purple card inset from the white page, rounded on every
- * corner, with the wordmark bleeding off its bottom edge.
+ * corner.
  *
  * Inside the card: the closing invitation and sign-up on top, then the link
  * columns, then the legal bar. The Kolam-and-landscape artwork sits behind it
@@ -55,7 +55,7 @@ export async function Footer() {
 
   return (
     <footer className="bg-white px-3 pb-3 sm:px-5 sm:pb-5 lg:px-6 lg:pb-6">
-      <div className="relative isolate overflow-hidden rounded-card bg-brand-dark px-6 pt-14 text-white sm:px-10 sm:pt-16 lg:px-14 lg:pt-20 [&_a:focus-visible]:outline-white">
+      <div className="relative isolate overflow-hidden rounded-card bg-brand-dark px-6 py-10 text-white sm:px-10 sm:py-12 lg:px-14 lg:py-14 [&_a:focus-visible]:outline-white">
         {/* Kolam-and-landscape artwork. It carries its detail on the left and
             right edges and stays pale through the middle, so the columns keep
             their contrast even where it shows through. */}
@@ -79,13 +79,6 @@ export async function Footer() {
           journeyLinks={journeyLinks}
         />
 
-        {/* The wordmark, oversized and cropped by the card's bottom edge. */}
-        <p
-          aria-hidden="true"
-          className="mt-12 -mb-[0.1em] bg-gradient-to-b from-white/25 to-white/5 bg-clip-text text-center font-display text-[19vw] leading-[0.75] font-semibold tracking-[0.02em] text-transparent select-none"
-        >
-          LotusWave
-        </p>
       </div>
     </footer>
   );
@@ -105,14 +98,14 @@ function FooterContent({
   return (
     <>
       {/* Band 1 — the closing invitation, and the sign-up beside it */}
-      <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+      <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
         <div>
           <Logo tone="light" size="lg" />
-          <h2 className="mt-8 max-w-sm font-display text-3xl leading-tight text-white sm:text-4xl">
+          <h2 className="mt-6 max-w-sm font-display text-3xl leading-tight text-white sm:text-4xl">
             Shall we plan this journey together?
           </h2>
           {socials.length > 0 && (
-            <div className="mt-8">
+            <div className="mt-7">
               <h2 className={headingStyle}>Follow us</h2>
               <ul aria-label="Social media" className="mt-4 flex flex-wrap gap-2.5">
                 {socials.map((link) => {
@@ -144,7 +137,7 @@ function FooterContent({
           <NewsletterSignup />
 
           {/* The three direct lines, one row under the sign-up. */}
-          <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3 border-t border-white/15 pt-6 text-sm">
+          <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3 border-t border-white/15 pt-5 text-sm">
             <p className="flex items-center gap-2.5">
               <Phone aria-hidden="true" className="size-4 shrink-0 text-white" />
               <a href={telHref(COMPANY.phone)} className={linkStyle}>
@@ -173,14 +166,14 @@ function FooterContent({
       </div>
 
       {/* Band 2 — link columns, with contact as the last one */}
-      <div className="mt-16 grid gap-10 border-t border-white/15 pt-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+      <div className="mt-6 grid gap-8 border-t border-white/15 pt-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
         <LinkColumn heading="Explore the site" links={explore} />
         <LinkColumn heading="Experiences" links={experienceLinks} />
         <LinkColumn heading="Journeys" links={journeyLinks} />
 
         <div>
           <h2 className={headingStyle}>Visit us</h2>
-          <address className="mt-5 space-y-3 text-sm not-italic">
+          <address className="mt-4 space-y-3 text-sm not-italic">
             <p className="flex gap-3 text-white/70">
               <MapPin aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-white" />
               <span>
@@ -208,7 +201,7 @@ function FooterContent({
       </div>
 
       {/* Band 3 — the legal line, with the policy pages beside it */}
-      <div className="mt-14 flex flex-col gap-4 border-t border-white/15 pt-8 text-xs text-white/60 lg:flex-row lg:items-center lg:justify-between">
+      <div className="mt-6 flex flex-col gap-4 border-t border-white/15 pt-6 text-xs text-white/60 lg:flex-row lg:items-center lg:justify-between">
         <div className="space-y-1">
           <p>
             &copy; {new Date().getFullYear()} {COMPANY.legalName}. All rights
@@ -252,7 +245,7 @@ function LinkColumn({
   return (
     <nav aria-label={heading}>
       <h2 className={headingStyle}>{heading}</h2>
-      <ul className="mt-5 space-y-3">
+      <ul className="mt-4 space-y-2.5">
         {links.map((link) => (
           <li key={link.href}>
             <Link href={link.href} className={linkStyle}>
