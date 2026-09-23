@@ -14,7 +14,12 @@ import { COMPANY, SITE } from "@/lib/constants";
  * stored or promised here. Swap the handler for a Server Action once the list
  * lives in Firestore; the markup does not need to change.
  */
-export function NewsletterSignup() {
+export function NewsletterSignup({
+  /** Drops the supporting line — for a column that is already narrow. */
+  compact = false,
+}: {
+  compact?: boolean;
+} = {}) {
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
 
@@ -37,12 +42,14 @@ export function NewsletterSignup() {
       <h2 className="font-sans text-xs font-semibold tracking-[0.2em] text-ink uppercase">
         Receive travel inspirations
       </h2>
-      <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted">
-        Seasonal harvests, quiet coastlines and new wellness retreats — a few
-        times a year, never more.
-      </p>
+      {!compact && (
+        <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted">
+          Seasonal harvests, quiet coastlines and new wellness retreats — a few
+          times a year, never more.
+        </p>
+      )}
 
-      <form onSubmit={handleSubmit} className="mt-5 flex max-w-md items-center gap-3">
+      <form onSubmit={handleSubmit} className="mt-4 flex max-w-md items-center gap-3">
         <div className="flex-1">
           <label htmlFor="newsletter-email" className="sr-only">
             Your email address

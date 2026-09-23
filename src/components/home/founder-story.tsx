@@ -43,18 +43,18 @@ const IMAGE = {
 };
 
 /**
- * Section 11 — why the company exists. Warm sand, like the wellness section,
- * so the page softens before the final call to action. Photograph holds the
- * left column (sticky on desktop); the story runs on the right as four short
- * answers to the questions a traveller would actually ask.
+ * Section 11 — why the company exists. White, so the page runs clean into the
+ * footer. Photograph holds the left column (sticky on desktop); the story runs
+ * on the right as four short answers to the questions a traveller would
+ * actually ask.
  */
 export function FounderStory() {
   return (
-    <Section id="our-story" aria-labelledby="our-story-heading" className="bg-warm-sand">
+    <Section id="our-story" aria-labelledby="our-story-heading" className="bg-white">
       <Container>
         <div className="grid gap-12 lg:grid-cols-[5fr_7fr] lg:gap-16 xl:gap-24">
           <div className="lg:sticky lg:top-32 lg:self-start">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-card bg-white/60">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-card bg-brand-light">
               <Image
                 src={IMAGE.src}
                 alt={IMAGE.alt}
@@ -63,7 +63,7 @@ export function FounderStory() {
                 className="object-cover"
               />
             </div>
-            <p className="mt-4 text-center text-xs font-semibold tracking-[0.2em] text-ink/70 uppercase">
+            <p className="mt-4 text-center text-xs font-semibold tracking-[0.2em] text-muted uppercase">
               Founded in Sri Lanka
             </p>
           </div>
@@ -90,7 +90,7 @@ export function FounderStory() {
                   <h3 className="font-display text-2xl leading-tight font-semibold text-ink">
                     {question}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-ink/75 sm:text-[15px]">
+                  <p className="mt-2 text-sm leading-relaxed text-muted sm:text-[15px]">
                     {answer}
                   </p>
                 </div>

@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Figtree, Fraunces } from "next/font/google";
 import { BackToTop } from "@/components/layout/back-to-top";
-import { Footer } from "@/components/layout/footer";
+// Two footers live side by side while the design is settled: `FooterScenic`
+// leads with the hill-country photograph, `Footer` is the plain white one.
+// Swap the element below to compare them.
+import { FooterScenic } from "@/components/layout/footer-scenic";
 import { Header } from "@/components/layout/header";
 import { WhatsAppButton } from "@/components/layout/whatsapp-button";
 import { SITE } from "@/lib/constants";
@@ -45,7 +48,7 @@ export default function RootLayout({
       <body>
         <Header />
         <main>{children}</main>
-        <Footer />
+        <FooterScenic />
         <BackToTop />
         <WhatsAppButton />
       </body>
