@@ -71,7 +71,14 @@ const POINTS: TrustPoint[] = [
  */
 export function WhyTravelWithUs() {
   return (
-    <Section id="why-us" aria-labelledby="why-us-heading">
+    <Section
+      id="why-us"
+      aria-labelledby="why-us-heading"
+      // The wellness band above ends in its own white haze, so the usual top
+      // padding would read as one long empty stretch. The section drops its
+      // top padding and lifts into that haze instead.
+      className="-mt-8 pt-0 sm:-mt-14 lg:-mt-24"
+    >
       <Container>
         <ScrollReveal disabled className="grid gap-12 lg:grid-cols-[2fr_3fr] lg:gap-16 xl:gap-24">
           <div className="lg:sticky lg:top-32 lg:self-start">

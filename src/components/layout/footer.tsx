@@ -17,16 +17,17 @@ import {
 import { getExperiences, getJourneys } from "@/lib/data";
 
 const linkStyle =
-  "text-sm text-white/70 transition-colors duration-200 ease-out hover:text-white";
+  "text-sm text-muted transition-colors duration-200 ease-out hover:text-brand";
 
 const headingStyle =
-  "font-sans text-xs font-semibold tracking-[0.2em] text-white uppercase";
+  "font-sans text-xs font-semibold tracking-[0.2em] text-ink uppercase";
 
 /**
- * Site footer — a deep purple card inset from the white page, rounded on every
- * corner.
+ * Site footer — full bleed on a white ground, separated from the page by a
+ * hairline. Ink type throughout; purple carries the icons, the link hovers and
+ * the send button, nothing else.
  *
- * Inside the card: the closing invitation and sign-up on top, then the link
+ * Three bands: the closing invitation and sign-up on top, then the link
  * columns, then the legal bar. The Kolam-and-landscape artwork sits behind it
  * all at a whisper — decorative, hidden from assistive tech and from phones,
  * where the crop would show nothing but the pale centre.
@@ -54,32 +55,29 @@ export async function Footer() {
   }));
 
   return (
-    <footer className="bg-white px-3 pb-3 sm:px-5 sm:pb-5 lg:px-6 lg:pb-6">
-      <div className="relative isolate overflow-hidden rounded-card bg-brand-dark px-6 py-10 text-white sm:px-10 sm:py-12 lg:px-14 lg:py-14 [&_a:focus-visible]:outline-white">
+    <footer className="relative isolate overflow-hidden border-t border-line bg-white px-4 py-10 text-ink sm:px-8 sm:py-12 lg:px-14 lg:py-14">
         {/* Kolam-and-landscape artwork. It carries its detail on the left and
             right edges and stays pale through the middle, so the columns keep
             their contrast even where it shows through. */}
         <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 -z-10 hidden [mask-image:linear-gradient(to_bottom,#000,transparent_75%)] sm:block"
-        >
-          <Image
-            src="/bg/footer_bg.png"
-            alt=""
-            fill
-            sizes="100vw"
-            className="object-cover object-center opacity-[0.5]"
-          />
-        </div>
-
-        <FooterContent
-          socials={socials}
-          explore={explore}
-          experienceLinks={experienceLinks}
-          journeyLinks={journeyLinks}
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 hidden [mask-image:linear-gradient(to_bottom,#000,transparent_75%)] sm:block"
+      >
+        <Image
+          src="/bg/footer_bg.png"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-center opacity-[0.14]"
         />
-
       </div>
+
+      <FooterContent
+        socials={socials}
+        explore={explore}
+        experienceLinks={experienceLinks}
+        journeyLinks={journeyLinks}
+      />
     </footer>
   );
 }
@@ -100,8 +98,8 @@ function FooterContent({
       {/* Band 1 — the closing invitation, and the sign-up beside it */}
       <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
         <div>
-          <Logo tone="light" size="lg" />
-          <h2 className="mt-6 max-w-sm font-display text-3xl leading-tight text-white sm:text-4xl">
+          <Logo tone="brand" size="lg" />
+          <h2 className="mt-6 max-w-sm font-display text-3xl leading-tight text-ink sm:text-4xl">
             Shall we plan this journey together?
           </h2>
           {socials.length > 0 && (
@@ -117,7 +115,7 @@ function FooterContent({
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={`${SITE.name} on ${link.label}`}
-                        className="inline-flex size-11 items-center justify-center rounded-pill border border-white/30 text-white transition-colors duration-200 ease-out hover:bg-white hover:text-brand"
+                        className="inline-flex size-11 items-center justify-center rounded-pill border border-line text-brand transition-colors duration-200 ease-out hover:border-brand hover:bg-brand hover:text-white"
                       >
                         {Icon ? (
                           <Icon className="size-4" />
@@ -137,15 +135,15 @@ function FooterContent({
           <NewsletterSignup />
 
           {/* The three direct lines, one row under the sign-up. */}
-          <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3 border-t border-white/15 pt-5 text-sm">
+          <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3 border-t border-line pt-5 text-sm">
             <p className="flex items-center gap-2.5">
-              <Phone aria-hidden="true" className="size-4 shrink-0 text-white" />
+              <Phone aria-hidden="true" className="size-4 shrink-0 text-brand" />
               <a href={telHref(COMPANY.phone)} className={linkStyle}>
                 {COMPANY.phone}
               </a>
             </p>
             <p className="flex items-center gap-2.5">
-              <MessageCircle aria-hidden="true" className="size-4 shrink-0 text-white" />
+              <MessageCircle aria-hidden="true" className="size-4 shrink-0 text-brand" />
               <a
                 href={WHATSAPP_URL}
                 target="_blank"
@@ -156,7 +154,7 @@ function FooterContent({
               </a>
             </p>
             <p className="flex items-center gap-2.5">
-              <Mail aria-hidden="true" className="size-4 shrink-0 text-white" />
+              <Mail aria-hidden="true" className="size-4 shrink-0 text-brand" />
               <a href={`mailto:${COMPANY.email}`} className={`${linkStyle} break-all`}>
                 {COMPANY.email}
               </a>
@@ -166,7 +164,7 @@ function FooterContent({
       </div>
 
       {/* Band 2 — link columns, with contact as the last one */}
-      <div className="mt-6 grid gap-8 border-t border-white/15 pt-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+      <div className="mt-6 grid gap-8 border-t border-line pt-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
         <LinkColumn heading="Explore the site" links={explore} />
         <LinkColumn heading="Experiences" links={experienceLinks} />
         <LinkColumn heading="Journeys" links={journeyLinks} />
@@ -174,8 +172,8 @@ function FooterContent({
         <div>
           <h2 className={headingStyle}>Visit us</h2>
           <address className="mt-4 space-y-3 text-sm not-italic">
-            <p className="flex gap-3 text-white/70">
-              <MapPin aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-white" />
+            <p className="flex gap-3 text-muted">
+              <MapPin aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand" />
               <span>
                 {COMPANY.address.map((line) => (
                   <span key={line} className="block">
@@ -185,12 +183,12 @@ function FooterContent({
               </span>
             </p>
             <p className="flex gap-3">
-              <Siren aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-white" />
-              <span className="text-white/70">
+              <Siren aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand" />
+              <span className="text-muted">
                 <span className="block">24/7 while you travel</span>
                 <a
                   href={telHref(COMPANY.emergencyPhone)}
-                  className="font-medium text-white underline-offset-4 hover:underline"
+                  className="font-medium text-brand underline-offset-4 hover:underline"
                 >
                   {COMPANY.emergencyPhone}
                 </a>
@@ -201,7 +199,7 @@ function FooterContent({
       </div>
 
       {/* Band 3 — the legal line, with the policy pages beside it */}
-      <div className="mt-6 flex flex-col gap-4 border-t border-white/15 pt-6 text-xs text-white/60 lg:flex-row lg:items-center lg:justify-between">
+      <div className="mt-6 flex flex-col gap-4 border-t border-line pt-6 text-xs text-muted lg:flex-row lg:items-center lg:justify-between">
         <div className="space-y-1">
           <p>
             &copy; {new Date().getFullYear()} {COMPANY.legalName}. All rights
@@ -221,7 +219,7 @@ function FooterContent({
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="transition-colors duration-200 ease-out hover:text-white"
+                  className="transition-colors duration-200 ease-out hover:text-brand"
                 >
                   {link.label}
                 </Link>

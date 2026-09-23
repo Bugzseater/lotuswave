@@ -53,7 +53,7 @@ const STEPS: Step[] = [
  * rice terraces full-bleed beneath it with the five steps floating over the
  * paddies as a row of equal, see-through glass cards. The
  * photograph's sky is transparent and its foot fades to mist, so it melts
- * into the white above and meets the wellness section's sand on the wave.
+ * into the white above and meets the wellness section on the wave.
  */
 export function SignatureAgro() {
   return (
@@ -145,8 +145,8 @@ export function SignatureAgro() {
         </Container>
       </div>
 
-      {/* Meets the wellness section's sand on the wave, with no white strip. */}
-      <WaveEdge position="bottom" flat className="fill-warm-sand" />
+      {/* Meets the wellness section on the wave, with no strip between. */}
+      <WaveEdge position="bottom" flat className="fill-white" />
     </Section>
   );
 }
