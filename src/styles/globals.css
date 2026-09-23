@@ -136,27 +136,4 @@
     animation: wave-drift 4.5s linear infinite reverse;
   }
 
-  /* Glass card with a wavy top edge (the footer). Two mask layers: the wave
-     shape across the top strip, a solid block for everything below it. The
-     SVG is a mask only — black means "keep", so no palette colour is
-     involved. Side borders are clipped by the same mask, so they meet the
-     curve cleanly. Pair with the matching stroke in `footer.tsx`. */
-  .glass-wave {
-    --wave-h: 3rem;
-    --wave-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 120' preserveAspectRatio='none'%3E%3Cpath d='M1440 46c-150 34-300 44-470 22S690 12 520 28 210 92 0 66V120H1440Z'/%3E%3C/svg%3E");
-    -webkit-mask-image: var(--wave-mask), linear-gradient(#000 0 0);
-    mask-image: var(--wave-mask), linear-gradient(#000 0 0);
-    -webkit-mask-size: 100% var(--wave-h), 100% calc(100% - var(--wave-h) + 1px);
-    mask-size: 100% var(--wave-h), 100% calc(100% - var(--wave-h) + 1px);
-    -webkit-mask-position: top, bottom;
-    mask-position: top, bottom;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-  }
-
-  @media (min-width: 64rem) {
-    .glass-wave {
-      --wave-h: 4.5rem;
-    }
-  }
 }
