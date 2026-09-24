@@ -133,12 +133,12 @@ export function WellnessExperience() {
               {/* A photograph in a circle, on a hairline ring the same purple
                   as the headings — the ring is what holds the row together
                   when the crops differ in tone. */}
-              <span className="relative mx-auto block size-24 overflow-hidden rounded-pill bg-brand-light ring-1 ring-brand/20 ring-offset-4 ring-offset-white lg:size-28">
+              <span className="relative mx-auto block size-20 overflow-hidden rounded-pill bg-brand-light ring-1 ring-brand/20 ring-offset-4 ring-offset-white lg:size-24">
                 <Image
                   src={image.src}
                   alt={image.alt}
                   fill
-                  sizes="(min-width: 1024px) 7rem, 6rem"
+                  sizes="(min-width: 1024px) 6rem, 5rem"
                   className="object-cover"
                 />
               </span>
@@ -167,7 +167,7 @@ export function WellnessExperience() {
           does less of the section's. `-z-10` keeps it behind the text while
           still painting over the section's white ground — the top of each
           photograph is quiet background, so nothing legible is lost. */}
-      <div className="relative -z-10 -mt-24 sm:-mt-32 lg:-mt-60">
+      <div className="relative -z-10 -mt-36 sm:-mt-52 lg:-mt-96">
         <WellnessShowcase />
       </div>
     </Section>

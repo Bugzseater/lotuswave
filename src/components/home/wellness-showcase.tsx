@@ -17,11 +17,11 @@ import { cn } from "@/lib/utils";
  */
 const IMAGES = [
   {
-    src: "/bg/wellness/ayurvedic%20spa%20outdoor.png",
+    src: "/bg/wellness/ayurvedic.png",
     alt: "A shirodhara treatment in a garden — warm oil streaming from a hanging brass vessel onto the forehead",
   },
   {
-    src: "/bg/wellness/herbal%20wellnes.png",
+    src: "/bg/wellness/herbal.png",
     alt: "A therapist spreading a fresh green herbal paste during a treatment, bowl in hand",
   },
   {
