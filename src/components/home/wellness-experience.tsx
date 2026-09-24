@@ -167,7 +167,7 @@ export function WellnessExperience() {
           does less of the section's. `-z-10` keeps it behind the text while
           still painting over the section's white ground — the top of each
           photograph is quiet background, so nothing legible is lost. */}
-      <div className="relative -z-10 -mt-4 sm:-mt-8 lg:-mt-14">
+      <div className="relative -z-10 -mt-24 sm:-mt-32 lg:-mt-60">
         <WellnessShowcase />
       </div>
     </Section>
