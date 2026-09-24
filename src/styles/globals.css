@@ -155,7 +155,6 @@
   stroke-dasharray: 6 94;
   animation: comet var(--loop-duration, 9s) linear infinite;
 }
-
 /* A stop lighting up as the dash passes — peaks at 5% of the cycle, so each
    icon's delay is (its position on the loop − 5%) of the duration. */
 @keyframes stop-glow {

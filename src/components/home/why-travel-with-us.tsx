@@ -43,7 +43,6 @@ const LOOP_S = 9;
  * desktop widths drift by a percent or so, which the glow's width absorbs.
  */
 const STOP_AT = [2.5, 14.3, 26.1, 37.9, 87.9, 76.1, 64.3, 52.5];
-
 /**
  * Section 08 — the reasons to book with us. Centred heading, the eight trust
  * points as a compact icon grid, and the island itself as the closing band:
