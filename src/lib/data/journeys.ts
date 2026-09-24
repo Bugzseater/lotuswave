@@ -117,6 +117,90 @@ const JOURNEYS: Journey[] = [
         "A 14-day Sri Lanka tour covering ancient cities, the hill country, wildlife safaris and the south coast.",
     },
   },
+  {
+    slug: "tea-country-trails",
+    title: "Tea Country Trails",
+    durationDays: 5,
+    bestFor: "Walkers and tea lovers",
+    summary:
+      "Five cool, green days in the hills — estate walks, a morning with the tea pluckers and the slow blue train to Ella.",
+    description:
+      "A short escape into Sri Lanka's hill country: stays on working tea estates, guided walks between the terraces, a morning plucking and processing tea with the estate's own families, and the famous train ride through the mountains.",
+    highlights: [
+      "Two nights on a working tea estate near Nuwara Eliya",
+      "Tea plucking and a factory visit with the estate team",
+      "Scenic train ride from Nanu Oya to Ella",
+      "Easy guided walks to Little Adam's Peak and the Nine Arches Bridge",
+    ],
+    startingPrice: 890,
+    theme: "agro",
+    featured: true,
+    image: {
+      src: unsplash("1544015759-237f87d55ef3"),
+      alt: "Terraced green tea plantations curving over the hills",
+    },
+    seo: {
+      title: "Tea Country Trails — 5-Day Hill Country Journey in Sri Lanka",
+      description:
+        "A 5-day Sri Lanka hill-country journey with tea-estate stays, tea plucking with local families and the scenic train to Ella.",
+    },
+  },
+  {
+    slug: "wild-sri-lanka",
+    title: "Wild Sri Lanka",
+    durationDays: 6,
+    bestFor: "Wildlife lovers and photographers",
+    summary:
+      "Leopards in Yala, elephant herds at Udawalawe and birdlife on the wetlands, with nights in quiet bush camps.",
+    description:
+      "Six days built around the island's wildlife: game drives in Yala and Udawalawe with experienced naturalist guides, wetland birding by boat, and evenings in small camps at the edge of the parks.",
+    highlights: [
+      "Morning and afternoon game drives in Yala National Park",
+      "Elephant herds at Udawalawe",
+      "Wetland birding by boat",
+      "Nights in a small tented bush camp",
+    ],
+    startingPrice: 1390,
+    theme: "agro",
+    featured: true,
+    image: {
+      src: unsplash("1456926631375-92c8ce872def"),
+      alt: "A leopard resting on a fallen tree trunk",
+    },
+    seo: {
+      title: "Wild Sri Lanka — 6-Day Wildlife Safari Journey",
+      description:
+        "A 6-day Sri Lanka wildlife journey with leopard safaris in Yala, elephants at Udawalawe and wetland birding.",
+    },
+  },
+  {
+    slug: "slow-south-coast",
+    title: "Slow South Coast",
+    durationDays: 6,
+    bestFor: "Couples and anyone wanting to unwind",
+    summary:
+      "Sea-view yoga, Galle Fort's old streets and long lazy afternoons on quiet southern beaches.",
+    description:
+      "Six unhurried days on the south coast: a small beach stay with morning yoga, a walk through the ramparts and lanes of Galle Fort, a cooking class with a local family and plenty of time to do nothing at all.",
+    highlights: [
+      "Morning yoga sessions overlooking the sea",
+      "Guided walk through Galle Fort",
+      "Home cooking class with a coastal family",
+      "Free days on quiet southern beaches",
+    ],
+    startingPrice: 1090,
+    theme: "wellness",
+    featured: true,
+    image: {
+      src: unsplash("1580910527739-556eb89f9d65"),
+      alt: "Coconut palms on a red-earth headland above a turquoise sea",
+    },
+    seo: {
+      title: "Slow South Coast — 6-Day Beach & Wellness Journey in Sri Lanka",
+      description:
+        "A 6-day Sri Lanka south-coast journey with sea-view yoga, Galle Fort and quiet beach days.",
+    },
+  },
 ];
 
 export async function getJourneys(): Promise<Journey[]> {

@@ -54,19 +54,23 @@ export async function FooterScenic() {
   }));
 
   return (
-    <footer className="bg-white text-ink">
-      {/* The file's own 1920×771 ratio, so the photograph shows whole — no
-          crop. Its mist along the lower edge is what meets the content. */}
-      <div className="relative aspect-[1920/771] w-full">
+    // Pulled up over the foot of the section above. The white ground sits on
+    // the content only, so the artwork's transparent top shows what is beneath.
+    <footer className="relative -mt-16 text-ink sm:-mt-24 lg:-mt-32">
+      {/* The file's own 1920×871 ratio, so the photograph shows whole — no
+          crop, which keeps the lettering along its top edge intact. Its mist
+          along the lower edge is what meets the content. */}
+      <div className="relative aspect-[1920/871] w-full">
         <Image
-          src="/bg/footer_bg_2.png"
-          alt=""
+          src="/bg/mountion_1.png"
+          alt="Green hills of Sri Lanka's hill country rolling into morning mist, under the words Let's travel around Sri Lanka"
           fill
           sizes="100vw"
           className="object-cover"
         />
       </div>
 
+      <div className="bg-white">
       <div className="mx-auto w-full max-w-7xl px-4 pb-10 sm:px-6 lg:px-8">
         {/* Row 1 — the logo alone, centred */}
         <div className="flex justify-center">
@@ -200,6 +204,7 @@ export async function FooterScenic() {
             </ul>
           </nav>
         </div>
+      </div>
       </div>
     </footer>
   );

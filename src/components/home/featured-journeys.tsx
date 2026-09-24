@@ -8,7 +8,8 @@ import { getFeaturedJourneys } from "@/lib/data";
 /**
  * Section 04 — the packaged journeys, back on white after the tinted
  * experiences section. Each poster carries the facts a visitor compares
- * first: length, who it suits, and price.
+ * first: length, who it suits, and price. The slider has manual controls and
+ * also advances on its own every 5s.
  */
 export async function FeaturedJourneys() {
   const journeys = await getFeaturedJourneys();
@@ -46,7 +47,7 @@ export async function FeaturedJourneys() {
           </div>
 
           <div className="mt-10 sm:mt-12 lg:mt-14">
-            <JourneySlider label="Featured journeys">
+            <JourneySlider label="Featured journeys" autoplayMs={5000}>
               {journeys.map((journey) => (
                 <li
                   key={journey.slug}

@@ -98,7 +98,7 @@ export function SignatureAgro() {
           pulled up under the intro so that empty sky doesn't open a gap. */}
       <div className="relative isolate -mt-10 sm:-mt-20 lg:-mt-32">
         <Image
-          src="/bg/Vila.png"
+          src="/bg/Vilan.png"
           alt="Terraced rice paddies flooded with water beneath a line of coconut palms"
           fill
           sizes="100vw"

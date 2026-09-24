@@ -7,13 +7,20 @@ import { cn } from "@/lib/utils";
 /**
  * Horizontal, snap-scrolling track with previous / next controls. Swipe and
  * trackpad scrolling work natively; the buttons step one card at a time.
- * Never autoplays. Children are the `<li>` slides, rendered on the server.
+ * Children are the `<li>` slides, rendered on the server.
+ *
+ * Autoplay is opt-in through `autoplayMs`: it steps one card per interval and
+ * wraps back to the first after the last. It holds while the pointer is over
+ * the slider or focus is inside it, while the tab is hidden, and never runs
+ * for reduced-motion visitors. Pressing a control restarts the interval, so
+ * an auto step never lands straight after a manual one.
  */
 export function JourneySlider({
   children,
   label,
   itemName = "journey",
   controlClassName,
+  autoplayMs,
 }: {
   children: ReactNode;
   label: string;
@@ -21,10 +28,15 @@ export function JourneySlider({
   itemName?: string;
   /** Overrides for both prev / next buttons — size, vertical position. */
   controlClassName?: string;
+  /** Advance one card every this many ms. Omit for no autoplay. */
+  autoplayMs?: number;
 }) {
   const track = useRef<HTMLUListElement>(null);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
+  const [paused, setPaused] = useState(false);
+  // Bumped by the controls to restart the autoplay interval.
+  const [restart, setRestart] = useState(0);
 
   const update = useCallback(() => {
     const el = track.current;
@@ -45,17 +57,33 @@ export function JourneySlider({
     };
   }, [update]);
 
-  const step = (dir: 1 | -1) => {
+  const step = useCallback((dir: 1 | -1, wrap = false) => {
     const el = track.current;
     const slide = el?.firstElementChild as HTMLElement | null;
     if (!el || !slide) return;
     const gap = parseFloat(getComputedStyle(el).columnGap) || 0;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    el.scrollBy({
-      left: dir * (slide.offsetWidth + gap),
-      behavior: reduce ? "auto" : "smooth",
-    });
+    const behavior = reduce ? "auto" : "smooth";
+    if (wrap && el.scrollLeft + el.clientWidth >= el.scrollWidth - 4) {
+      el.scrollTo({ left: 0, behavior });
+      return;
+    }
+    el.scrollBy({ left: dir * (slide.offsetWidth + gap), behavior });
+  }, []);
+
+  const manualStep = (dir: 1 | -1) => {
+    step(dir);
+    setRestart((n) => n + 1);
   };
+
+  useEffect(() => {
+    if (!autoplayMs || paused) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const id = setInterval(() => {
+      if (!document.hidden) step(1, true);
+    }, autoplayMs);
+    return () => clearInterval(id);
+  }, [autoplayMs, paused, restart, step]);
 
   // Below the track on small screens; from lg they float at the track's
   // sides, level with the photographs (`lg:contents` drops the wrapper so the
@@ -64,7 +92,19 @@ export function JourneySlider({
     "grid size-12 place-items-center rounded-pill border border-brand bg-white text-brand transition-colors duration-200 ease-out hover:bg-brand hover:text-white disabled:pointer-events-none disabled:opacity-0 lg:absolute lg:top-[22%] lg:z-10 lg:shadow-header";
 
   return (
-    <div className="relative">
+    <div
+      className="relative"
+      onPointerEnter={autoplayMs ? () => setPaused(true) : undefined}
+      onPointerLeave={autoplayMs ? () => setPaused(false) : undefined}
+      onFocus={autoplayMs ? () => setPaused(true) : undefined}
+      onBlur={
+        autoplayMs
+          ? (e) => {
+              if (!e.currentTarget.contains(e.relatedTarget)) setPaused(false);
+            }
+          : undefined
+      }
+    >
       <ul
         ref={track}
         aria-label={label}
@@ -76,7 +116,7 @@ export function JourneySlider({
       <div className="mt-8 flex justify-center gap-3 lg:contents">
         <button
           type="button"
-          onClick={() => step(-1)}
+          onClick={() => manualStep(-1)}
           disabled={atStart}
           aria-label={`Previous ${itemName}`}
           className={cn(control, "lg:-left-6 2xl:-left-16", controlClassName)}
@@ -85,7 +125,7 @@ export function JourneySlider({
         </button>
         <button
           type="button"
-          onClick={() => step(1)}
+          onClick={() => manualStep(1)}
           disabled={atEnd}
           aria-label={`Next ${itemName}`}
           className={cn(control, "lg:-right-6 2xl:-right-16", controlClassName)}

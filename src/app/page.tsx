@@ -4,7 +4,7 @@ import { BrandIntro } from "@/components/home/brand-intro";
 import { CustomTourPrompt } from "@/components/home/custom-tour-prompt";
 import { DestinationsMosaic } from "@/components/home/destinations-mosaic";
 import { FeaturedJourneys } from "@/components/home/featured-journeys";
-import { FounderStory } from "@/components/home/founder-story";
+// import { FounderStory } from "@/components/home/founder-story";
 import { Hero } from "@/components/home/hero";
 // import { HowItWorks } from "@/components/home/how-it-works";
 // import { ResponsibleTravel } from "@/components/home/responsible-travel";
@@ -29,7 +29,7 @@ export default function HomePage() {
       <WhyTravelWithUs />
       {/* <ResponsibleTravel /> */}
       {/* <Testimonials /> */}
-      <FounderStory />
+      {/* <FounderStory /> */}
       {/* <CustomJourneyCta /> */}
     </>
   );

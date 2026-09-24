@@ -10,7 +10,7 @@ import { getExperiences } from "@/lib/data";
 /**
  * Section 03 — the six ways into Sri Lanka. A centred heading, then the
  * experiences as photo cards in a snap-scrolling carousel with manual
- * previous / next controls. Sits on the tint so the page alternates
+ * previous / next controls that also advances on its own every 3s. Sits on the tint so the page alternates
  * white → tint after the brand intro. Each card opens its experience page.
  */
 export async function SignatureExperiences() {
@@ -50,6 +50,7 @@ export async function SignatureExperiences() {
             <JourneySlider
               label="Signature experiences"
               itemName="experience"
+              autoplayMs={3000}
               controlClassName="size-10 lg:top-[32%] [&_svg]:size-4"
             >
               {experiences.map((experience) => (

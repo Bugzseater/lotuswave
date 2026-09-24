@@ -35,15 +35,15 @@ export function Hero() {
           <div className="flex flex-1 flex-col items-center justify-center text-center">
             <h1 className="font-display text-5xl leading-[1.04] font-semibold text-balance text-white sm:text-6xl lg:text-7xl xl:text-[5.5rem]">
               {/* Each line rises out of its own mask. The padding keeps
-                  ascenders, descenders and the stroke clear of the clip. */}
+                  ascenders and descenders clear of the clip. */}
               <span className="-my-[0.08em] block overflow-hidden py-[0.08em]">
                 <span data-hero-line className="block lg:whitespace-nowrap">
                   Experience{" "}
-                  {/* Stroke painted under the fill, so only its outer half
-                      shows and the letterforms keep their weight. */}
+                  {/* Thin purple outline, painted under the fill so only its outer
+                      1px shows and the letterforms keep their weight. */}
                   <span
                     data-hero-accent
-                    className="inline-block text-brand [-webkit-text-stroke:2px_var(--color-white)] [paint-order:stroke_fill]"
+                    className="inline-block text-white [-webkit-text-stroke:2px_var(--color-brand)] [paint-order:stroke_fill]"
                   >
                     Sri Lanka
                   </span>

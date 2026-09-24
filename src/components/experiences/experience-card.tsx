@@ -49,11 +49,13 @@ export function ExperienceCard({ slug, title, summary, image, cutout }: Experien
 
       <div
         className={cn(
-          "flex flex-1 flex-col items-center px-6 pb-8 text-center sm:px-8",
+          "flex flex-1 flex-col items-center px-4 pb-8 text-center sm:px-5",
           cutout ? "-mt-4 sm:-mt-5" : "pt-8",
         )}
       >
-        <h3 className="font-display text-2xl leading-tight font-medium text-balance text-ink transition-colors duration-200 ease-out group-hover:text-brand sm:text-3xl">
+        {/* Sized so the longest title ("Food & Culinary Experiences") holds
+            one line at the carousel's card widths. */}
+        <h3 className="font-display text-[1.375rem] leading-tight font-medium text-balance text-ink transition-colors duration-200 ease-out group-hover:text-brand sm:text-2xl">
           <Link
             href={`/experiences/${slug}`}
             className="after:absolute after:inset-0 focus-visible:outline-none focus-visible:after:rounded-card focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-brand"
@@ -66,7 +68,7 @@ export function ExperienceCard({ slug, title, summary, image, cutout }: Experien
         </p>
         <span
           aria-hidden="true"
-          className="mt-4 inline-flex items-center gap-2text-sm font-semibold tracking-[0.14em] text-brand uppercase"
+          className="mt-auto inline-flex items-center gap-2 pt-4 text-sm font-semibold tracking-[0.14em] text-brand uppercase"
         >
           Discover more
           <ArrowRight className="size-4 transition-transform duration-200 ease-out group-hover:translate-x-1" />
