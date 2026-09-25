@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 const CLOUD_01 = { src: "/bg/cloud-01.png", width: 2400, height: 1253 } as const;
 const CLOUD_02 = { src: "/bg/cloud-02.png", width: 2400, height: 1016 } as const;
@@ -31,13 +32,16 @@ const PUFFS: readonly Puff[] = [
  * melting into the white page beneath it. Overlapping puffs at different
  * scales keep the silhouette from reading as one repeated shape.
  *
- * Expects a positioned parent.
+ * Expects a positioned parent. `className` can override the strip's height.
  */
-export function CloudDivider() {
+export function CloudDivider({ className }: { className?: string }) {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-[19vh] min-h-[128px] overflow-hidden sm:h-[22vh] lg:h-[25vh]"
+      className={cn(
+        "pointer-events-none absolute inset-x-0 bottom-0 z-10 h-[19vh] min-h-[128px] overflow-hidden sm:h-[22vh] lg:h-[25vh]",
+        className,
+      )}
     >
       {PUFFS.map((puff, index) => (
         <Image

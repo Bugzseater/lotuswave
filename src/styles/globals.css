@@ -119,6 +119,21 @@
     animation: rise-in 600ms var(--ease-out-soft) both;
   }
 
+  /* Oversized hero wordmarks (About "ABOUT US") — the whole word is unveiled
+     in place, from its bottom edge up to its top. No travel. */
+  @keyframes wordmark-in {
+    from {
+      clip-path: inset(100% 0 0 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  .animate-wordmark-in {
+    animation: wordmark-in 1.6s var(--ease-out-soft) both;
+  }
+
   /* Liquid surface in the back-to-top ball. The wave strip is two periods
      wide, so sliding it half its width loops without a seam. Reduced motion
      freezes it through the base-layer rule. */
