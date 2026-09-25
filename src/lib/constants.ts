@@ -19,9 +19,20 @@ export const COMPANY = {
   email: "hello@lotuswavelankatours.com",
   /** Line guests call while travelling, answered 24/7. */
   emergencyPhone: "+94 77 123 4567",
+  /** Office hours, Sri Lanka time. */
+  hours: "Monday – Saturday, 8:30 AM – 5:30 PM (GMT +5:30)",
   /** Sri Lanka Tourism Development Authority registration. Hidden while null. */
   sltdaRegistration: null as string | null,
 } as const;
+
+/** "What would you like to talk about?" options on the contact form. */
+export const CONTACT_INTERESTS = [
+  "General question",
+  "Agro experiences",
+  "Wellness & Ayurveda",
+  "A tailor-made journey",
+  "Something else",
+] as const;
 
 export const telHref = (phone: string) => `tel:${phone.replace(/\s+/g, "")}`;
 
