@@ -10,9 +10,9 @@ import { cn } from "@/lib/utils";
 const INITIAL: ContactState = { status: "idle" };
 
 const FIELD =
-  "mt-1.5 block w-full border border-white/80 bg-white/60 px-5 text-sm text-ink " +
+  "mt-1.5 block w-full border border-brand/40 bg-white px-5 text-sm text-ink " +
   "placeholder:text-muted/70 transition-colors duration-200 ease-out " +
-  "hover:border-brand/40 focus:border-brand focus:bg-white/90 focus:outline-none focus-visible:outline-none " +
+  "hover:border-brand/70 focus:border-brand focus:outline-none focus-visible:outline-none " +
   "focus:ring-2 focus:ring-brand/20 aria-invalid:border-brand-dark";
 
 /** Single-line inputs are pills; the message box keeps the card radius. */
@@ -110,7 +110,7 @@ export function ContactForm() {
           {CONTACT_INTERESTS.map((option) => (
             <label
               key={option}
-              className="cursor-pointer rounded-pill border border-white/80 bg-white/60 px-4 py-2 text-sm text-ink transition-colors duration-200 ease-out select-none hover:border-brand/50 has-checked:border-brand has-checked:bg-brand has-checked:text-white has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-brand"
+              className="cursor-pointer rounded-pill border border-brand/40 bg-white px-4 py-2 text-sm text-ink transition-colors duration-200 ease-out select-none hover:border-brand/70 has-checked:border-brand has-checked:bg-brand has-checked:text-white has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-brand"
             >
               <input
                 type="radio"

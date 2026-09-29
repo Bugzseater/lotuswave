@@ -43,8 +43,10 @@ export function GetInTouch() {
     <section
       id="get-in-touch"
       aria-labelledby="get-in-touch-heading"
-      className="relative scroll-mt-20 overflow-hidden bg-white pt-16 pb-28 sm:pt-24 sm:pb-36 lg:pb-44"
+      className="relative scroll-mt-20 overflow-hidden bg-sky-light pt-12 pb-28 sm:pt-16 sm:pb-36 lg:pt-20 lg:pb-44"
     >
+      {/* No top wave here — it sits on the hero's bottom edge, rising into
+          the photo in this band's sky-light. */}
       <Container>
         <div className="mx-auto max-w-3xl text-center">
           <Eyebrow centered>Get in Touch</Eyebrow>
@@ -123,9 +125,9 @@ export function GetInTouch() {
         )}
       </Container>
 
-      {/* Waves into the brand-light form section — same fill, so the two meet
-          on the curve. Nudged 1px past the edge to hide any sub-pixel seam. */}
-      <WaveEdge position="bottom" flat className="-bottom-px fill-brand-light" />
+      {/* White wave into the form section, nudged 1px past the edge to hide
+          any sub-pixel seam. */}
+      <WaveEdge position="bottom" flat className="-bottom-px fill-white" />
     </section>
   );
 }

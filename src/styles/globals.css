@@ -31,6 +31,9 @@
   /* Charcoal — warm near-black, the footer background. White text only;
      never brand text on it (same rule as ink). */
   --color-charcoal: #2a2622;
+  /* Sky — pale blue surface for the contact page's Get in Touch band.
+     A surface, never text; ink and brand text both clear 7:1 on it. */
+  --color-sky-light: #eaf4fb;
 
   --color-transparent: transparent;
   --color-current: currentColor;
@@ -54,6 +57,8 @@
 
   /* Elevation — a single hairline shadow for the settled glass header */
   --shadow-header: 0 1px 24px color-mix(in srgb, var(--color-ink) 6%, transparent);
+  /* Soft lift for a white card on a white section (the contact form) */
+  --shadow-card: 0 8px 40px -12px color-mix(in srgb, var(--color-ink) 15%, transparent);
 
   /* Motion */
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);

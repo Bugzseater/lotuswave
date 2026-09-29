@@ -2,6 +2,7 @@ import Image from "next/image";
 import { ArrowDown } from "lucide-react";
 import { HeroIntro } from "@/components/home/hero-intro";
 import { Container } from "@/components/ui/container";
+import { WaveEdge } from "@/components/ui/wave-edge";
 
 const HERO_IMAGE = {
   src: "/bg/contactUs/hero-peak.png",
@@ -101,16 +102,15 @@ export function ContactHero() {
         </HeroIntro>
       </Container>
 
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-28 bg-gradient-to-t from-white from-5% via-white/45 via-40% to-transparent sm:h-36 lg:h-44"
-      />
+      {/* Sky wave rising into the photo — Get in Touch continues it below.
+          Nudged 1px past the edge to hide any sub-pixel seam. */}
+      <WaveEdge position="bottom" flat className="-bottom-px z-10 fill-sky-light" />
 
       <a
         href="#get-in-touch"
-        className="group absolute bottom-4 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-1.5 text-brand"
+        className="group absolute bottom-16 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-1.5 text-white focus-visible:outline-white sm:bottom-20 lg:bottom-28"
       >
-        <span className="flex h-11 w-7 items-center justify-center rounded-pill border border-brand/70 transition-transform duration-300 ease-out group-hover:translate-y-1">
+        <span className="flex h-11 w-7 items-center justify-center rounded-pill border border-white/70 transition-transform duration-300 ease-out group-hover:translate-y-1">
           <ArrowDown aria-hidden="true" className="size-4" />
         </span>
         <span className="text-[0.65rem] tracking-[0.3em] uppercase">
