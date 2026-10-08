@@ -38,17 +38,22 @@ export const CONTACT_INTERESTS = [
 
 /**
  * The experiences page taxonomy, in page order. `key` is both the section
- * anchor (`/experiences#agro`) and the icon. `types` are the kinds of
- * experience each category covers; every `Experience.type` is one of them.
+ * anchor (`/experiences#agro`) and the icon. `slug` is the category's own
+ * page, `/experiences/agro-experience`; it shares the `[slug]` route with
+ * the experiences, so it must never equal an experience slug. `types` are
+ * the kinds of experience each category covers; every `Experience.type` is
+ * one of them.
  */
 export const EXPERIENCE_CATEGORIES: readonly {
   key: ExperienceCategoryKey;
+  slug: string;
   title: string;
   intro: string;
   types: readonly string[];
 }[] = [
   {
     key: "agro",
+    slug: "agro-experience",
     title: "Agro Experiences",
     intro:
       "Working farms, tea estates and spice gardens, opened to you by the families who tend them. Plant, pick, process and cook — then eat what the land gave that morning.",
@@ -65,6 +70,7 @@ export const EXPERIENCE_CATEGORIES: readonly {
   },
   {
     key: "wellness",
+    slug: "wellness-experience",
     title: "Wellness Experiences",
     intro:
       "Slow, restorative days drawn from Sri Lanka's living traditions — Ayurveda with qualified physicians, yoga in quiet places and food that is cooked to nourish.",
@@ -80,6 +86,7 @@ export const EXPERIENCE_CATEGORIES: readonly {
   },
   {
     key: "culture",
+    slug: "culture-and-community",
     title: "Culture & Community",
     intro:
       "Village life, craft and heritage, hosted by the people who keep them alive. Every visit is arranged with the community and pays the hosts directly.",
@@ -93,6 +100,7 @@ export const EXPERIENCE_CATEGORIES: readonly {
   },
   {
     key: "nature",
+    slug: "nature-and-wildlife",
     title: "Nature & Wildlife",
     intro:
       "Elephant plains, leopard country, rainforest and waterfalls — with naturalist guides who know when to speak and when to let the place do it.",
@@ -100,6 +108,7 @@ export const EXPERIENCE_CATEGORIES: readonly {
   },
   {
     key: "food",
+    slug: "food-experience",
     title: "Food Experiences",
     intro:
       "Morning markets, wood-fire kitchens and tea from the estate it grew on. Sri Lanka tasted the way its families eat it.",

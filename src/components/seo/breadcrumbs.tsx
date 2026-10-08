@@ -5,26 +5,45 @@ import { cn } from "@/lib/utils";
 export type Crumb = { label: string; href?: string };
 
 /**
- * Breadcrumb trail for light backgrounds. Every crumb but the last is a link;
- * the last is the current page.
+ * Breadcrumb trail. Every crumb but the last is a link; the last is the
+ * current page. `onBrand` switches to white for dark image heroes.
  */
-export function Breadcrumbs({ items, className }: { items: Crumb[]; className?: string }) {
+export function Breadcrumbs({
+  items,
+  onBrand = false,
+  className,
+}: {
+  items: Crumb[];
+  onBrand?: boolean;
+  className?: string;
+}) {
   return (
     <nav aria-label="Breadcrumb" className={className}>
-      <ol className="flex flex-wrap items-center gap-1.5 text-sm text-muted">
+      <ol className={cn("flex flex-wrap items-center gap-1.5 text-sm", onBrand ? "text-white/80" : "text-muted")}>
         {items.map(({ label, href }, i) => {
           const last = i === items.length - 1;
           return (
             <li key={label} className="flex items-center gap-1.5">
-              {i > 0 && <ChevronRight aria-hidden="true" className="size-4 text-muted/70" />}
+              {i > 0 && (
+                <ChevronRight
+                  aria-hidden="true"
+                  className={cn("size-4", onBrand ? "text-white/60" : "text-muted/70")}
+                />
+              )}
               {last || !href ? (
-                <span aria-current={last ? "page" : undefined} className={cn(last && "font-medium text-ink")}>
+                <span
+                  aria-current={last ? "page" : undefined}
+                  className={cn(last && (onBrand ? "font-medium text-white" : "font-medium text-ink"))}
+                >
                   {label}
                 </span>
               ) : (
                 <Link
                   href={href}
-                  className="transition-colors duration-200 ease-out hover:text-brand hover:underline underline-offset-4"
+                  className={cn(
+                    "underline-offset-4 transition-colors duration-200 ease-out hover:underline",
+                    onBrand ? "hover:text-white focus-visible:outline-white" : "hover:text-brand",
+                  )}
                 >
                   {label}
                 </Link>

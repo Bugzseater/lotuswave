@@ -186,6 +186,8 @@ export type Experience = {
   /** Display text, e.g. "Full day, about 7 hours". */
   duration: string;
   location: string;
+  /** Where it happens, for the island map pin. */
+  coordinates: { lat: number; lng: number };
   bestSeason: string;
   suitableFor: string;
   groupSize: string;
