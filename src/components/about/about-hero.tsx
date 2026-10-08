@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { ArrowDown } from "lucide-react";
-import { HeroIntro } from "@/components/home/hero-intro";
 import { Container } from "@/components/ui/container";
+import { WaveEdge } from "@/components/ui/wave-edge";
 
 const HERO_IMAGE = {
   src: "/bg/aboutUs/hero.png",
@@ -63,52 +63,37 @@ export function AboutHero() {
       />
 
       <Container className="relative z-20 h-full max-w-[80rem]">
-        <HeroIntro className="flex h-full flex-col justify-end pt-28 pb-36 sm:pb-40 lg:pb-48">
+        {/* Static copy — no entrance or scroll animation. */}
+        <div className="flex h-full flex-col justify-end pt-28 pb-36 sm:pb-40 lg:pb-48">
           <h1 className="font-display text-4xl leading-[1.08] font-semibold text-balance text-white sm:text-5xl lg:text-6xl">
             <span className="sr-only">About LotusWave Lanka Tours: </span>
-            <span className="-my-[0.08em] block overflow-hidden py-[0.08em]">
-              <span data-hero-line className="block">
-                People, Nature
-              </span>
-            </span>
-            <span className="-my-[0.08em] block overflow-hidden py-[0.08em]">
-              <span data-hero-line className="block">
-                and{" "}
-                {/* Gold on the brand-dark veil, at 36px+ — allowed by rule 7. */}
-                <span data-hero-accent className="inline-block text-accent-gold">
-                  Meaningful Journeys
-                </span>
-                .
-              </span>
+            <span className="block">People, Nature</span>
+            <span className="block">
+              and{" "}
+              {/* Gold on the brand-dark veil, at 36px+ — allowed by rule 7. */}
+              <span className="text-accent-gold">Meaningful Journeys</span>.
             </span>
           </h1>
 
-          <p
-            data-hero-fade
-            className="mt-6 max-w-xl text-base leading-relaxed text-pretty text-white/90 sm:text-lg"
-          >
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-pretty text-white/90 sm:text-lg">
             We are a Sri Lankan travel and wellness company dedicated to
             showcasing the island&rsquo;s natural beauty, rich culture and
             authentic experiences, while supporting local communities and
             sustainable travel.
           </p>
-        </HeroIntro>
+        </div>
       </Container>
 
-      {/* Soft white fade along the foot, so the photo melts into the white
-          Who We Are section instead of ending on a hard line. Solid only at
-          the very bottom, then a long, eased ramp. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-28 bg-gradient-to-t from-white from-5% via-white/45 via-40% to-transparent sm:h-36 lg:h-44"
-      />
+      {/* White wave closing the photo into the white Who We Are section.
+          Nudged 1px past the edge to hide any sub-pixel seam. */}
+      <WaveEdge position="bottom" flat className="-bottom-px z-10 fill-white" />
 
-      {/* Sits in the white of the fade, so it takes brand, not white. */}
+      {/* Above the wave, on the photo, so it takes white — as on Contact. */}
       <a
         href="#our-story"
-        className="group absolute bottom-4 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-1.5 text-brand"
+        className="group absolute bottom-16 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-1.5 text-white focus-visible:outline-white sm:bottom-20 lg:bottom-28"
       >
-        <span className="flex h-11 w-7 items-center justify-center rounded-pill border border-brand/70 transition-transform duration-300 ease-out group-hover:translate-y-1">
+        <span className="flex h-11 w-7 items-center justify-center rounded-pill border border-white/70 transition-transform duration-300 ease-out group-hover:translate-y-1">
           <ArrowDown aria-hidden="true" className="size-4" />
         </span>
         <span className="text-[0.65rem] tracking-[0.3em] uppercase">

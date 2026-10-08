@@ -24,6 +24,10 @@
      (the agro section). White text still clears 6:1 on it. */
   --color-accent-green-soft: color-mix(in srgb, var(--color-accent-green) 80%, var(--color-white));
   --color-accent-sand: #e9dfcb;
+  /* Green mist — accent-green washed almost to white, for a calm green
+     section surface (the destinations CTA). A surface, never text; ink and
+     brand text both clear 7:1 on it. */
+  --color-green-mist: color-mix(in srgb, var(--color-accent-green) 7%, var(--color-white));
   /* Warm sand — background of the wellness section. A surface, never text.
      Ink and brand text both clear 7:1 on it; muted is borderline, so
      supporting copy on it uses ink at 75%. */

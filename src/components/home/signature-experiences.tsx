@@ -5,16 +5,16 @@ import { JourneySlider } from "@/components/journeys/journey-slider";
 import { Container } from "@/components/ui/container";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { Section } from "@/components/ui/section";
-import { getExperiences } from "@/lib/data";
+import { getSignatureExperiences } from "@/lib/data";
 
 /**
  * Section 03 — the six ways into Sri Lanka. A centred heading, then the
  * experiences as photo cards in a snap-scrolling carousel with manual
  * previous / next controls that also advances on its own every 3s. Sits on the tint so the page alternates
- * white → tint after the brand intro. Each card opens its experience page.
+ * white → tint after the brand intro. Each card opens its category on the experiences page.
  */
 export async function SignatureExperiences() {
-  const experiences = await getExperiences();
+  const experiences = await getSignatureExperiences();
 
   return (
     <Section id="experiences" aria-labelledby="experiences-heading" className="bg-section pt-10 pb-6 sm:pt-14 sm:pb-8 lg:pt-16 lg:pb-10">
@@ -55,7 +55,7 @@ export async function SignatureExperiences() {
             >
               {experiences.map((experience) => (
                 <li
-                  key={experience.slug}
+                  key={experience.title}
                   data-reveal-card
                   className="w-[85%] shrink-0 snap-start sm:w-[calc((100%-1.25rem)/2)] lg:w-[calc((100%-3rem)/3)]"
                 >

@@ -6,6 +6,7 @@ import { NewsletterSignup } from "@/components/layout/newsletter-signup";
 import { SOCIAL_ICONS } from "@/components/layout/social-icons";
 import {
   COMPANY,
+  EXPERIENCE_CATEGORIES,
   NAV_LINKS,
   POLICY_LINKS,
   SITE,
@@ -14,7 +15,7 @@ import {
   telHref,
   type NavLink,
 } from "@/lib/constants";
-import { getExperiences, getJourneys } from "@/lib/data";
+import { getJourneys } from "@/lib/data";
 
 const linkStyle =
   "text-sm text-muted transition-colors duration-200 ease-out hover:text-brand";
@@ -32,22 +33,20 @@ const headingStyle =
  * all at a whisper — decorative, hidden from assistive tech and from phones,
  * where the crop would show nothing but the pale centre.
  *
- * The experience and journey columns come from `@/lib/data`, so every page the
+ * The experience column lists the categories in `EXPERIENCE_CATEGORIES`;
+ * the journey column comes from `@/lib/data`, so every page the
  * site has is reachable from the footer and stays in step as the collections
  * grow. Contact details live in `COMPANY` (constants); the SLTDA number and
  * social links render only once they have real values.
  */
 export async function Footer() {
-  const [experiences, journeys] = await Promise.all([
-    getExperiences(),
-    getJourneys(),
-  ]);
+  const journeys = await getJourneys();
 
   const socials = SOCIAL_LINKS.filter((link) => link.href);
   const explore = NAV_LINKS.filter((link) => link.href !== "/");
-  const experienceLinks: NavLink[] = experiences.map((experience) => ({
-    label: experience.title,
-    href: `/experiences/${experience.slug}`,
+  const experienceLinks: NavLink[] = EXPERIENCE_CATEGORIES.map((category) => ({
+    label: category.title,
+    href: `/experiences#${category.key}`,
   }));
   const journeyLinks: NavLink[] = journeys.map((journey) => ({
     label: journey.title,

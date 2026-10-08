@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { ArrowDown } from "lucide-react";
-import { HeroIntro } from "@/components/home/hero-intro";
 import { Container } from "@/components/ui/container";
 import { WaveEdge } from "@/components/ui/wave-edge";
 
@@ -73,33 +72,22 @@ export function ContactHero() {
       />
 
       <Container className="relative z-20 h-full max-w-[80rem]">
-        <HeroIntro className="flex h-full flex-col justify-end pt-28 pb-36 sm:pb-40 lg:pb-48">
+        {/* Static copy — no entrance or scroll animation. */}
+        <div className="flex h-full flex-col justify-end pt-28 pb-36 sm:pb-40 lg:pb-48">
           <h1 className="font-display text-4xl leading-[1.08] font-semibold text-balance text-white sm:text-5xl lg:text-6xl">
             <span className="sr-only">Contact LotusWave Lanka Tours: </span>
-            <span className="-my-[0.08em] block overflow-hidden py-[0.08em]">
-              <span data-hero-line className="block">
-                Let&rsquo;s Talk About
-              </span>
-            </span>
-            <span className="-my-[0.08em] block overflow-hidden py-[0.08em]">
-              <span data-hero-line className="block">
-                {/* Gold on the brand-dark veil, at 36px+ — allowed by rule 7. */}
-                <span data-hero-accent className="inline-block text-accent-gold">
-                  Your Sri Lanka
-                </span>
-                .
-              </span>
+            <span className="block">Let&rsquo;s Talk About</span>
+            <span className="block">
+              {/* Gold on the brand-dark veil, at 36px+ — allowed by rule 7. */}
+              <span className="text-accent-gold">Your Sri Lanka</span>.
             </span>
           </h1>
 
-          <p
-            data-hero-fade
-            className="mt-6 max-w-xl text-base leading-relaxed text-pretty text-white/90 sm:text-lg"
-          >
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-pretty text-white/90 sm:text-lg">
             Questions, ideas or a half-formed dream of tea hills and Ayurveda —
             our local team replies personally, usually within one working day.
           </p>
-        </HeroIntro>
+        </div>
       </Container>
 
       {/* Sky wave rising into the photo — Get in Touch continues it below.

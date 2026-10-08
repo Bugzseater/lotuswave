@@ -1,19 +1,13 @@
 import Image from "next/image";
-import { ArrowRight, Landmark, Leaf, MapPin, Mountain, PawPrint, Waves, type LucideIcon } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, MapPin } from "lucide-react";
+import { DESTINATION_CATEGORY } from "@/components/destinations/destination-category";
 import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { getDestinations } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import type { Destination } from "@/types";
-
-const CATEGORY: Record<Destination["category"], { label: string; icon: LucideIcon }> = {
-  heritage: { label: "Heritage", icon: Landmark },
-  hills: { label: "Hill Country", icon: Mountain },
-  tea: { label: "Tea Country", icon: Leaf },
-  wildlife: { label: "Wildlife", icon: PawPrint },
-  coast: { label: "Coast", icon: Waves },
-};
 
 /**
  * Tile spans by position. Phones: a full-width lead, then pairs, closing on a
@@ -102,13 +96,13 @@ function DestinationTile({
   index: number;
   className?: string;
 }) {
-  const { label, icon: Icon } = CATEGORY[destination.category];
+  const { label, icon: Icon } = DESTINATION_CATEGORY[destination.category];
   const lead = index === 0;
 
   return (
     <li
       className={cn(
-        "group relative isolate overflow-hidden rounded-card bg-brand-light",
+        "group relative isolate overflow-hidden rounded-card bg-brand-light has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-2 has-[a:focus-visible]:outline-brand",
         className,
       )}
     >
@@ -146,7 +140,12 @@ function DestinationTile({
               lead ? "text-3xl sm:text-4xl lg:text-5xl" : "text-xl sm:text-2xl",
             )}
           >
-            {destination.name}
+            <Link
+              href={`/destinations/${destination.slug}`}
+              className="outline-none after:absolute after:inset-0 after:content-['']"
+            >
+              {destination.name}
+            </Link>
           </h3>
           <p
             className={cn(

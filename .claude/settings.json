@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd \"d:/MIEZ DEV/lotus-wave-lanka-tours\" && sed -i '1a import type { ExperienceCategoryKey } from \"@/types\";\\\\n' src/lib/constants.ts && head -4 src/lib/constants.ts && git mv src/lib/data/experiences.ts src/lib/data/signature-experiences.ts)",
+      "Bash(sed -i '2,3d' src/lib/constants.ts)",
+      "Bash(sed -i '1i import type { ExperienceCategoryKey } from \"@/types\";\\\\n' src/lib/constants.ts)",
+      "Bash(grep -n \"lib/constants\\\\|^  [A-Z_]*,$\\\\|^import {$\" src/components/layout/footer.tsx src/components/layout/footer-scenic.tsx)"
+    ]
+  }
+}

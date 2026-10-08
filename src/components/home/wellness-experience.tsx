@@ -154,7 +154,7 @@ export function WellnessExperience() {
 
         <div className="mt-8 text-center sm:mt-10">
           <ButtonLink
-            href="/experiences/ayurveda-wellness"
+            href="/experiences#wellness"
             size="lg"
             className="w-full sm:w-auto"
           >

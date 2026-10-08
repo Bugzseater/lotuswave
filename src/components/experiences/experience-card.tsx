@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import type { ExperienceCategory } from "@/types";
+import type { SignatureExperience } from "@/types";
 import { cn } from "@/lib/utils";
 
 /**
@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
  * The whole card is clickable, but only the title is a link: its `::after`
  * stretches over the card, so screen readers hear one descriptive link.
  */
-export function ExperienceCard({ slug, title, summary, image, cutout }: ExperienceCategory) {
+export function ExperienceCard({ title, summary, image, cutout, href }: SignatureExperience) {
   return (
     <article
       className={cn(
@@ -57,7 +57,7 @@ export function ExperienceCard({ slug, title, summary, image, cutout }: Experien
             one line at the carousel's card widths. */}
         <h3 className="font-display text-[1.375rem] leading-tight font-medium text-balance text-ink transition-colors duration-200 ease-out group-hover:text-brand sm:text-2xl">
           <Link
-            href={`/experiences/${slug}`}
+            href={href}
             className="after:absolute after:inset-0 focus-visible:outline-none focus-visible:after:rounded-card focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-brand"
           >
             {title}

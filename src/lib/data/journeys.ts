@@ -214,3 +214,8 @@ export async function getFeaturedJourneys(): Promise<Journey[]> {
 export async function getJourneyBySlug(slug: string): Promise<Journey | undefined> {
   return JOURNEYS.find((journey) => journey.slug === slug);
 }
+
+/** Journeys in the order the slugs are given; unknown slugs are skipped. */
+export async function getJourneysBySlugs(slugs: readonly string[]): Promise<Journey[]> {
+  return slugs.flatMap((slug) => JOURNEYS.find((journey) => journey.slug === slug) ?? []);
+}
