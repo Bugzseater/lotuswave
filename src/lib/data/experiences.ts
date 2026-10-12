@@ -536,3 +536,8 @@ export async function getExperienceBySlug(slug: string): Promise<Experience | un
   return EXPERIENCES.find((experience) => experience.slug === slug);
 }
 
+/** Experiences in the order the slugs are given; unknown slugs are skipped. */
+export async function getExperiencesBySlugs(slugs: readonly string[]): Promise<Experience[]> {
+  return slugs.flatMap((slug) => EXPERIENCES.find((experience) => experience.slug === slug) ?? []);
+}
+

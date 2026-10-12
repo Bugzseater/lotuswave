@@ -1,4 +1,11 @@
-import type { DestinationAreaKey, ExperienceCategoryKey } from "@/types";
+import type {
+  ComfortLevel,
+  DestinationAreaKey,
+  ExperienceCategoryKey,
+  GroupType,
+  JourneyCategoryKey,
+  TravelStyleKey,
+} from "@/types";
 
 export const SITE = {
   name: "LotusWave Lanka Tours",
@@ -34,6 +41,23 @@ export const CONTACT_INTERESTS = [
   "Wellness & Ayurveda",
   "A tailor-made journey",
   "Something else",
+] as const;
+
+/** "When would you like to travel?" options on the journey enquiry form. */
+export const TRAVEL_MONTHS = [
+  "Flexible",
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ] as const;
 
 /**
@@ -155,6 +179,110 @@ export const DESTINATION_AREAS: readonly {
     intro:
       "Two coasts and two seasons. The south and west are at their best in winter, the east in summer — so there is always a beach in the sun.",
   },
+] as const;
+
+/**
+ * The journeys page categories, in tab order. `key` is the `?category=`
+ * value on `/journeys`. A journey can sit in several.
+ */
+export const JOURNEY_CATEGORIES: readonly {
+  key: JourneyCategoryKey;
+  title: string;
+  intro: string;
+}[] = [
+  {
+    key: "signature",
+    title: "Signature Journeys",
+    intro:
+      "The journeys we built the company around — farm days, healing days and the island's heritage, joined in the order we would travel them ourselves.",
+  },
+  {
+    key: "agro",
+    title: "Agro Journeys",
+    intro:
+      "Working farms, tea estates and paddy fields, opened to you by the families who tend them. Plant, pick and cook your way across the island.",
+  },
+  {
+    key: "wellness",
+    title: "Wellness Journeys",
+    intro:
+      "Ayurveda with qualified physicians, yoga in quiet places and food cooked to nourish — journeys paced for rest.",
+  },
+  {
+    key: "complete",
+    title: "Complete Sri Lanka Tours",
+    intro:
+      "Ancient cities, hill country, wildlife and the coast in one trip — for travellers who want to see the whole island properly.",
+  },
+  {
+    key: "short",
+    title: "Short Escapes",
+    intro:
+      "Five or six days, one region done well. Easy to add to a business trip, a Maldives stay or a longer journey of your own.",
+  },
+  {
+    key: "luxury",
+    title: "Luxury Private Tours",
+    intro:
+      "Boutique villas, heritage bungalows and a private driver-guide throughout, with every day shaped around you.",
+  },
+  {
+    key: "family",
+    title: "Family Journeys",
+    intro:
+      "Shorter drives, hands-on days and stays with room to run — journeys children remember and parents enjoy too.",
+  },
+] as const;
+
+/** Travel-style filter on `/journeys`, in display order. */
+export const TRAVEL_STYLES: readonly { key: TravelStyleKey; label: string }[] = [
+  { key: "agro", label: "Agro" },
+  { key: "wellness", label: "Wellness" },
+  { key: "culture", label: "Culture" },
+  { key: "wildlife", label: "Wildlife" },
+  { key: "beach", label: "Beach" },
+] as const;
+
+/** Duration filter bands on `/journeys`. `max` is inclusive. */
+export const JOURNEY_DURATIONS: readonly {
+  key: "short" | "week" | "long";
+  label: string;
+  min: number;
+  max: number;
+}[] = [
+  { key: "short", label: "Up to 6 days", min: 1, max: 6 },
+  { key: "week", label: "7 – 9 days", min: 7, max: 9 },
+  { key: "long", label: "10 days or more", min: 10, max: Infinity },
+] as const;
+
+/** Accommodation standard, lowest first. */
+export const COMFORT_LEVELS: readonly {
+  key: ComfortLevel;
+  label: string;
+  text: string;
+}[] = [
+  {
+    key: "comfort",
+    label: "Comfort",
+    text: "Characterful, well-run guesthouses, farm lodges and small hotels — clean, warm and personally checked by our team.",
+  },
+  {
+    key: "premium",
+    label: "Premium",
+    text: "Boutique hotels, tea-estate bungalows and four-star retreats with more space, better views and a pool most nights.",
+  },
+  {
+    key: "luxury",
+    label: "Luxury",
+    text: "The island's finest small hotels and private villas — five-star service, exceptional settings and nothing left to chance.",
+  },
+] as const;
+
+/** "Travelling as" filter on `/journeys`. */
+export const GROUP_TYPES: readonly { key: GroupType; label: string }[] = [
+  { key: "couple", label: "Couple" },
+  { key: "family", label: "Family" },
+  { key: "small-group", label: "Small group" },
 ] as const;
 
 export const telHref =(phone: string) => `tel:${phone.replace(/\s+/g, "")}`;

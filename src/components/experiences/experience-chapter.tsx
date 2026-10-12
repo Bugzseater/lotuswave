@@ -3,7 +3,6 @@ import {
   Backpack,
   CalendarDays,
   Check,
-  ChevronDown,
   Clock,
   HeartHandshake,
   ListOrdered,
@@ -15,6 +14,7 @@ import {
 } from "lucide-react";
 import { IslandMap } from "@/components/destinations/island-map";
 import { ButtonLink } from "@/components/ui/button";
+import { Disclosure as Fold } from "@/components/ui/disclosure";
 import type { Experience } from "@/types";
 import { cn } from "@/lib/utils";
 import { ExperienceIcon } from "./experience-icon";
@@ -199,33 +199,6 @@ export function ExperienceChapter({
         </ButtonLink>
       </div>
     </article>
-  );
-}
-
-/** A native disclosure — no client JavaScript, keyboard-accessible. */
-function Fold({
-  icon: Icon,
-  heading,
-  open = false,
-  children,
-}: {
-  icon: LucideIcon;
-  heading: string;
-  open?: boolean;
-  children: React.ReactNode;
-}) {
-  return (
-    <details open={open} className="group">
-      <summary className="flex cursor-pointer list-none items-center gap-3 py-4 text-base font-medium text-ink transition-colors duration-200 ease-out hover:text-brand [&::-webkit-details-marker]:hidden">
-        <Icon aria-hidden="true" className="size-5 shrink-0 text-brand" strokeWidth={1.5} />
-        <span className="flex-1">{heading}</span>
-        <ChevronDown
-          aria-hidden="true"
-          className="size-4 shrink-0 text-muted transition-transform duration-200 ease-out group-open:rotate-180"
-        />
-      </summary>
-      <div className="pb-5 pl-8">{children}</div>
-    </details>
   );
 }
 

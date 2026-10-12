@@ -96,6 +96,9 @@ const TONES = {
     dot: "fill-white/45",
     label: "fill-white",
     labelText: "fill-brand",
+    route: "stroke-white/35",
+    routeLine: "stroke-white",
+    traveller: "fill-accent-gold stroke-white",
   },
   /** On white or brand-light. */
   light: {
@@ -109,6 +112,9 @@ const TONES = {
     dot: "fill-brand/35",
     label: "fill-brand",
     labelText: "fill-white",
+    route: "stroke-brand/30",
+    routeLine: "stroke-brand",
+    traveller: "fill-white stroke-brand",
   },
 } as const;
 
@@ -117,7 +123,8 @@ const TONES = {
  * to that guide and shows its name on hover or focus. With `activeSlug`, that
  * pin is drawn large with a pulsing halo and the others shrink to dots — the
  * "you are here" view on a guide page. With `focus`, only those pins keep
- * their numbers — one region lit on the full island.
+ * their numbers — one region lit on the full island. With `route`, a dashed
+ * line joins the pins in the order given — a journey's path.
  */
 export function IslandMap({
   pins,
@@ -125,6 +132,7 @@ export function IslandMap({
   focus,
   linked = false,
   minimal = false,
+  route = false,
   labelScale = 1,
   tone = "onBrand",
   label,
@@ -132,6 +140,8 @@ export function IslandMap({
 }: {
   /** Outline and pins only — no grid, compass or pulse. For thumbnail sizes. */
   minimal?: boolean;
+  /** Joins the pins with a dashed line, in array order. */
+  route?: boolean;
   /** Enlarges the hover name labels — for a map drawn small. */
   labelScale?: number;
   pins: MapPin[];
@@ -183,6 +193,8 @@ export function IslandMap({
           </text>
         </g>
       )}
+
+      {route && pins.length > 1 && <RouteLine pins={pins} tone={tone} />}
 
       {pins.map((pin) => {
         const [x, y] = project(pin.coordinates.lng, pin.coordinates.lat);
@@ -278,11 +290,75 @@ export function IslandMap({
             {marker}
           </a>
         ) : (
-          <g key={pin.slug} aria-hidden="true" className="group">
+          <g
+            key={pin.slug}
+            aria-hidden="true"
+            data-route-pin
+            className="group origin-center transition-[opacity,scale] duration-300 ease-out [transform-box:fill-box] [&.is-off]:scale-75 [&.is-off]:opacity-30"
+          >
             {marker}
           </g>
         );
       })}
     </svg>
+  );
+}
+
+/**
+ * A journey's path through the pins, in order. Two layers: a faint dashed
+ * track of the whole route, and over it a solid line that can be drawn on —
+ * `pathLength` is 1, so `stroke-dashoffset` runs from 1 (hidden) to 0 (full),
+ * and `data-fractions` gives how far along the line each pin sits. A
+ * traveller dot, hidden until a script places it, rides the drawn end.
+ * Without a script the line is simply drawn in full.
+ */
+function RouteLine({ pins, tone }: { pins: MapPin[]; tone: keyof typeof TONES }) {
+  const t = TONES[tone];
+  const points = pins.map(({ coordinates: { lng, lat } }) => project(lng, lat));
+  const d = `M${points.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(" L")}`;
+
+  // Distance along the route to each pin, as a fraction of the whole.
+  const lengths = [0];
+  for (let i = 1; i < points.length; i++) {
+    const [x0, y0] = points[i - 1];
+    const [x1, y1] = points[i];
+    lengths.push(lengths[i - 1] + Math.hypot(x1 - x0, y1 - y0));
+  }
+  const total = lengths.at(-1) || 1;
+  const fractions = lengths.map((length) => Number((length / total).toFixed(4)));
+
+  return (
+    <g aria-hidden="true">
+      <path
+        d={d}
+        fill="none"
+        strokeWidth="1.5"
+        strokeDasharray="3 4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className={t.route}
+      />
+      <path
+        data-route-line
+        data-fractions={JSON.stringify(fractions)}
+        d={d}
+        pathLength={1}
+        fill="none"
+        strokeWidth="2.5"
+        strokeDasharray="1 1"
+        strokeDashoffset="0"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className={t.routeLine}
+      />
+      <circle
+        data-route-traveller
+        cx={points[0][0]}
+        cy={points[0][1]}
+        r="5"
+        strokeWidth="2.5"
+        className={cn("opacity-0", t.traveller)}
+      />
+    </g>
   );
 }

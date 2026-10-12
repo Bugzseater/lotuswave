@@ -1,5 +1,5 @@
 export { getDestinationBySlug, getDestinations } from "./destinations";
-export { getExperienceBySlug, getExperiences } from "./experiences";
+export { getExperienceBySlug, getExperiences, getExperiencesBySlugs } from "./experiences";
 export {
   getFeaturedJourneys,
   getJourneyBySlug,

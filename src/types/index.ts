@@ -39,26 +39,127 @@ export type FounderIntro = {
   photo: ImageAsset;
 };
 
-/** A packaged multi-day itinerary. */
+/** The journeys page categories. See `JOURNEY_CATEGORIES`. */
+export type JourneyCategoryKey =
+  | "signature"
+  | "agro"
+  | "wellness"
+  | "complete"
+  | "short"
+  | "luxury"
+  | "family";
+
+/** Travel-style filter keys. See `TRAVEL_STYLES`. */
+export type TravelStyleKey = "agro" | "wellness" | "culture" | "wildlife" | "beach";
+
+/** Accommodation standard. See `COMFORT_LEVELS`. */
+export type ComfortLevel = "comfort" | "premium" | "luxury";
+
+/** Who a journey is shaped for. See `GROUP_TYPES`. */
+export type GroupType = "couple" | "family" | "small-group";
+
+export type Meal = "breakfast" | "lunch" | "dinner";
+
+/** A place the journey stays, in route order. Pinned on the route map. */
+export type JourneyStop = {
+  /** Unique within the journey; the map pin's key. */
+  id: string;
+  name: string;
+  coordinates: { lat: number; lng: number };
+  nights: number;
+  /** The kind of stay, e.g. "Family-run farm lodge". */
+  stay: string;
+  /** Links the stop to its destination guide. */
+  destinationSlug?: string;
+};
+
+/** One day — or a run of days in one place — of the itinerary. */
+export type JourneyDay = {
+  day: number;
+  /** Last day of a run, e.g. `day: 5, toDay: 6` reads "Days 5–6". */
+  toDay?: number;
+  title: string;
+  text: string;
+  /** Where the night is spent; `null` on the departure day. */
+  overnight: string | null;
+  /** Meals included on each day of the run. */
+  meals: Meal[];
+};
+
+export type Faq = {
+  question: string;
+  answer: string;
+};
+
+/** A packaged multi-day itinerary with its own page at `/journeys/[slug]`. */
 export type Journey = {
   slug: string;
   title: string;
   durationDays: number;
   /** Who the journey suits, e.g. "Couples, families and slow travellers". */
   bestFor: string;
+  /** The one-line promise under the title. */
+  promise: string;
   /** Two or three lines for the card. */
   summary: string;
   /** Opening paragraph on the detail page. */
   description: string;
+  /** Further overview paragraphs. */
+  overview: string[];
   highlights: string[];
+  /** "Who this is for", one reader per line. */
+  whoFor: string[];
   /** Per person in USD. `null` shows "Request Price". */
   startingPrice: number | null;
   /** Content categorisation only — never changes colour. */
   theme: "agro" | "wellness";
+  categories: JourneyCategoryKey[];
+  travelStyles: TravelStyleKey[];
+  comfort: ComfortLevel;
+  groupTypes: GroupType[];
   featured: boolean;
   image: ImageAsset;
+  /** Stops in travel order. Nights add up to `durationDays - 1`. */
+  route: JourneyStop[];
+  itinerary: JourneyDay[];
+  /** What the accommodation standard means on this journey. */
+  accommodation: string;
+  /** Slugs of experiences built into the journey. */
+  experiences: string[];
+  /** A sentence on how meals work; the counts come from the itinerary. */
+  meals: string;
+  transport: string[];
+  included: string[];
+  notIncluded: string[];
+  upgrades: { title: string; text: string }[];
+  bestTime: {
+    summary: string;
+    /** Exactly twelve entries, January first. */
+    months: MonthRating[];
+  };
+  /** Responsible-travel impact — who benefits and how. */
+  impact: string[];
+  gallery: ImageAsset[];
+  faqs: Faq[];
   seo: SeoFields;
 };
+
+/** What a journey card and the journeys finder need — kept small for the client. */
+export type JourneySummary = Pick<
+  Journey,
+  | "slug"
+  | "title"
+  | "durationDays"
+  | "bestFor"
+  | "startingPrice"
+  | "theme"
+  | "image"
+  | "route"
+  | "categories"
+  | "travelStyles"
+  | "comfort"
+  | "groupTypes"
+>;
 
 /** The four groups the destinations page is arranged in. See `DESTINATION_AREAS`. */
 export type DestinationAreaKey = "ancient" | "highlands" | "wild" | "coast";
