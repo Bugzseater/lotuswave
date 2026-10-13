@@ -4,6 +4,7 @@ import type {
   ExperienceCategoryKey,
   GroupType,
   JourneyCategoryKey,
+  StoryCategoryKey,
   TravelStyleKey,
 } from "@/types";
 
@@ -58,6 +59,29 @@ export const TRAVEL_MONTHS = [
   "October",
   "November",
   "December",
+] as const;
+
+/** "What draws you to Sri Lanka?" options on the plan-your-trip form. */
+export const TRIP_INTERESTS = [
+  "Agro",
+  "Wellness",
+  "Ayurveda",
+  "Yoga",
+  "Culture",
+  "Wildlife",
+  "Food",
+  "Beach",
+  "Adventure",
+] as const;
+
+/** Budget bands on the plan-your-trip form, per person, excluding flights. */
+export const TRIP_BUDGETS = [
+  "Under US$1,500",
+  "US$1,500 – 2,500",
+  "US$2,500 – 4,000",
+  "US$4,000 – 6,000",
+  "Over US$6,000",
+  "Not sure yet",
 ] as const;
 
 /**
@@ -231,6 +255,67 @@ export const JOURNEY_CATEGORIES: readonly {
     title: "Family Journeys",
     intro:
       "Shorter drives, hands-on days and stays with room to run — journeys children remember and parents enjoy too.",
+  },
+] as const;
+
+/**
+ * The travel stories categories, in filter order. `slug` is the `?category=`
+ * value on `/travel-stories`, e.g. `/travel-stories?category=agro-tourism`.
+ */
+export const STORY_CATEGORIES: readonly {
+  key: StoryCategoryKey;
+  slug: string;
+  title: string;
+  intro: string;
+}[] = [
+  {
+    key: "agro",
+    slug: "agro-tourism",
+    title: "Agro Tourism",
+    intro:
+      "Farm stays, tea estates, spice gardens and paddy fields — what it is really like to spend your days on a working Sri Lankan farm.",
+  },
+  {
+    key: "wellness",
+    slug: "wellness-and-ayurveda",
+    title: "Wellness & Ayurveda",
+    intro:
+      "Ayurveda, yoga and slow, restorative travel — how Sri Lanka's healing traditions work, and how to choose the right kind of rest.",
+  },
+  {
+    key: "guides",
+    slug: "sri-lanka-travel-guides",
+    title: "Sri Lanka Travel Guides",
+    intro:
+      "Practical planning: when to go, how long to stay, how to get around and how to build a route that is not all driving.",
+  },
+  {
+    key: "food",
+    slug: "food-and-culture",
+    title: "Food & Culture",
+    intro:
+      "Rice and curry, village kitchens, festivals and the people who keep the island's traditions alive.",
+  },
+  {
+    key: "responsible",
+    slug: "responsible-travel",
+    title: "Responsible Travel",
+    intro:
+      "How to travel in a way that pays farmers, protects wildlife and leaves the places you visit better off.",
+  },
+  {
+    key: "destinations",
+    slug: "destinations",
+    title: "Destinations",
+    intro:
+      "Ancient cities, hill country, rainforest and two coasts — where to go in Sri Lanka and what to do once you are there.",
+  },
+  {
+    key: "founder",
+    slug: "founders-journey",
+    title: "Founder’s Journey",
+    intro:
+      "Why LotusWave exists — notes from our founder on building a travel company around Sri Lanka's farms and healing traditions.",
   },
 ] as const;
 

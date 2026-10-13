@@ -267,6 +267,51 @@ export type SignatureExperience = {
   href: string;
 };
 
+/** The travel stories categories. See `STORY_CATEGORIES`. */
+export type StoryCategoryKey =
+  | "agro"
+  | "wellness"
+  | "guides"
+  | "food"
+  | "responsible"
+  | "destinations"
+  | "founder";
+
+/** An article with its own page at `/travel-stories/[slug]`. */
+export type Story = {
+  slug: string;
+  title: string;
+  /** Two lines for the card and the article standfirst. */
+  excerpt: string;
+  category: StoryCategoryKey;
+  /** As credited on the article, e.g. "LotusWave Travel Team". */
+  author: string;
+  /** ISO date, e.g. "2026-09-14". */
+  publishedAt: string;
+  /** ISO date of the last real revision. */
+  updatedAt?: string;
+  featured: boolean;
+  image: ImageAsset;
+  /**
+   * The article text, one string per paragraph. May carry inline links
+   * written `[label](/path)` and bold written `**text**`.
+   */
+  description: string[];
+  /** Optional key points, shown as bullets after the description. Same markup. */
+  points?: string[];
+  /** The two photos that close the article. */
+  images: [ImageAsset, ImageAsset];
+  /** Slugs to link at the foot of the article, in this order. */
+  relatedJourneys: string[];
+  seo: SeoFields;
+};
+
+/** What a story card and the stories browser need — kept small for the client. */
+export type StorySummary = Pick<
+  Story,
+  "slug" | "title" | "excerpt" | "category" | "publishedAt" | "image"
+> & { readingMinutes: number };
+
 /** The five sections of the experiences page. Each is also an icon key. */
 export type ExperienceCategoryKey = "agro" | "wellness" | "culture" | "nature" | "food";
 
