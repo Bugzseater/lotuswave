@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { SITE } from "@/lib/constants";
 
 /** Merge conditional class names, letting later Tailwind utilities win. */
 export function cn(...inputs: ClassValue[]) {
@@ -14,6 +15,15 @@ export function formatDate(iso: string) {
     year: "numeric",
     timeZone: "UTC",
   }).format(new Date(iso));
+}
+
+/**
+ * "/journeys/wellness-reset" → "https://lotuswavelankatours.com/journeys/wellness-reset".
+ * Already-absolute URLs (Unsplash, R2) pass through unchanged. JSON-LD and the
+ * sitemap need this — `metadataBase` only covers the `metadata` object.
+ */
+export function absoluteUrl(path: string) {
+  return new URL(path, SITE.url).toString();
 }
 
 /** "Days 2–3: Sigiriya" → "days-2-3-sigiriya". */

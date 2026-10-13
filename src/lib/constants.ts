@@ -4,6 +4,7 @@ import type {
   ExperienceCategoryKey,
   GroupType,
   JourneyCategoryKey,
+  PolicyGroupKey,
   StoryCategoryKey,
   TravelStyleKey,
 } from "@/types";
@@ -11,6 +12,11 @@ import type {
 export const SITE = {
   name: "LotusWave Lanka Tours",
   tagline: "Experience Sri Lanka From Its Roots.",
+  /**
+   * Production origin, no trailing slash. Canonicals, Open Graph, JSON-LD and
+   * the sitemap are all built on it. Set `NEXT_PUBLIC_SITE_URL` per deployment.
+   */
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://lotuswavelankatours.com",
   /** International format, digits only — used to build the wa.me link. */
   whatsappNumber: "94771234567",
 } as const;
@@ -372,13 +378,13 @@ export const GROUP_TYPES: readonly { key: GroupType; label: string }[] = [
 
 export const telHref =(phone: string) => `tel:${phone.replace(/\s+/g, "")}`;
 
-/** Legal and policy pages, in footer order. */
-export const POLICY_LINKS: readonly NavLink[] = [
-  { label: "Privacy Policy", href: "/privacy-policy" },
-  { label: "Terms and Conditions", href: "/terms-and-conditions" },
-  { label: "Booking Conditions", href: "/booking-conditions" },
-  { label: "Cancellation and Refund Policy", href: "/cancellation-refund-policy" },
-  { label: "Responsible Travel Policy", href: "/responsible-travel-policy" },
+/**
+ * The two groups policy pages are listed in, in page order. `key` is
+ * `Policy.group`. The pages themselves come from `getPolicies()`.
+ */
+export const POLICY_GROUPS: readonly { key: PolicyGroupKey; title: string }[] = [
+  { key: "legal", title: "Terms & policies" },
+  { key: "travel", title: "Travelling with us" },
 ] as const;
 
 /*

@@ -30,6 +30,8 @@ const figtree = Figtree({
 });
 
 export const metadata: Metadata = {
+  // Resolves every relative canonical and Open Graph image URL below the root.
+  metadataBase: new URL(SITE.url),
   title: {
     default: `${SITE.name} — ${SITE.tagline}`,
     template: `%s | ${SITE.name}`,

@@ -312,6 +312,47 @@ export type StorySummary = Pick<
   "slug" | "title" | "excerpt" | "category" | "publishedAt" | "image"
 > & { readingMinutes: number };
 
+/** The two groups policy pages are listed in. See `POLICY_GROUPS`. */
+export type PolicyGroupKey = "legal" | "travel";
+
+/** Keys into the icon map in `components/policies/policy-page.tsx`. */
+export type PolicyIcon =
+  | "terms"
+  | "booking"
+  | "cancellation"
+  | "payment"
+  | "privacy"
+  | "cookie"
+  | "responsible"
+  | "health"
+  | "insurance"
+  | "emergency";
+
+/** One headed part of a policy page. */
+export type PolicySection = {
+  /** Also the anchor, slugified: "Your deposit" → `#your-deposit`. */
+  heading: string;
+  /** Paragraphs. Same inline markup as stories: `[label](/path)`, `**bold**`. */
+  body: string[];
+  /** Optional bullets after the paragraphs. Same markup. */
+  points?: string[];
+};
+
+/** A legal or travel-information page, served at `/<slug>`. */
+export type Policy = {
+  slug: string;
+  /** The h1, and the link label in the footer. */
+  title: string;
+  group: PolicyGroupKey;
+  icon: PolicyIcon;
+  /** One or two plain sentences under the title: what the page covers. */
+  summary: string;
+  /** ISO date of the last real revision. Shown as "Last updated". */
+  updatedAt: string;
+  sections: PolicySection[];
+  seo: SeoFields;
+};
+
 /** The five sections of the experiences page. Each is also an icon key. */
 export type ExperienceCategoryKey = "agro" | "wellness" | "culture" | "nature" | "food";
 

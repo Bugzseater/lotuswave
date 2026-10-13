@@ -17,6 +17,7 @@ import {
   getStoryBySlug,
   toStorySummary,
 } from "@/lib/data";
+import { absoluteUrl } from "@/lib/utils";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -65,20 +66,20 @@ export default async function StoryPage({ params }: Props) {
         "@type": "BlogPosting",
         headline: title,
         description: seo.description,
-        image: image.src,
+        image: absoluteUrl(image.src),
         datePublished: publishedAt,
         dateModified: updatedAt ?? publishedAt,
         author: { "@type": "Organization", name: author },
-        publisher: { "@type": "Organization", name: SITE.name },
+        publisher: { "@type": "Organization", name: SITE.name, url: SITE.url },
         articleSection: categoryTitle,
-        mainEntityOfPage: `/travel-stories/${slug}`,
+        mainEntityOfPage: absoluteUrl(`/travel-stories/${slug}`),
       },
       {
         "@type": "BreadcrumbList",
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Home", item: "/" },
-          { "@type": "ListItem", position: 2, name: "Travel Stories", item: "/travel-stories" },
-          { "@type": "ListItem", position: 3, name: title, item: `/travel-stories/${slug}` },
+          { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+          { "@type": "ListItem", position: 2, name: "Travel Stories", item: absoluteUrl("/travel-stories") },
+          { "@type": "ListItem", position: 3, name: title, item: absoluteUrl(`/travel-stories/${slug}`) },
         ],
       },
     ],

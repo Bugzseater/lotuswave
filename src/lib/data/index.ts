@@ -6,6 +6,7 @@ export {
   getJourneys,
   getJourneysBySlugs,
 } from "./journeys";
+export { getPolicies, getPolicyBySlug } from "./policies";
 export { getSignatureExperiences } from "./signature-experiences";
 export {
   getRelatedStories,

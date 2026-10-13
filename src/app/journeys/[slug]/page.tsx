@@ -23,9 +23,9 @@ import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { WaveEdge } from "@/components/ui/wave-edge";
-import { COMFORT_LEVELS, EXPERIENCE_CATEGORIES, GROUP_TYPES, WHATSAPP_URL } from "@/lib/constants";
+import { COMFORT_LEVELS, EXPERIENCE_CATEGORIES, GROUP_TYPES, SITE, WHATSAPP_URL } from "@/lib/constants";
 import { getExperiencesBySlugs, getJourneyBySlug, getJourneys } from "@/lib/data";
-import { cn, formatPrice } from "@/lib/utils";
+import { absoluteUrl, cn, formatPrice } from "@/lib/utils";
 import type { Journey, Meal } from "@/types";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -109,7 +109,8 @@ export default async function JourneyPage({ params }: Props) {
         "@type": "TouristTrip",
         name: title,
         description,
-        image: journey.image.src,
+        url: absoluteUrl(`/journeys/${slug}`),
+        image: absoluteUrl(journey.image.src),
         touristType: bestFor,
         itinerary: {
           "@type": "ItemList",
@@ -135,7 +136,7 @@ export default async function JourneyPage({ params }: Props) {
             description: "Per person, based on two adults sharing",
           },
         }),
-        provider: { "@type": "TravelAgency", name: "LotusWave Lanka Tours" },
+        provider: { "@type": "TravelAgency", name: SITE.name, url: SITE.url },
       },
       {
         "@type": "FAQPage",
@@ -148,9 +149,9 @@ export default async function JourneyPage({ params }: Props) {
       {
         "@type": "BreadcrumbList",
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Home", item: "/" },
-          { "@type": "ListItem", position: 2, name: "Journeys", item: "/journeys" },
-          { "@type": "ListItem", position: 3, name: title, item: `/journeys/${slug}` },
+          { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+          { "@type": "ListItem", position: 2, name: "Journeys", item: absoluteUrl("/journeys") },
+          { "@type": "ListItem", position: 3, name: title, item: absoluteUrl(`/journeys/${slug}`) },
         ],
       },
     ],

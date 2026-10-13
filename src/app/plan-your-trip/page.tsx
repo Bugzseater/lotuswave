@@ -4,6 +4,7 @@ import { PlanTripSection } from "@/components/plan-trip/plan-trip-section";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { Container } from "@/components/ui/container";
 import { getDestinations, getExperiences, getJourneys } from "@/lib/data";
+import { absoluteUrl } from "@/lib/utils";
 
 // TODO: switch to buildMetadata() once src/lib/seo/metadata.ts exists.
 export const metadata: Metadata = {
@@ -43,14 +44,14 @@ export default async function PlanYourTripPage() {
       {
         "@type": "ContactPage",
         name: "Plan Your Trip",
-        url: "/plan-your-trip",
+        url: absoluteUrl("/plan-your-trip"),
         description: metadata.description,
       },
       {
         "@type": "BreadcrumbList",
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Home", item: "/" },
-          { "@type": "ListItem", position: 2, name: "Plan Your Trip", item: "/plan-your-trip" },
+          { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+          { "@type": "ListItem", position: 2, name: "Plan Your Trip", item: absoluteUrl("/plan-your-trip") },
         ],
       },
     ],

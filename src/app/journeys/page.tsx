@@ -11,7 +11,7 @@ import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { WaveEdge } from "@/components/ui/wave-edge";
 import { getJourneys } from "@/lib/data";
-import { cn } from "@/lib/utils";
+import { absoluteUrl, cn } from "@/lib/utils";
 import type { JourneySummary } from "@/types";
 
 // TODO: switch to buildMetadata() once src/lib/seo/metadata.ts exists.
@@ -57,15 +57,15 @@ export default async function JourneysPage() {
         itemListElement: journeys.map((journey, i) => ({
           "@type": "ListItem",
           position: i + 1,
-          url: `/journeys/${journey.slug}`,
+          url: absoluteUrl(`/journeys/${journey.slug}`),
           name: journey.title,
         })),
       },
       {
         "@type": "BreadcrumbList",
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Home", item: "/" },
-          { "@type": "ListItem", position: 2, name: "Journeys", item: "/journeys" },
+          { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+          { "@type": "ListItem", position: 2, name: "Journeys", item: absoluteUrl("/journeys") },
         ],
       },
     ],

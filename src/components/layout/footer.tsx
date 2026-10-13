@@ -8,14 +8,13 @@ import {
   COMPANY,
   EXPERIENCE_CATEGORIES,
   NAV_LINKS,
-  POLICY_LINKS,
   SITE,
   SOCIAL_LINKS,
   WHATSAPP_URL,
   telHref,
   type NavLink,
 } from "@/lib/constants";
-import { getJourneys } from "@/lib/data";
+import { getJourneys, getPolicies } from "@/lib/data";
 
 const linkStyle =
   "text-sm text-muted transition-colors duration-200 ease-out hover:text-brand";
@@ -34,13 +33,13 @@ const headingStyle =
  * where the crop would show nothing but the pale centre.
  *
  * The experience column lists the categories in `EXPERIENCE_CATEGORIES`;
- * the journey column comes from `@/lib/data`, so every page the
+ * the journey column and the policy links come from `@/lib/data`, so every page the
  * site has is reachable from the footer and stays in step as the collections
  * grow. Contact details live in `COMPANY` (constants); the SLTDA number and
  * social links render only once they have real values.
  */
 export async function Footer() {
-  const journeys = await getJourneys();
+  const [journeys, policies] = await Promise.all([getJourneys(), getPolicies()]);
 
   const socials = SOCIAL_LINKS.filter((link) => link.href);
   const explore = NAV_LINKS.filter((link) => link.href !== "/");
@@ -51,6 +50,10 @@ export async function Footer() {
   const journeyLinks: NavLink[] = journeys.map((journey) => ({
     label: journey.title,
     href: `/journeys/${journey.slug}`,
+  }));
+  const policyLinks: NavLink[] = policies.map((policy) => ({
+    label: policy.title,
+    href: `/${policy.slug}`,
   }));
 
   return (
@@ -214,7 +217,7 @@ function FooterContent({
 
         <nav aria-label="Policies">
           <ul className="flex flex-wrap gap-x-6 gap-y-2">
-            {POLICY_LINKS.map((link) => (
+            {policyLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}

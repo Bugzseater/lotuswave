@@ -29,7 +29,7 @@ import {
   getDestinationBySlug,
   getDestinations,
 } from "@/lib/data";
-import { cn } from "@/lib/utils";
+import { absoluteUrl, cn } from "@/lib/utils";
 import type {
   DestinationActivity,
   ImageAsset,
@@ -100,7 +100,8 @@ export default async function DestinationPage({ params }: Props) {
     "@type": "TouristDestination",
     name: `${name}, Sri Lanka`,
     description: intro,
-    image: image.src,
+    url: absoluteUrl(`/destinations/${slug}`),
+    image: absoluteUrl(image.src),
     geo: {
       "@type": "GeoCoordinates",
       latitude: coordinates.lat,

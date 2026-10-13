@@ -7,6 +7,7 @@ import { STORIES_HERO_IMAGE as HERO_IMAGE, StoriesHero } from "@/components/stor
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { getStories, toStorySummary } from "@/lib/data";
+import { absoluteUrl } from "@/lib/utils";
 
 // TODO: switch to buildMetadata() once src/lib/seo/metadata.ts exists.
 export const metadata: Metadata = {
@@ -31,20 +32,20 @@ export default async function TravelStoriesPage() {
       {
         "@type": "Blog",
         name: "LotusWave Travel Stories",
-        url: "/travel-stories",
+        url: absoluteUrl("/travel-stories"),
         blogPost: stories.map((story) => ({
           "@type": "BlogPosting",
           headline: story.title,
-          url: `/travel-stories/${story.slug}`,
+          url: absoluteUrl(`/travel-stories/${story.slug}`),
           datePublished: story.publishedAt,
-          image: story.image.src,
+          image: absoluteUrl(story.image.src),
         })),
       },
       {
         "@type": "BreadcrumbList",
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Home", item: "/" },
-          { "@type": "ListItem", position: 2, name: "Travel Stories", item: "/travel-stories" },
+          { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+          { "@type": "ListItem", position: 2, name: "Travel Stories", item: absoluteUrl("/travel-stories") },
         ],
       },
     ],
