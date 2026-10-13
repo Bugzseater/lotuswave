@@ -79,6 +79,7 @@ export async function Footer() {
         explore={explore}
         experienceLinks={experienceLinks}
         journeyLinks={journeyLinks}
+        policyLinks={policyLinks}
       />
     </footer>
   );
@@ -89,11 +90,13 @@ function FooterContent({
   explore,
   experienceLinks,
   journeyLinks,
+  policyLinks,
 }: {
   socials: readonly NavLink[];
   explore: readonly NavLink[];
   experienceLinks: readonly NavLink[];
   journeyLinks: readonly NavLink[];
+  policyLinks: readonly NavLink[];
 }) {
   return (
     <>
